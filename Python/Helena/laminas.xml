@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<laminas>
+	<padrao>
+		<lamina numero="0">
+			<a valor="15" unidade="mm" /><!-- espessura do nucleo central da lamina -->
+			<secao valor="168" unidade="mm*mm" /><!-- secao da janela da lamina -->
+			<peso valor="0.095" unidade="kg/cm" /><!-- peso do nucleo em kilo por cm -->
+			<tipo valor="simples" /><!-- tipo da lamina -->
+		</lamina>
+		<lamina numero="1">
+			<a valor="20" unidade="mm" />
+			<secao valor="300" unidade="mm*mm" />
+			<peso valor="0.170" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+		<lamina numero="2">
+			<a valor="25" unidade="mm" />
+			<secao valor="468" unidade="mm*mm" />
+			<peso valor="0.273" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+		<lamina numero="3">
+			<a valor="30" unidade="mm" />
+			<secao valor="675" unidade="mm*mm" />
+			<peso valor="0.380" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+		<lamina numero="4">
+			<a valor="35" unidade="mm" />
+			<secao valor="900" unidade="mm*mm" />
+			<peso valor="0.516" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+		<lamina numero="5">
+			<a valor="40" unidade="mm" />
+			<secao valor="1200" unidade="mm*mm" />
+			<peso valor="0.674" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+		<lamina numero="6">
+			<a valor="50" unidade="mm" />
+			<secao valor="1880" unidade="mm*mm" />
+			<peso valor="1.053" unidade="kg/cm" />
+			<tipo valor="simples" />
+		</lamina>
+	</padrao>
+	<comprida>
+		<lamina numero="5">
+			<a valor="40" unidade="mm" />
+			<secao valor="2400" unidade="mm*mm" />
+			<peso valor="1" unidade="kg/cm" />
+			<tipo valor="especial" />
+		</lamina>
+		<lamina numero="6">
+			<a valor="50" unidade="mm" />
+			<secao valor="3750" unidade="mm*mm" />
+			<peso valor="1.58" unidade="kg/cm" />
+			<tipo valor="especial" />
+		</lamina>
+	</comprida>
+</laminas>

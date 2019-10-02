@@ -67,7 +67,6 @@ void sample_wire(){
 }
 
 void sample_wires( DataBase* database ){
-    /*
     Wires* wires = new Wires();
     wires->setDatabase( database );
 
@@ -98,7 +97,6 @@ void sample_wires( DataBase* database ){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
 }
 
 void sample_bobbin(){
@@ -140,7 +138,7 @@ void sample_bobbin(){
 }
 
 void sample_bobbins( DataBase* database ){
-
+    /*
     Bobbins* bobbins = new Bobbins();
     bobbins->setDatabase( database );
 
@@ -161,7 +159,7 @@ void sample_bobbins( DataBase* database ){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-
+    */
 }
 
 void sample_lamina(){
