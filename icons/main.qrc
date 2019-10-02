@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>iconAbout.ico</file>
+        <file>iconBobbin.ico</file>
+        <file>iconClose.ico</file>
+        <file>iconDocumentOpen.ico</file>
+        <file>iconExit.ico</file>
+        <file>iconHelp.ico</file>
+        <file>iconLamina.ico</file>
+        <file>iconNew.ico</file>
+        <file>iconNotification.ico</file>
+        <file>iconPower.ico</file>
+        <file>iconSave.ico</file>
+        <file>iconSetting.ico</file>
+        <file>iconWire.ico</file>
+    </qresource>
+</RCC>

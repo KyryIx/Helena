@@ -1,0 +1,33 @@
+#ifndef WINDOWBOBBIN_H
+#define WINDOWBOBBIN_H
+
+#include <QDialog>
+#include "database.h"
+
+namespace Ui {
+class WindowBobbin;
+}
+
+class WindowBobbin : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit WindowBobbin(QWidget *parent = nullptr,  DataBase* database=nullptr);
+    ~WindowBobbin();
+    void setDatabase( DataBase *database );
+    void clearFields();
+    void updateFields();
+    void init();
+
+public slots:
+    void on_pushButton_exit_clicked();
+    void on_pushButton_before_clicked();
+    void on_pushButton_after_clicked();
+
+private:
+    Ui::WindowBobbin *ui;
+    DataBase* database;
+};
+
+#endif // WINDOWBOBBIN_H

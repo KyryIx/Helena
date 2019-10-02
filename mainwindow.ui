@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>790</width>
+    <height>524</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Helena - Software de desenvolvimento de transformadores</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons/main.qrc">
+    <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>210</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>790</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Arquivo</string>
+    </property>
+    <addaction name="action_newProject"/>
+    <addaction name="action_openProject"/>
+    <addaction name="action_saveProject"/>
+    <addaction name="action_closeProject"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menuPreferences">
+    <property name="title">
+     <string>Editar</string>
+    </property>
+    <addaction name="action_preferences"/>
+   </widget>
+   <widget class="QMenu" name="menuMaterials">
+    <property name="title">
+     <string>Materiais</string>
+    </property>
+    <addaction name="action_wires"/>
+    <addaction name="action_laminas"/>
+    <addaction name="action_bobbins"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Ajuda</string>
+    </property>
+    <addaction name="action_showHelp"/>
+    <addaction name="action_aboutHelena"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuPreferences"/>
+   <addaction name="menuMaterials"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_newProject"/>
+   <addaction name="action_openProject"/>
+   <addaction name="action_saveProject"/>
+   <addaction name="action_closeProject"/>
+   <addaction name="separator"/>
+   <addaction name="action_wires"/>
+   <addaction name="action_laminas"/>
+   <addaction name="action_bobbins"/>
+   <addaction name="separator"/>
+   <addaction name="action_showHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_newProject">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconNew.ico</normaloff>:/iconNew.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Novo Projeto</string>
+   </property>
+  </action>
+  <action name="action_openProject">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconDocumentOpen.ico</normaloff>:/iconDocumentOpen.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Abrir Projeto</string>
+   </property>
+  </action>
+  <action name="action_saveProject">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconSave.ico</normaloff>:/iconSave.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Salvar Projeto</string>
+   </property>
+  </action>
+  <action name="action_closeProject">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconClose.ico</normaloff>:/iconClose.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Fechar Projeto</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconExit.ico</normaloff>:/iconExit.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="action_preferences">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconSetting.ico</normaloff>:/iconSetting.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Preferências</string>
+   </property>
+  </action>
+  <action name="action_wires">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconWire.ico</normaloff>:/iconWire.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Fios</string>
+   </property>
+  </action>
+  <action name="action_laminas">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconLamina.ico</normaloff>:/iconLamina.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Lâminas</string>
+   </property>
+  </action>
+  <action name="action_bobbins">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconBobbin.ico</normaloff>:/iconBobbin.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Carretéis</string>
+   </property>
+  </action>
+  <action name="action_showHelp">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconHelp.ico</normaloff>:/iconHelp.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Exibir Ajuda</string>
+   </property>
+  </action>
+  <action name="action_aboutHelena">
+   <property name="icon">
+    <iconset resource="icons/main.qrc">
+     <normaloff>:/iconAbout.ico</normaloff>:/iconAbout.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Sobre o Helena</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="icons/main.qrc"/>
+ </resources>
+ <connections/>
+</ui>
