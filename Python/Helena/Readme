@@ -1,0 +1,16 @@
+O aplicativo Helena é utilizado para cálculo de transformadores monofásicos até 3 KVA.
+
+Os procedimentos são:
+
+1 - Baixar o Python e suas bibliotecas no arquivo contido em:
+https://portablepython.com/wiki/PortablePython2.7.6.1/
+
+1.1 - Execute o arquivo "PortablePython_2.7.6.1.exe"
+
+2 - Garantir que tem instalado a biblioteca "The ElementTree XML API" https://docs.python.org/2/library/xml.etree.elementtree.html
+
+3 - No arquivo "execute.bat", troque as linhas "\A_DEVELOPMENT\Python 2.7.6.1\App" pelo endereço do seu instalador conforme onde foi instalado.
+
+3.2 - Exemplo: Se foi instalado em "C:\Users\everton\Desktop\Portable Python 2.7.6.1\App", troque "\A_DEVELOPMENT\Python 2.7.6.1\App" por "\Users\everton\Desktop\Portable Python 2.7.6.1\App", sendo que o diretorio do projeto deve estar no mesmo drive do instalador do Python, que neste exemplo é o drive C:.
+
+4 - Execute o arquivo "execute.bat". Pronto, abrirá o Helena.
