@@ -34,7 +34,7 @@ class Lamina{
             return this->type;
 		}
 
-        void setThickness( double width ){
+        void setWidth( double width ){
             this->width = width;
 		}
 

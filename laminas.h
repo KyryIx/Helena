@@ -49,7 +49,7 @@ class Laminas{
             // LIMIT 1
             std::string sql = "";
             sql = sql + "SELECT id ";
-            sql = sql + "FROM wires ";
+            sql = sql + "FROM laminas ";
             sql = sql + "WHERE (type_lamina='" + type + "') ";
             sql = sql + "AND ";
             sql = sql + "(" + field + this->comparation( comparation ) + std::to_string( value ) + ") ";
@@ -75,7 +75,7 @@ class Laminas{
             return type_tmp;
         }
 
-        double getThickness( unsigned int index ){
+        double getWidth( unsigned int index ){
             double thickness = 0.0;
             // SELECT width_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "width_lamina" ) ) > -1 ){
@@ -108,7 +108,7 @@ class Laminas{
             return weight;
         }
 
-        unsigned int findIndexByThickness( double thickness, char comparation='g', std::string type="simples" ){
+        unsigned int findIndexByWidth( double thickness, char comparation='g', std::string type="simples" ){
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='simples') AND (width_lamina>=6) ORDER BY width_lamina ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "width_lamina", thickness, comparation, "ASC" ) ) > -1 ){
@@ -122,7 +122,7 @@ class Laminas{
         unsigned int findIndexByWindowArea( double windowArea, char comparation='g', std::string type="simples" ){
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='simples') AND (area_lamina>=6) ORDER BY area_lamina ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "width_lamina", windowArea, comparation, "ASC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "area_lamina", windowArea, comparation, "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -133,7 +133,7 @@ class Laminas{
         unsigned int findIndexByWeight( double weight, char comparation='l', std::string type="simples" ){
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='simples') AND (weght_lamina<=6) ORDER BY weght_lamina DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "weght_lamina", weight, comparation, "DESC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_lamina", weight, comparation, "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -152,7 +152,7 @@ class Laminas{
                 if( this->database->nextRegister() ){
                     lamina->setId( index );
                     lamina->setType( this->database->returnValue( "type_lamina" ) );
-                    lamina->setThickness( atof( this->database->returnValue( "width_lamina" ).c_str() ) );
+                    lamina->setWidth( atof( this->database->returnValue( "width_lamina" ).c_str() ) );
                     lamina->setWindowArea( atof( this->database->returnValue( "area_lamina" ).c_str() ) );
                     lamina->setWeight( atof( this->database->returnValue( "weight_lamina" ).c_str() ) );
                 }
