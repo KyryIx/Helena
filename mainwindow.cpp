@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->database = new DataBase();
-    samples( this->database );
 }
 
 MainWindow::~MainWindow()
@@ -55,6 +54,7 @@ void MainWindow::on_action_saveProject_triggered(){
 }
 
 void MainWindow::on_action_closeProject_triggered(){
+    samples( this->database );
 }
 
 void MainWindow::on_action_exit_triggered(){

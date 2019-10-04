@@ -149,7 +149,7 @@ void samples( DataBase* database ){
     id = wires->findIndexByLength( 50.0 );
     id = wires->findIndexByFrequency( 2.0 );
     id = wires->findIndexByCurrentMax( 20.0 );
-    wire = wires->getWire( 2 );
+    wire = wires->getWire( 5 );
 
     msgBox.setText( wire->toString().c_str() );
     msgBox.setIcon( QMessageBox::Warning );
@@ -199,7 +199,7 @@ void samples( DataBase* database ){
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
 
-    printf( "id: %d\ndiameter: %f\nturns per cm: %f\narea: %f\nresistance: %f\nweight: %f\nlength: %f\nfrequency: %f\nwidth: %f\nheight: %f\nvolume: %f\nwindow area: %f\n", id, diameter, turnsPerCm, area, resistance, weight, length, frequency, width, height, volume, windowArea );
+    //printf( "id: %d\ndiameter: %f\nturns per cm: %f\narea: %f\nresistance: %f\nweight: %f\nlength: %f\nfrequency: %f\nwidth: %f\nheight: %f\nvolume: %f\nwindow area: %f\n", id, diameter, turnsPerCm, area, resistance, weight, length, frequency, width, height, volume, windowArea );
 }
 
 #endif // SAMPLES_H
