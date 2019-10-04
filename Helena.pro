@@ -30,9 +30,9 @@ SOURCES += \
         windownew.cpp \
         windowpreference.cpp \
         windowwire.cpp \
+        windowlamina.cpp \
         windowbobbin.cpp \
         windowabout.cpp \
-        windowlamina.cpp \
         windowhelp.cpp \
         database.cpp
 
@@ -42,17 +42,17 @@ HEADERS += \
         windowpreference.h \
         windowwire.h \
         windowbobbin.h \
-        windowabout.h \
         windowlamina.h \
+        windowabout.h \
         windowhelp.h \
         database.h \
         wire.h \
         bobbin.h \
-        samples.h \
         lamina.h \
         wires.h \
         bobbins.h \
-    laminas.h
+        laminas.h \
+        samples.h
 
 FORMS += \
         mainwindow.ui \
@@ -60,8 +60,8 @@ FORMS += \
         windowpreference.ui \
         windowwire.ui \
         windowbobbin.ui \
-        windowabout.ui \
         windowlamina.ui \
+        windowabout.ui \
         windowhelp.ui
 
 # Default rules for deployment.

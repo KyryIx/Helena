@@ -12,7 +12,7 @@
 
 #include <QMessageBox>
 
-void sample_wire(){
+void samples( DataBase* database ){
     ///////////////////////////////////////////////////
     // Exemplo baseado na                            //
     // Tabela de fios de cobre esmaltados padrão AWG //
@@ -31,7 +31,6 @@ void sample_wire(){
     //                          6.0A/mm^2 => 404.590 //
     // Frequência máxima (kHz): 0.203                //
     ///////////////////////////////////////////////////
-    /*
     Wire* wire = new Wire();
     wire->setId( 10 );
     wire->setType( "redondo" );
@@ -63,45 +62,7 @@ void sample_wire(){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
-}
 
-void sample_wires( DataBase* database ){
-    /*
-    Wires* wires = new Wires();
-    wires->setDatabase( database );
-
-    std::string type                              = wires->getType( 2 );
-    std::string awg                               = wires->getAWG( 2 );
-    double diameter                               = wires->getDiameter( 2 );
-    double turnsPerCm                             = wires->getTurnsPerCm( 2 );
-    double area                                   = wires->getArea( 2 );
-    double resistance                             = wires->getResistance( 2 );
-    double weight                                 = wires->getWeight( 2 );
-    double length                                 = wires->getLength( 2 );
-    double frequency                              = wires->getFrequency( 2 );
-    std::vector< std::vector<double> > currentMax = wires->getCurrentMax( 2 );
-
-    unsigned int id;
-    id = wires->findIndexByDiameter( 3.5 );
-    id = wires->findIndexByTurnsPerCm( 10.0 );
-    id = wires->findIndexByArea( 12.5 );
-    id = wires->findIndexByResistance( 25.0 );
-    id = wires->findIndexByWeight( 45.0 );
-    id = wires->findIndexByLength( 50.0 );
-    id = wires->findIndexByFrequency( 2.0 );
-    id = wires->findIndexByCurrentMax( 20.0 );
-    Wire* wire = wires->getWire( 2 );
-
-    QMessageBox msgBox;
-    msgBox.setText( wire->toString().c_str() );
-    msgBox.setIcon( QMessageBox::Warning );
-    msgBox.setStandardButtons( QMessageBox::Ok );
-    msgBox.exec();
-    */
-}
-
-void sample_bobbin(){
     ///////////////////////////////////////////
     // Exemplo baseado na                    //
     // Página de Prodtos da Dragão Plasticos //
@@ -114,7 +75,6 @@ void sample_bobbin(){
     // Temperatura (°C): 140.0               //
     //       Fornecedor: Dragão Plasticos    //
     ///////////////////////////////////////////
-    /*
     Bobbin* bobbin = new Bobbin();
     bobbin->setId( 1 );
     bobbin->setType( "STSR" );
@@ -122,49 +82,20 @@ void sample_bobbin(){
     bobbin->setLength( 29.5 );
     bobbin->setHeight( 42.9 );
 
-    unsigned int id    = bobbin->getId();
-    std::string type   = bobbin->getType();
-    double width       = bobbin->getWidth();
-    double length      = bobbin->getLength();
-    double height      = bobbin->getHeight();
-    double area        = bobbin->getArea();
-    double volume      = bobbin->getVolume();
-    std::string report = bobbin->toString();
+    id            = bobbin->getId();
+    type          = bobbin->getType();
+    double width  = bobbin->getWidth();
+    length        = bobbin->getLength();
+    double height = bobbin->getHeight();
+    area          = bobbin->getArea();
+    double volume = bobbin->getVolume();
+    report        = bobbin->toString();
 
-    QMessageBox msgBox;
     msgBox.setText( report.c_str() );
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
-}
 
-void sample_bobbins( DataBase* database ){
-
-    Bobbins* bobbins = new Bobbins();
-    bobbins->setDatabase( database );
-
-    std::string type = bobbins->getType( 10 );
-    double width     = bobbins->getWidth( 10 );
-    double length    = bobbins->getLength( 10 );
-    double height    = bobbins->getHeight( 10 );
-
-    unsigned int id;
-    id = bobbins->findIndexByWidth( 29.7 );
-    id = bobbins->findIndexByWidthAndArea( 29.7, 100.0 );
-    id = bobbins->findIndexByLength( 71.0 );
-    id = bobbins->findIndexByHeight( 50.4 );
-    Bobbin* bobbin = bobbins->getBobbin( 10 );
-
-    QMessageBox msgBox;
-    msgBox.setText( bobbin->toString().c_str() );
-    msgBox.setIcon( QMessageBox::Warning );
-    msgBox.setStandardButtons( QMessageBox::Ok );
-    msgBox.exec();
-
-}
-
-void sample_lamina(){
     /////////////////////////////////////////
     // Exemplo baseado no                  //
     // Livro Transformadores de Martignoni //
@@ -174,51 +105,101 @@ void sample_lamina(){
     //        peso (kg/cm): 0.273          //
     //                tipo: simples        //
     /////////////////////////////////////////
-    /*
     Lamina* lamina = new Lamina();
     lamina->setId( 1 );
     lamina->setType( "simples" );
-    lamina->setThickness( 25.0 );
+    lamina->setWidth( 25.0 );
     lamina->setWindowArea( 468 );
     lamina->setWeight( 0.273 );
 
-    unsigned int id    = lamina->getId();
-    std::string type   = lamina->getType();
-    double width       = lamina->getWidth();
-    double windowArea  = lamina->getWindowArea();
-    double weight      = lamina->getWeight();
-    std::string report = lamina->toString();
+    id                = lamina->getId();
+    type              = lamina->getType();
+    width             = lamina->getWidth();
+    double windowArea = lamina->getWindowArea();
+    weight            = lamina->getWeight();
+    report            = lamina->toString();
 
-    QMessageBox msgBox;
     msgBox.setText( report.c_str() );
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
-}
 
-void sample_laminas( DataBase* database ){
-    /*
+    //////////////////////////////////////////
+    //             search wires             //
+    //////////////////////////////////////////
+    Wires* wires = new Wires();
+    wires->setDatabase( database );
+
+    type       = wires->getType( 2 );
+    awg        = wires->getAWG( 2 );
+    diameter   = wires->getDiameter( 2 );
+    turnsPerCm = wires->getTurnsPerCm( 2 );
+    area       = wires->getArea( 2 );
+    resistance = wires->getResistance( 2 );
+    weight     = wires->getWeight( 2 );
+    length     = wires->getLength( 2 );
+    frequency  = wires->getFrequency( 2 );
+    currentMax = wires->getCurrentMax( 2 );
+
+    id = wires->findIndexByDiameter( 3.5 );
+    id = wires->findIndexByTurnsPerCm( 10.0 );
+    id = wires->findIndexByArea( 12.5 );
+    id = wires->findIndexByResistance( 25.0 );
+    id = wires->findIndexByWeight( 45.0 );
+    id = wires->findIndexByLength( 50.0 );
+    id = wires->findIndexByFrequency( 2.0 );
+    id = wires->findIndexByCurrentMax( 20.0 );
+    wire = wires->getWire( 2 );
+
+    msgBox.setText( wire->toString().c_str() );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok );
+    msgBox.exec();
+
+    //////////////////////////////////////////
+    //            search bobbins            //
+    //////////////////////////////////////////
+    Bobbins* bobbins = new Bobbins();
+    bobbins->setDatabase( database );
+
+    type   = bobbins->getType( 10 );
+    width  = bobbins->getWidth( 10 );
+    length = bobbins->getLength( 10 );
+    height = bobbins->getHeight( 10 );
+
+    id = bobbins->findIndexByWidth( 29.7 );
+    id = bobbins->findIndexByWidthAndArea( 29.7, 100.0 );
+    id = bobbins->findIndexByLength( 71.0 );
+    id = bobbins->findIndexByHeight( 50.4 );
+    bobbin = bobbins->getBobbin( 10 );
+
+    msgBox.setText( bobbin->toString().c_str() );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok );
+    msgBox.exec();
+
+    //////////////////////////////////////////
+    //            search laminas            //
+    //////////////////////////////////////////
     Laminas* laminas = new Laminas();
     laminas->setDatabase( database );
 
-    std::string type  = laminas->getType(2 );
-    double thickness  = laminas->getThickness( 2 );
-    double windowArea = laminas->getWindowArea( 2 );
-    double weight     = laminas->getWeight( 2 );
+    type       = laminas->getType(2 );
+    width      = laminas->getWidth( 2 );
+    windowArea = laminas->getWindowArea( 2 );
+    weight     = laminas->getWeight( 2 );
 
-    unsigned int id;
-    id = laminas->findIndexByThickness( 2.7 );
+    id = laminas->findIndexByWidth( 22.7 );
     id = laminas->findIndexByWindowArea( 714 );
-    id = laminas->findIndexByWeight( 0.6 );
-    Lamina* lamina = laminas->getLamina( 2 );
+    id = laminas->findIndexByWeight( 1.5 );
+    lamina = laminas->getLamina( 2 );
 
-    QMessageBox msgBox;
     msgBox.setText( lamina->toString().c_str() );
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
+
+    printf( "id: %d\ndiameter: %f\nturns per cm: %f\narea: %f\nresistance: %f\nweight: %f\nlength: %f\nfrequency: %f\nwidth: %f\nheight: %f\nvolume: %f\nwindow area: %f\n", id, diameter, turnsPerCm, area, resistance, weight, length, frequency, width, height, volume, windowArea );
 }
 
 #endif // SAMPLES_H

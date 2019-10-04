@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->database = new DataBase();
+    samples( this->database );
 }
 
 MainWindow::~MainWindow()
@@ -54,12 +55,6 @@ void MainWindow::on_action_saveProject_triggered(){
 }
 
 void MainWindow::on_action_closeProject_triggered(){
-    sample_wire();
-    sample_wires( this->database );
-    sample_bobbin();
-    sample_bobbins( this->database ); // rever as funcoes de bobbins que os resultados nao batem //
-    sample_lamina();
-    sample_laminas( this->database ); // rever as funcoes de laminas que os resultados nao batem //
 }
 
 void MainWindow::on_action_exit_triggered(){

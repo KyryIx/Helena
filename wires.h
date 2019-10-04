@@ -162,8 +162,28 @@ class Wires{
             return frequency;
         }
 
+        std::string removeSpace( std::string str ){
+            std::size_t found = str.find( " " );
+            while( found != std::string::npos ){
+                str.erase( found, 1 );
+                found = str.find( " " );
+            }
+            return str;
+        }
+
         std::vector< std::vector<double> > getCurrentMax( unsigned int index ){
             std::vector< std::vector<double> >currentMax;
+            // SELECT currentMaxPerDensity_wire FROM wires WHERE id=10 //
+            if( this->database->executeSQL( this->queryByIndex( index, "currentMaxPerDensity_wire" ).c_str() ) > -1 ){
+                if( this->database->nextRegister() ){
+                    std::string result = this->database->returnValue( "currentMaxPerDensity_wire" ).c_str();
+                    result = removeSpace( result );
+                    int a = 5;
+                    int b = 2 * a;
+                }
+            }
+
+
             /*
             std::string sql = "SELECT currentMaxPerDensity_wire FROM wires WHERE (id=";
             sql = sql + std::to_string( index );

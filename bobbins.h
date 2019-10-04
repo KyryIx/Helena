@@ -85,9 +85,9 @@ class Bobbins{
         double getLength( unsigned int index ){
             double lenght = 0.0;
             // SELECT lenght_bobbin FROM bobbins WHERE id=10 //
-            if( this->database->executeSQL( this->queryByIndex( index, "lenght_bobbin" ).c_str() ) > -1 ){
+            if( this->database->executeSQL( this->queryByIndex( index, "length_bobbin" ).c_str() ) > -1 ){
                 if( this->database->nextRegister() ){
-                    lenght = atof( this->database->returnValue( "lenght_bobbin" ).c_str() );
+                    lenght = atof( this->database->returnValue( "length_bobbin" ).c_str() );
                 }
             }
             return lenght;
@@ -123,10 +123,10 @@ class Bobbins{
             sql = sql + "WHERE ";
             sql = sql + "(width_bobbin" + comparation( comparationWidth ) + std::to_string(width) + ") ";
             sql = sql + "AND ";
-            sql = sql + "(area_bobbin" + comparation( comparationArea ) + std::to_string(area) + ") ";
+            sql = sql + "((width_bobbin*length_bobbin)" + comparation( comparationArea ) + std::to_string(area) + ") ";
             sql = sql + "ORDER BY ";
             sql = sql + "width_bobbin ASC, ";
-            sql = sql + "area_bobbin ASC ";
+            sql = sql + "(width_bobbin*length_bobbin) ASC ";
             sql = sql + "LIMIT 1";
             // SELECT id FROM bobbins WHERE (width_bobbin>=6) AND ((width_bobbin*length_bobbin)>=10) ORDER BY width_bobbin ASC, (width_bobbin*length_bobbin) ASC LIMIT 1 //
             if( this->database->executeSQL( sql ) > -1 ){
@@ -140,7 +140,7 @@ class Bobbins{
         unsigned int findIndexByLength( double length, char comparation='g' ){
             unsigned int index = 0;
             // SELECT id FROM bobbins WHERE length_bobbin>=6 ORDER BY length_bobbin ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByField( "width_bobbin", length, comparation, "ASC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByField( "length_bobbin", length, comparation, "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -151,7 +151,7 @@ class Bobbins{
         unsigned int findIndexByHeight( double height, char comparation='g' ){
             unsigned int index = 0;
             // SELECT id FROM bobbins WHERE height_bobbin>=6 ORDER BY height_bobbin ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByField( "width_bobbin", height, comparation, "ASC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByField( "height_bobbin", height, comparation, "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
