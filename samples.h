@@ -1,14 +1,16 @@
 #ifndef SAMPLES_H
 #define SAMPLES_H
 
-//#include "wire.h"
+#include "wire.h"
 #include "wires.h"
 
-//#include "bobbin.h"
+#include "bobbin.h"
 #include "bobbins.h"
 
-//#include "lamina.h"
+#include "lamina.h"
 #include "laminas.h"
+
+#include "transformer.h"
 
 #include <QMessageBox>
 
@@ -127,8 +129,7 @@ void samples( DataBase* database ){
     //////////////////////////////////////////
     //             search wires             //
     //////////////////////////////////////////
-    Wires* wires = new Wires();
-    wires->setDatabase( database );
+    Wires* wires = new Wires( database );
 
     type       = wires->getType( 2 );
     awg        = wires->getAWG( 2 );
@@ -159,8 +160,7 @@ void samples( DataBase* database ){
     //////////////////////////////////////////
     //            search bobbins            //
     //////////////////////////////////////////
-    Bobbins* bobbins = new Bobbins();
-    bobbins->setDatabase( database );
+    Bobbins* bobbins = new Bobbins( database);
 
     type   = bobbins->getType( 10 );
     width  = bobbins->getWidth( 10 );
@@ -181,8 +181,7 @@ void samples( DataBase* database ){
     //////////////////////////////////////////
     //            search laminas            //
     //////////////////////////////////////////
-    Laminas* laminas = new Laminas();
-    laminas->setDatabase( database );
+    Laminas* laminas = new Laminas( database );
 
     type       = laminas->getType(2 );
     width      = laminas->getWidth( 2 );
@@ -198,6 +197,76 @@ void samples( DataBase* database ){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
+    /*
+    Wire* wireIN   = new Wire();
+    Wire* wireOUT  = new Wire();
+    Lamina* lamina   = new Lamina();
+
+    Wires* wires     = new Wires( database );
+    Bobbin* bobbin   = new Bobbin();
+    Laminas* laminas = new Laminas( database );
+    Bobbins* bobbins = new Bobbins( database );
+
+    lamina->setType( "simples" );
+    bobbin->setType( "STSR" );
+    wireIN->setType( "redondo" );
+    wireOUT->setType( "redondo" );
+
+    // #####################################
+    // ## Current Density value by Power   #
+    // ## +------------+-----------------+ #
+    // ## |   Power    | Current Density | #
+    // ## |    (VA)    |    (A/mm^2)     | #
+    // ## +------------+-----------------+ #
+    // ## |   0 ~ 500  |        3        | #
+    // ## +------------+-----------------+ #
+    // ## | 500 ~ 1000 |       2.5       | #
+    // ## +------------+-----------------+ #
+    // ## |1000 ~ 3000 |        2        | #
+    // ## +------------+-----------------+ #
+    // #####################################
+
+    Transformer* transformer1 = new Transformer( database );
+    transformer1->setPowerOUT( 300.0 );
+    transformer1->setVoltageOUT( 220.0 );
+    transformer1->setVoltageIN( 120.0 );
+    transformer1->setFrequency( 50 );
+    transformer1->setFlux( 11300.0 );
+    transformer1->setCurrentDensity(3.0);
+    transformer1->setStyle( 1 );
+    transformer1->setLamina( lamina );
+    transformer1->setBobbin( bobbin );
+    transformer1->setWireIN( wireIN );
+    transformer1->setWireOUT( wireOUT );
+    std::string report;
+    if( transformer1->calculate() ){
+        report = transformer1->toString();
+    }
+    else {
+        report = "invalido";
+    }
+
+    // ###################################################
+    // ###################################################
+    Transformer* transformer2 = new Transformer( database );
+    transformer2->setPowerOUT( 1000.0 );
+    transformer2->setVoltageOUT( 24.0 );
+    transformer2->setVoltageIN( 220.0 );
+    transformer2->setFrequency( 50 );
+    transformer2->setFlux( 11300.0 );
+    transformer2->setCurrentDensity(2.5);
+    transformer2->setStyle( 1 );
+    transformer2->setLamina( lamina );
+    transformer2->setBobbin( bobbin );
+    transformer2->setWireIN( wireIN );
+    transformer2->setWireOUT( wireOUT );
+    if( transformer2->calculate() ){
+        report = transformer2->toString();
+    }
+    else{
+        report = "sem resultado";
+    }
+    */
 
     //printf( "id: %d\ndiameter: %f\nturns per cm: %f\narea: %f\nresistance: %f\nweight: %f\nlength: %f\nfrequency: %f\nwidth: %f\nheight: %f\nvolume: %f\nwindow area: %f\n", id, diameter, turnsPerCm, area, resistance, weight, length, frequency, width, height, volume, windowArea );
 }

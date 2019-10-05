@@ -1,3 +1,6 @@
+#ifndef LAMINAS_H
+#define LAMINAS_H
+
 #include "lamina.h"
 #include "database.h"
 
@@ -58,7 +61,9 @@ class Laminas{
         }
 
     public:
-        Laminas(){}
+        Laminas( DataBase *database ){
+            this->database = database;
+        }
 
         void setDatabase( DataBase *database ){
             this->database = database;
@@ -160,3 +165,5 @@ class Laminas{
             return lamina;
         }
 };
+
+#endif // LAMINAS_H

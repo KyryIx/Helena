@@ -1,0 +1,295 @@
+// https://www.sqlite.org/json1.html
+// http://souptonuts.sourceforge.net/readme_sqlite_tutorial.html
+// https://www.sqlite.org/c3ref/create_function.html
+// http://souptonuts.sourceforge.net/readme_sqlite_tutorial.html
+
+// SELECT currentMaxPerDensity_wire FROM wires WHERE id=10;
+//         * {"density":[2.5, 3.0, 6.0],  "current":[ 33.25600,  39.90800,  79.8150]}
+// SELECT json_array_length( currentMaxPerDensity_wire, '$.density' ) FROM wires WHERE id=10;
+//         * 3
+// SELECT json_extract( currentMaxPerDensity_wire, '$.density' ) FROM wires WHERE id=10;
+//         * [2.5,3.0,6.0]
+// SELECT json_extract( currentMaxPerDensity_wire, '$.density[0]' ) FROM wires WHERE id=10;
+// SELECT json_extract( currentMaxPerDensity_wire, '$.density[1]' ) FROM wires WHERE id=10;
+// SELECT json_extract( currentMaxPerDensity_wire, '$.density[2]' ) FROM wires WHERE id=10;
+//         * 2.5
+//         * 3
+//         * 6
+// SELECT json_extract( currentMaxPerDensity_wire, '$.current' ) FROM wires WHERE id=10;
+//         * [33.25600,39.90800,79.8150]
+//
+// ---------------+--------------------------------+---------------------------
+// Function	      |  Overwrite if already exists?  |  Create if does not exist?
+// json_insert()  |  No                            |  Yes
+// json_replace() |  Yes                           |  No
+// json_set()     |  Yes                           |  Yes
+// ---------------+--------------------------------+---------------------------
+// SELECT json_insert( currentMaxPerDensity_wire, '$.temperature', '[0, 0, 0]') FROM wires WHERE id=10;
+//         * {"density":[2.5,3.0,6.0],"current":[33.25600,39.90800,79.8150],"temperature":"[0, 0, 0]"}
+// SELECT json_replace( currentMaxPerDensity_wire, '$.current', '[33.0, 40.0, 80.0]') FROM wires WHERE id=10;
+//         * {"density":[2.5,3.0,6.0],"current":"[33.0, 40.0, 80.0]"}
+// SELECT json_set( currentMaxPerDensity_wire, '$.current[0]', 35.0) FROM wires WHERE id=10;
+//         * {"density":[2.5,3.0,6.0],"current":[35.0,39.90800,79.8150]}
+// SELECT json_object( 'density', json_array(2.5,3.0,6.0), 'current', json_array(8.0,10.0,12.0) )
+//         * {"density":[2.5,3.0,6.0],"current":[8.0,10.0,12.0]}
+// SELECT json_patch( currentMaxPerDensity_wire, '{"temperature":[0, 0, 0]}' ) FROM wires WHERE id=10;
+//         * {"density":[2.5,3.0,6.0],"current":[33.25600,39.90800,79.8150],"temperature":[0,0,0]}
+// SELECT json_patch( currentMaxPerDensity_wire, '{"density":[0, 0, 0], "temperature":[0, 0, 0]}' ) FROM wires WHERE id=10;
+//         * {"density":[0,0,0],"current":[33.25600,39.90800,79.8150],"temperature":[0,0,0]}
+// SELECT json_remove( currentMaxPerDensity_wire, '$.density' ) FROM wires WHERE id=10;
+//         * {"current":[33.25600,39.90800,79.8150]}
+// SELECT json_remove( currentMaxPerDensity_wire, '$.density[1]' ) FROM wires WHERE id=10;
+//         * {"density":[2.5,6.0],"current":[33.25600,39.90800,79.8150]}
+// SELECT
+//       json_extract( currentMaxPerDensity_wire, '$.density' ) AS density,
+//       json_extract( currentMaxPerDensity_wire, '$.current' ) AS current
+// FROM
+//       wires
+// WHERE
+//       id=10
+
+std::string removeCharacter( std::string text, char character ){
+    size_t index = text.find( character );
+    while( index != std::string::npos ){
+        text.erase( index, 1 );
+    }
+    return text;
+}
+
+/*
+std::vector< std::vector<double> > getString2CurrentMax( std::string str ){
+	std::vector< std::vector<double> > currentTemp;
+	std::string strTemp;
+	std::size_t found1 = 0;
+	std::size_t found2 = str.find( ";" );
+	while( found2 != std::string::npos ){
+		strTemp = str.substr( found1, (found2-found1) );
+		found1 = found2 + 1;
+		found2 = strTemp.find( "," );
+		currentTemp.push_back( {
+								atof( strTemp.substr( 0, found2 ).c_str() ),
+								atof( strTemp.substr( found2+1, std::string::npos ).c_str() )
+							  } );
+		found2 = str.find( ";", found1+1 );
+	}
+	strTemp = str.substr( found1, std::string::npos );
+	found1 = 0;
+	found2 = strTemp.find( "," );
+	currentTemp.push_back( {
+							  atof( strTemp.substr( 0, found2 ).c_str() ),
+							  atof( strTemp.substr(found2+1,std::string::npos).c_str() )
+						  } );
+	return currentTemp;
+}
+*/
+
+
+
+#ifndef EXAMPLE_CLASSES_H
+#define EXAMPLE_CLASSES_H
+
+#include "database.h"
+#include "wires.h"
+#include "laminas.h"
+#include "bobbins.h"
+#include "transformer.h"
+
+void sample_wire( DataBase* database ){
+    Wires* wires    = new Wires();
+    wires->setDatabase( database );
+
+    std::string str = "";
+
+    str.assign( wires->getWire( 2 )->toString() );
+
+    str.assign( "AWG = "             + wires->getAWG( 5 ) + "\n" );
+    str.assign( "Diametro = "        + std::to_string( wires->getDiameter( 5 ) ) + "\n" );
+    str.assign( "Espiras por cm = "  + std::to_string( wires->getTurnsPerCm( 5 ) ) + "\n" );
+    str.assign( "Area = "            + std::to_string( wires->getArea( 5 ) ) + "\n" );
+    str.assign( "Resistencia = "     + std::to_string( wires->getResistance( 5 ) ) + "\n" );
+    str.assign( "Peso = "            + std::to_string( wires->getWeight( 5 ) ) + "\n" );
+    str.assign( "Comprimento = "     + std::to_string( wires->getLength( 5 ) ) + "\n" );
+    str.assign( "Frequencia = "      + std::to_string( wires->getFrequency( 5 ) ) + "\n" );
+    //str = "Corrente Maxima = " + std::to_string( wires->getCurrentMax( 5 ) ) + "\n" );
+
+    str = "Indice do diametro maior que 3.5 = ";
+    str = str + std::to_string( wires->findIndexByDiameter( 3.5 ) ) + "\n";
+
+    str = "Indice de espiras por cm maior que 10 = ";
+    str = str + std::to_string( wires->findIndexByTurnsPerCm( 10 ) ) + "\n";
+
+    str = "Indice da area maior que 12.5 = ";
+    str = str + std::to_string( wires->findIndexByArea( 12.5 ) ) + "\n";
+
+    str = "Indice da resistencia maior que 25 = ";
+    str = str + std::to_string( wires->findIndexByResistance( 25 ) ) + "\n";
+
+    str = "Indice do peso maior que 45 = ";
+    str = str + std::to_string( wires->findIndexByWeight( 45 ) ) + "\n";
+
+    str = "Indice da frequencia maior que 2 kHz = ";
+    str = str + std::to_string( wires->findIndexByFrequency( 2.0 ) ) + "\n";
+
+    //str = "Indice da corrente maxima maior que 100 = ";
+    //str = str + std::to_string( wires->findIndexByCurrentMax(100.0) ) + "\n";
+
+    int b = 9;
+}
+
+void sample_lamina( DataBase* database ){
+    Laminas* laminas    = new Laminas();
+    laminas->setDatabase( database );
+
+    std::string str = "";
+
+    str.assign( laminas->getLamina( 2 )->toString() );
+
+    str = std::to_string( laminas->getThickness( 2 ) );
+    str = std::to_string( laminas->getWindowArea( 2 ) );
+    str = std::to_string( laminas->getWeight( 2 ) );
+
+    str = std::to_string( laminas->findIndexByThickness( 2.7 ) );
+    str = std::to_string( laminas->findIndexByWindowArea( 714 ) );
+    str = std::to_string( laminas->findIndexByWeight( 0.6 ) );
+
+    str = std::to_string( laminas->getThickness( 6 ) );
+    str = std::to_string( laminas->getWindowArea( 6 ) );
+    str = std::to_string( laminas->getWeight( 6 ) );
+
+    str = std::to_string( laminas->findIndexByThickness( 2.7, 'g', "especial" ) );
+    str = std::to_string( laminas->findIndexByWindowArea( 0.5, 'g', "especial" ) );
+    str = std::to_string( laminas->findIndexByWeight( 0.6, 'l', "especial" ) );
+}
+
+void sample_bobbin( DataBase* database ){
+    Bobbins* bobbins    = new Bobbins();
+    bobbins->setDatabase( database );
+
+    std::string str = "";
+
+    str.assign( bobbins->getBobbin( 10 )->toString() );
+
+    str = std::to_string( bobbins->getWidth( 5 ) );
+    str = std::to_string( bobbins->getLength( 5 ) );
+    str = std::to_string( bobbins->getHeight( 5 ) );
+
+    str = std::to_string( bobbins->findIndexByWidth( 2.7 ) );
+    str = std::to_string( bobbins->findIndexByLength( 54 ) );
+    str = std::to_string( bobbins->findIndexByHeight( 0.6 ) );
+
+    str = std::to_string( bobbins->findIndexByWidth( 2.7 ) );
+    str = std::to_string( bobbins->findIndexByWidthAndArea( 2.7, 100.0 ) );
+    str = std::to_string( bobbins->findIndexByLength( 714 ) );
+    str = std::to_string( bobbins->findIndexByHeight( 0.6 ) );
+}
+
+void sample_transformer( DataBase *database ){
+    Laminas* laminas;
+    Bobbins* bobbins;
+    Wires* wires;
+
+    Lamina* lamina = new Lamina();
+    Bobbin* bobbin = new Bobbin();
+    Wire* wireIN   = new Wire();
+    Wire* wireOUT  = new Wire();
+
+    lamina->setType( "simples" );
+    bobbin->setType( "STSR" );
+    wireIN->setType( "redondo" );
+    wireOUT->setType( "redondo" );
+
+    // #####################################
+    // ## Current Density value by Power   #
+    // ## +------------+-----------------+ #
+    // ## |   Power    | Current Density | #
+    // ## |    (VA)    |    (A/mm^2)     | #
+    // ## +------------+-----------------+ #
+    // ## |   0 ~ 500  |        3        | #
+    // ## +------------+-----------------+ #
+    // ## | 500 ~ 1000 |       2.5       | #
+    // ## +------------+-----------------+ #
+    // ## |1000 ~ 3000 |        2        | #
+    // ## +------------+-----------------+ #
+    // #####################################
+
+    Transformer* transformer1 = new Transformer();
+    transformer1->setPowerOUT( 300.0 );
+    transformer1->setVoltageOUT( 220.0 );
+    transformer1->setVoltageIN( 120.0 );
+    transformer1->setFrequency( 50 );
+    transformer1->setFlux( 11300.0 );
+    transformer1->setCurrentDensity(3.0);
+    transformer1->setStyle( 1 );
+    transformer1->setLamina( lamina );
+    transformer1->setBobbin( bobbin );
+    transformer1->setWireIN( wireIN );
+    transformer1->setWireOUT( wireOUT );
+    std::string report;
+    if( transformer1->calculate() ){
+        report = transformer1->toString();
+    }
+    else {
+        report = "sem resultado";
+    }
+
+    // ###################################################
+    // ###################################################
+    Transformer* transformer2 = new Transformer();
+    transformer2->setPowerOUT( 1000.0 );
+    transformer2->setVoltageOUT( 24.0 );
+    transformer2->setVoltageIN( 220.0 );
+    transformer2->setFrequency( 50 );
+    transformer2->setFlux( 11300.0 );
+    transformer2->setCurrentDensity(2.5);
+    transformer2->setStyle( 1 );
+    transformer2->setLamina( lamina );
+    transformer2->setBobbin( bobbin );
+    transformer2->setWireIN( wireIN );
+    transformer2->setWireOUT( wireOUT );
+    if( transformer2->calculate() ){
+        report = transformer2->toString();
+    }
+    else{
+        report = "sem resultado";
+    }
+}
+
+void resto(){
+    //Wires* wires = new Wires();
+    //wires->setDatabase( this->database );
+    //std::string valueS;
+    //double valueD;
+    //unsigned int valueI;
+    //
+    //valueS = wires->getType( 5 );
+    //valueS = wires->getAWG( 5 );
+    //valueD = wires->getDiameter( 5 );
+    //valueD = wires->getTurnsPerCm( 5 );
+    //valueD = wires->getArea( 5 );
+    //valueD = wires->getResistance( 5 );
+    //valueD = wires->getWeight( 5 );
+    //valueD = wires->getLength( 5 );
+    //valueD = wires->getFrequency( 5 );
+    ////std::vector< std::vector<double> > currentMax = wires->getCurrentMax( 5 );
+    //valueI = wires->findIndexByDiameter( 2.3 );
+    //valueI = wires->findIndexByTurnsPerCm( 12.0 );
+    //valueI = wires->findIndexByArea( 11.0 );
+    //valueI = wires->findIndexByResistance( 100.0 );
+    //valueI = wires->findIndexByWeight( 15.0 );
+    //valueI = wires->findIndexByLength( 65.0 );
+    //valueI = wires->findIndexByFrequency( 20.0 );
+    ////id = wires->findIndexByCurrentMax( 5.0, 6.0 );
+    //Wire* w = wires->getWire( 7 );
+    /*
+    Bobbins* bobbins = new Bobbins();
+    bobbins->setDatabase( this->database );
+
+    valueS = bobbins->getType( 5 );
+    valueD = bobbins->getWidth( 5 );
+    valueD = bobbins->getLength( 5 );
+    valueD = bobbins->getHeight( 5 );
+    */
+    int a = 8;
+}
+
+#endif // EXAMPLE_CLASSES_H

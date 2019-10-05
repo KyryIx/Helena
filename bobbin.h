@@ -1,3 +1,6 @@
+#ifndef BOBBIN_H
+#define BOBBIN_H
+
 #include <string>
 
 class Bobbin{
@@ -78,3 +81,5 @@ class Bobbin{
 			return txt;
 		}
 };
+
+#endif // BOBBIN_H

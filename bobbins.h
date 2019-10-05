@@ -1,3 +1,6 @@
+#ifndef BOBBINS_H
+#define BOBBINS_H
+
 #include "bobbin.h"
 #include "database.h"
 
@@ -54,7 +57,9 @@ class Bobbins{
         }
 
 	public:
-		Bobbins(){}
+        Bobbins( DataBase *database ){
+            this->database = database;
+        }
 
         void setDatabase( DataBase *database ){
             this->database = database;
@@ -177,3 +182,5 @@ class Bobbins{
             return bobbin;
         }
 };
+
+#endif // BOBBINS_H

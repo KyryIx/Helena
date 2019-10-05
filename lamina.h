@@ -1,3 +1,6 @@
+#ifndef LAMINA_H
+#define LAMINA_H
+
 #include <string>
 
 class Lamina{
@@ -68,3 +71,5 @@ class Lamina{
 			return txt;
 		}
 };
+
+#endif // LAMINA_H
