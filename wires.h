@@ -1,3 +1,6 @@
+#ifndef WIRES_H
+#define WIRES_H
+
 #include "wire.h"
 #include "database.h"
 
@@ -56,8 +59,30 @@ class Wires{
             return sql;
         }
 
+        std::vector< std::vector<double> > string2Vector( std::string text, char separator ){
+            std::vector< std::vector<double> > values;
+            std::size_t found1, found2;
+            found1 = 0;
+            found2 = text.find( separator );
+            std::vector<double> value;
+            while( found2 != std::string::npos ){
+                value.push_back( atof( text.substr( found1, (found2-found1) ).c_str() ) );
+                if( value.size() == 2 ){
+                    values.push_back( value );
+                    value.clear();
+                }
+                found1 = found2 + 1;
+                found2 = text.find( separator, found1 );
+            }
+            value.push_back( atof( text.substr( found1 ).c_str() ) );
+            values.push_back( value );
+            return values;
+        }
+
 	public:
-		Wires(){}
+        Wires( DataBase *database ){
+            this->database = database;
+        }
 
         void setDatabase( DataBase *database ){
             this->database = database;
@@ -162,64 +187,14 @@ class Wires{
             return frequency;
         }
 
-        std::string removeSpace( std::string str ){
-            std::size_t found = str.find( " " );
-            while( found != std::string::npos ){
-                str.erase( found, 1 );
-                found = str.find( " " );
-            }
-            return str;
-        }
-
         std::vector< std::vector<double> > getCurrentMax( unsigned int index ){
             std::vector< std::vector<double> >currentMax;
             // SELECT currentMaxPerDensity_wire FROM wires WHERE id=10 //
-            if( this->database->executeSQL( this->queryByIndex( index, "currentMaxPerDensity_wire" ).c_str() ) > -1 ){
+             if( this->database->executeSQL( this->queryByIndex( index, "currentMaxPerDensity_wire" ).c_str() ) > -1 ){
                 if( this->database->nextRegister() ){
-                    std::string result = this->database->returnValue( "currentMaxPerDensity_wire" ).c_str();
-                    result = removeSpace( result );
-                    int a = 5;
-                    int b = 2 * a;
+                    currentMax = string2Vector( this->database->returnValue( "currentMaxPerDensity_wire" ), ',' );
                 }
             }
-
-
-            /*
-            std::string sql = "SELECT currentMaxPerDensity_wire FROM wires WHERE (id=";
-            sql = sql + std::to_string( index );
-			sql = sql + ") AND (type_wire='";
-			sql = sql + type;
-            sql = sql + "') LIMIT 1";
-			// SELECT currentMaxPerDensity_wire FROM wires WHERE (id=10) AND (type_wire='redondo') ORDER BY id ASC //
-            if( this->database->executeSQL( sql ) > -1 ){
-                if( this->database->nextRegister() ){
-                    std::string textCurrentMax, textPoint;
-                    size_t pos1, pos2;
-
-                    textCurrentMax = this->database->returnValue( "currentMaxPerDensity_wire" ).c_str();
-
-                    pos1 = 0;
-                    pos2 = textCurrentMax.find( ";", pos1 );
-                    textPoint = textCurrentMax.substr( pos1, pos2 );
-
-                    pos1 = pos2;
-                    pos2 = textCurrentMax.find( ";", pos1 );
-                    textPoint = textCurrentMax.substr( pos1, pos2 );
-
-                    pos1 = pos2;
-                    pos2 = textCurrentMax.find( ";", pos1 );
-                    textPoint = textCurrentMax.substr( pos1, pos2 );
-
-                    pos1 = pos2;
-                    pos2 = textCurrentMax.find( ";", pos1 );
-                    textPoint = textCurrentMax.substr( pos1, pos2 );
-
-                    pos1 = pos2;
-                    pos2 = textCurrentMax.find( ";", pos1 );
-                    textPoint = textCurrentMax.substr( pos1, pos2 );
-                }
-            }
-            */
 			return currentMax;
 		}
 
@@ -244,6 +219,7 @@ class Wires{
             }
 			return index;
 		}
+
         unsigned int findIndexByArea( double area, char comparation='l', std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (area_wire<=60) ORDER BY area_wire DESC LIMIT 1 //
@@ -253,7 +229,8 @@ class Wires{
                 }
             }
 			return index;
-		}	
+        }
+
         unsigned int findIndexByResistance( double resistance, char comparation='l', std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (resistance_wire<=60) ORDER BY resistance_wire DESC LIMIT 1 //
@@ -264,6 +241,7 @@ class Wires{
             }
 			return index;
 		}
+
         unsigned int findIndexByWeight( double weight, char comparation='l', std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (weight_wire<=60) ORDER BY weight_wire DESC LIMIT 1 //
@@ -274,6 +252,7 @@ class Wires{
             }
 			return index;
 		}
+
         unsigned int findIndexByLength( double length, char comparation='l', std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (length_wire<=60) ORDER BY length_wire DESC LIMIT 1 //
@@ -296,29 +275,33 @@ class Wires{
             return index;
         }
 
-        unsigned int findIndexByCurrentMax( double currentMax, double density=3.0, char comparation='l', std::string type="redondo" ){
+// To Do - this->database->executeSQL( sql ) null
+        unsigned int findIndexByCurrentMax( double currentMax, double density=3.0, std::string type="redondo" ){
             unsigned int index = 0;
-            /*
-			//std::string sql = "SELECT id FROM wires WHERE (type_wire='";
-			//sql = sql + type;
-			//sql = sql + "') AND (resistance_wire<=";
-			//sql = sql + to_string(diameter);
-			//sql = sql + ") ORDER BY resistance_wire DESC LIMIT 1";
-			//// SELECT id FROM wires WHERE (type_wire='redondo') AND (currentMax_wire<=60) ORDER BY resistance_wire DESC LIMIT 1 //
-			//for wire in wires:
-			//	densities = wire.find('correnteMaxima').findall('densidade')
-			//	density_last = -1e10
-			//	currentMax_tmp = -1e10
-			//	for densityObject in densities:
-			//		density_tmp = float(densityObject.get('valor'))
-			//		if (density >= density_tmp) and (density_tmp > density_last):
-			//			density_last = density_tmp
-			//			currentMax_tmp = float(densityObject.text)
-			//	
-			//	if (currentMax <= currentMax_tmp) and (currentMax_tmp < currentMax_last):
-			//		currentMax_last = currentMax_tmp
-			//		index = int(wire.attrib['numero'])
-            */
+            std::string sql = "";
+            sql = sql + "SELECT id, currentMaxPerDensity_wire ";
+            sql = sql + "FROM wires ";
+            sql = sql + "type_wire='" + type + "'";
+            // SELECT id, currentMaxPerDensity_wire FROM wires WHERE type_wire='redondo' //
+            if( this->database->executeSQL( sql ) > -1 ){
+                unsigned int indexTemp = 0;
+                double currentMaxTemp  = 1E10;
+                double densityTemp     = 1E10;
+                std::vector< std::vector<double> > currentTemp;
+                while( this->database->nextRegister() ){
+                    currentTemp = string2Vector( this->database->returnValue( "currentMaxPerDensity_wire" ), ',' );
+                    std::vector< std::vector<double> >::iterator it;
+                    for( it=currentTemp.begin(); it != currentTemp.end(); it++ ){
+                        if( ( (*it).at(1) >= currentMax ) && ( (*it).at(1) <= currentMaxTemp ) ){
+                            if( ( (*it).at(0) >= density ) && ( (*it).at(0) <= densityTemp ) ){
+                                indexTemp      = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
+                                currentMaxTemp = (*it).at(1);
+                                densityTemp    = (*it).at(0);
+                            }
+                        }
+                    }
+                }
+            }
 			return index;
 		}
 
@@ -340,10 +323,12 @@ class Wires{
                     wire->setResistance( atof( this->database->returnValue( "resistance_wire" ).c_str() ) );
                     wire->setWeight( atof( this->database->returnValue( "weight_wire" ).c_str() ) );
                     wire->setLength( atof( this->database->returnValue( "length_wire" ).c_str() ) );
-                    //wire.setCurrentMax( --- );
+                    wire->setCurrentMax( string2Vector( this->database->returnValue( "currentMaxPerDensity_wire" ), ',' ) );
                     wire->setFrequency( atof( this->database->returnValue( "frequency_wire" ).c_str() ) );
                 }
             }
             return wire;
 		}
 };
+
+#endif // WIRES_H

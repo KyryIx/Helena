@@ -28,6 +28,7 @@ public slots:
 private:
     Ui::WindowWire *ui;
     DataBase* database;
+    std::vector< std::vector<double> > string2Vector( std::string text, char separator );
 };
 
 #endif // WINDOWWIRE_H

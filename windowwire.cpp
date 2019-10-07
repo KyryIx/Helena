@@ -39,6 +39,26 @@ void WindowWire::clearFields(){
     }
 }
 
+std::vector< std::vector<double> > WindowWire::string2Vector( std::string text, char separator ){
+    std::vector< std::vector<double> > values;
+    std::size_t found1, found2;
+    found1 = 0;
+    found2 = text.find( separator );
+    std::vector<double> value;
+    while( found2 != std::string::npos ){
+        value.push_back( atof( text.substr( found1, (found2-found1) ).c_str() ) );
+        if( value.size() == 2 ){
+            values.push_back( value );
+            value.clear();
+        }
+        found1 = found2 + 1;
+        found2 = text.find( separator, found1 );
+    }
+    value.push_back( atof( text.substr( found1 ).c_str() ) );
+    values.push_back( value );
+    return values;
+}
+
 void WindowWire::updateFields(){
     this->clearFields();
     ui->lineEdit_id->setText( this->database->returnValue( "id" ).c_str() );
@@ -52,13 +72,12 @@ void WindowWire::updateFields(){
     ui->lineEdit_length->setText( this->database->returnValue( "length_wire" ).c_str() );
     ui->lineEdit_frequency->setText( this->database->returnValue( "frequency_wire" ).c_str() );
     ui->lineEdit_material->setText( this->database->returnValue( "material_wire" ).c_str() );
-    QStringList list = QString( this->database->returnValue( "currentMaxPerDensity_wire" ).c_str() ).split(';');
-    for( int i=0; i<list.size(); i++ ){
-        QStringList point = list.at(i).trimmed().split( "," );
-        ui->tableWidget_currentMax->insertRow( i );
-        for( int j=0; j<point.size(); j++ ){
-            QTableWidgetItem* item = new QTableWidgetItem( point[j] );
-            ui->tableWidget_currentMax->setItem( i, j, item );
+    std::vector< std::vector<double> > currentMax = this->string2Vector( this->database->returnValue( "currentMaxPerDensity_wire" ), ',' );
+    for( unsigned int i=0; i<currentMax.size(); i++ ){
+        ui->tableWidget_currentMax->insertRow( static_cast<int>(i) );
+        for( unsigned int j=0; j<currentMax.at(i).size(); j++ ){
+            QTableWidgetItem* item = new QTableWidgetItem( std::to_string( currentMax.at(i).at(j) ).c_str() );
+            ui->tableWidget_currentMax->setItem( static_cast<int>(i), static_cast<int>(j), item );
         }
     }
 }

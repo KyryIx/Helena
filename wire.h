@@ -1,3 +1,6 @@
+#ifndef WIRE_H
+#define WIRE_H
+
 #include <string>
 #include <vector>
 
@@ -140,3 +143,5 @@ class Wire{
 			return txt;
 		}
 };
+
+#endif // WIRE_H

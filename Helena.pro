@@ -52,7 +52,8 @@ HEADERS += \
         wires.h \
         bobbins.h \
         laminas.h \
-        samples.h
+        samples.h \
+    transformer.h
 
 FORMS += \
         mainwindow.ui \
