@@ -15,6 +15,7 @@
 #include <QMessageBox>
 
 void samples( DataBase* database ){
+    /*
     ///////////////////////////////////////////////////
     // Exemplo baseado na                            //
     // Tabela de fios de cobre esmaltados padrão AWG //
@@ -197,15 +198,15 @@ void samples( DataBase* database ){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    /*
+    */
     Wire* wireIN   = new Wire();
     Wire* wireOUT  = new Wire();
-    Lamina* lamina   = new Lamina();
+    Lamina* lamina = new Lamina();
+    Bobbin* bobbin = new Bobbin();
 
-    Wires* wires     = new Wires( database );
-    Bobbin* bobbin   = new Bobbin();
-    Laminas* laminas = new Laminas( database );
-    Bobbins* bobbins = new Bobbins( database );
+    //Wires* wires     = new Wires( database );
+    //Laminas* laminas = new Laminas( database );
+    //Bobbins* bobbins = new Bobbins( database );
 
     lamina->setType( "simples" );
     bobbin->setType( "STSR" );
@@ -245,7 +246,7 @@ void samples( DataBase* database ){
     else {
         report = "invalido";
     }
-
+    /*
     // ###################################################
     // ###################################################
     Transformer* transformer2 = new Transformer( database );
@@ -267,8 +268,6 @@ void samples( DataBase* database ){
         report = "sem resultado";
     }
     */
-
-    //printf( "id: %d\ndiameter: %f\nturns per cm: %f\narea: %f\nresistance: %f\nweight: %f\nlength: %f\nfrequency: %f\nwidth: %f\nheight: %f\nvolume: %f\nwindow area: %f\n", id, diameter, turnsPerCm, area, resistance, weight, length, frequency, width, height, volume, windowArea );
 }
 
 #endif // SAMPLES_H

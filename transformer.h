@@ -373,15 +373,15 @@ class Transformer{
 			
                 unsigned int N1 = 0;
                 unsigned int N2 = 0;
-                /*
+
                 while( i < limit ){
                     i = i + 1;
-                    index = this->laminas->findIndexByThickness( width_lamina_min_Temp );
+                    index = this->laminas->findIndexByWidth( width_lamina_min_Temp );
                     if( index == 0 )
                         state = false;
 
                     this->lamina = this->laminas->getLamina( index );
-                    width_lamina_min = this->lamina->getThickness();
+                    width_lamina_min = this->lamina->getWidth();
 
                     index = this->bobbins->findIndexByWidthAndArea( width_lamina_min, section_magnetic );
                     if( index == 0 )
@@ -418,12 +418,12 @@ class Transformer{
 
                     return state;
                 }
-                */
             }
             catch( ... ){
                 // Divisao por zero
                 return false;
             }
+
         }
 };
 
