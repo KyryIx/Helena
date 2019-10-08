@@ -8,7 +8,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Helena
+TARGET   = Helena
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -52,8 +52,8 @@ HEADERS += \
         wires.h \
         bobbins.h \
         laminas.h \
-        samples.h \
-    transformer.h
+        transformer.h \
+        samples.h
 
 FORMS += \
         mainwindow.ui \

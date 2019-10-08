@@ -38,20 +38,24 @@ class Bobbins{
             return sql;
         }
 
-        std::string queryByField( std::string field, double value, char comparation, std::string order="ASC" ){
+        std::string queryByField( std::string field, double value, char comparation, std::string order="ASC", std::string type="padrao" ){
             // SELECT
             //         id
             // FROM
             //          bobbins
             // WHERE
-            //          [field][comparation][value])
+            //          (type_bobbin='[type]')
+            //          AND
+            //          ([field][comparation][value])
             // ORDER BY
             //          [field] [order]
             // LIMIT 1
             std::string sql = "";
             sql = sql + "SELECT id ";
             sql = sql + "FROM bobbins ";
-            sql = sql + "WHERE " + field + this->comparation( comparation ) + std::to_string( value ) + " ";
+            sql = sql + "WHERE (type_bobbin='" + type + "') ";
+            sql = sql + "AND ";
+            sql = sql + "(" + field + this->comparation( comparation ) + std::to_string( value ) + ") ";
             sql = sql + "ORDER BY " + field + " " + order + " LIMIT 1";
             return sql;
         }
@@ -109,10 +113,10 @@ class Bobbins{
             return height;
         }
 
-        unsigned int findIndexByWidth( double width, char comparation='g' ){
+        unsigned int findIndexByWidth( double width, std::string type="padrao" ){
             unsigned int index = 0;
-            // SELECT id FROM bobbins WHERE width_bobbin>=6 ORDER BY width_bobbin ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByField( "width_bobbin", width, comparation, "ASC" ) ) > -1 ){
+            // SELECT id FROM bobbins WHERE (type_bobbin='STSR') AND width_bobbin>=6 ORDER BY width_bobbin ASC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByField( "width_bobbin", width, 'g', "ASC", type ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -120,20 +124,21 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByWidthAndArea( double width, double area, char comparationWidth='g', char comparationArea='g' ){
+        unsigned int findIndexByWidthAndArea( double width, double area, std::string type="padrao" ){
             unsigned int index = 0;
             std::string sql = "";
             sql = sql + "SELECT id ";
             sql = sql + "FROM bobbins ";
-            sql = sql + "WHERE ";
-            sql = sql + "(width_bobbin" + comparation( comparationWidth ) + std::to_string(width) + ") ";
+            sql = sql + "WHERE (type_bobbin='" + type + "') ";
             sql = sql + "AND ";
-            sql = sql + "((width_bobbin*length_bobbin)" + comparation( comparationArea ) + std::to_string(area) + ") ";
+            sql = sql + "(width_bobbin" + comparation( 'g' ) + std::to_string(width) + ") ";
+            sql = sql + "AND ";
+            sql = sql + "((width_bobbin*length_bobbin)" + comparation( 'g' ) + std::to_string(area) + ") ";
             sql = sql + "ORDER BY ";
             sql = sql + "width_bobbin ASC, ";
             sql = sql + "(width_bobbin*length_bobbin) ASC ";
             sql = sql + "LIMIT 1";
-            // SELECT id FROM bobbins WHERE (width_bobbin>=6) AND ((width_bobbin*length_bobbin)>=10) ORDER BY width_bobbin ASC, (width_bobbin*length_bobbin) ASC LIMIT 1 //
+            // SELECT id FROM bobbins WHERE (type_bobbin='padrao') AND (width_bobbin>=6) AND ((width_bobbin*length_bobbin)>=10) ORDER BY width_bobbin ASC, (width_bobbin*length_bobbin) ASC LIMIT 1 //
             if( this->database->executeSQL( sql ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
@@ -142,10 +147,10 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByLength( double length, char comparation='g' ){
+        unsigned int findIndexByLength( double length, std::string type="padrao" ){
             unsigned int index = 0;
-            // SELECT id FROM bobbins WHERE length_bobbin>=6 ORDER BY length_bobbin ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByField( "length_bobbin", length, comparation, "ASC" ) ) > -1 ){
+            // SELECT id FROM bobbins WHERE (type_bobbin='padrao') AND (length_bobbin>=6) ORDER BY length_bobbin ASC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByField( "length_bobbin", length, 'g', "ASC", type ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -153,10 +158,10 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByHeight( double height, char comparation='g' ){
+        unsigned int findIndexByHeight( double height, std::string type="padrao" ){
             unsigned int index = 0;
-            // SELECT id FROM bobbins WHERE height_bobbin>=6 ORDER BY height_bobbin ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByField( "height_bobbin", height, comparation, "ASC" ) ) > -1 ){
+            // SELECT id FROM bobbins WHERE (type_bobbin='STSR') AND (height_bobbin>=6) ORDER BY height_bobbin ASC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByField( "height_bobbin", height, 'g', "ASC", type ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -174,6 +179,7 @@ class Bobbins{
             if( this->database->executeSQL( sql ) > -1 ){
                 if( this->database->nextRegister() ){
                     bobbin->setId( index );
+                    bobbin->setType( this->database->returnValue( "type_bobbin" ) );
                     bobbin->setWidth( atof( this->database->returnValue( "width_bobbin" ).c_str() ) );
                     bobbin->setLength( atof( this->database->returnValue( "length_bobbin" ).c_str() ) );
                     bobbin->setHeight( atof( this->database->returnValue( "height_bobbin" ).c_str() ) );
