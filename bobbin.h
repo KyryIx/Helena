@@ -80,6 +80,20 @@ class Bobbin{
             txt = txt + "Bobbin Volume: " + std::to_string( this->getVolume() ) + " mm*mm*mm";
 			return txt;
 		}
+
+        std::string toHTML(){
+            std::string txt = "";
+            txt = txt + "<table align=\"center\">\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin ID:</td><td><b>" + std::to_string( this->getId() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Type:</td><td><b>" + this->getType() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Width:</td><td><b>" + std::to_string( this->getWidth() ) + " mm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Length:</td><td><b>" + std::to_string( this->getLength() ) + " mm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Height:</td><td><b>" + std::to_string( this->getHeight() ) + " mm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Area:</td><td><b>" + std::to_string( this->getArea() )   + " mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Bobbin Volume:</td><td><b>" + std::to_string( this->getVolume() ) + " mm<sup>3</sup></b></td></tr>\n";
+            txt = txt + "</table>";
+            return txt;
+        }
 };
 
 #endif // BOBBIN_H

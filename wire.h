@@ -132,16 +132,43 @@ class Wire{
             txt = txt + "Wire Resistance: "  + std::to_string( this->getResistance() ) + " ohm/km\n";
             txt = txt + "Wire Weight: "      + std::to_string( this->getWeight() )     + " kg/km\n";
             txt = txt + "Wire Length: "      + std::to_string( this->getLength() )     + " m/kg\n";
+            txt = txt + "Wire Frequency: "   + std::to_string( this->getFrequency() )  + " kHz\n";
             txt = txt + "Wire Current Max:\n";
             for( unsigned int i=0; i<this->getCurrentMax().size(); i++ ){
                 txt = txt + "                 ";
                 txt = txt + std::to_string( this->getCurrentMax().at(i).at(0) ) + " A/(mm*mm)";
-                txt = txt + "=> ";
+                txt = txt + " => ";
                 txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A\n";
             }
-            txt = txt + "Wire Frequency: "   + std::to_string( this->getFrequency() )  + " kHz";
 			return txt;
 		}
+
+        std::string toHTML(){
+            std::string txt = "";
+            txt = txt + "<table align=\"center\">\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire ID:</td><td><b>" + std::to_string( this->getId() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire AWG:</td><td><b>" + this->getAWG() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Diameter:</td><td><b>" + std::to_string( this->getDiameter() ) + " mm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Turn per cm:</td><td><b>" + std::to_string( this->getTurnsPerCm() ) + " esp/cm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Area:</td><td><b>" + std::to_string( this->getArea() ) + " mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Resistance:</td><td><b>" + std::to_string( this->getResistance() ) + " ohm/km</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Weight:</td><td><b>" + std::to_string( this->getWeight() ) + " kg/km</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Length:</td><td><b>" + std::to_string( this->getLength() ) + " m/kg</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " kHz</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" valign=\"top\" rowspan=\"" + std::to_string( this->getCurrentMax().size() ) + "\">Wire Current Max:</td>";
+            if( this->getCurrentMax().size() > 0 ){
+                txt = txt + "<td><b>" + std::to_string( this->getCurrentMax().at(0).at(0) ) + " A/mm<sup>2</sup>";
+                txt = txt + "=> ";
+                txt = txt + std::to_string( this->getCurrentMax().at(0).at(1) ) + " A</b></td></tr>\n";
+                for( unsigned int i=1; i<this->getCurrentMax().size(); i++ ){
+                    txt = txt + "\t<tr><td><b>" + std::to_string( this->getCurrentMax().at(i).at(0) ) + " A/mm<sup>2</sup>";
+                    txt = txt + " => ";
+                    txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A</b></td></tr>\n";
+                }
+            }
+            txt = txt + "</table>";
+            return txt;
+        }
 };
 
 #endif // WIRE_H

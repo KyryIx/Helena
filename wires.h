@@ -198,10 +198,10 @@ class Wires{
 			return currentMax;
 		}
 
-        unsigned int findIndexByDiameter( double diameter, char comparation='g', std::string type="redondo" ){
+        unsigned int findIndexByDiameter( double diameter, std::string type="redondo" ){
 			unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (diameter_wire>=6) ORDER BY diameter_wire ASC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "diameter_wire", diameter, comparation, "ASC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "diameter_wire", diameter, 'g', "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -209,10 +209,10 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByTurnsPerCm( double turnPerCm, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByTurnsPerCm( double turnPerCm, std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (turnsPerCm_wire<=60) ORDER BY turnsPerCm_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "turnsPerCm_wire", turnPerCm, comparation, "DESC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "turnsPerCm_wire", turnPerCm, 'l', "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -220,10 +220,10 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByArea( double area, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByArea( double area, std::string type="redondo" ){
 			unsigned int index = 0;
-			// SELECT id FROM wires WHERE (type_wire='redondo') AND (area_wire<=60) ORDER BY area_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "area_wire", area, comparation, "DESC" ) ) > -1 ){
+            // SELECT id FROM wires WHERE (type_wire='redondo') AND (area_wire>=0.92) ORDER BY area_wire ASC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "area_wire", area, 'g', "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -231,10 +231,10 @@ class Wires{
 			return index;
         }
 
-        unsigned int findIndexByResistance( double resistance, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByResistance( double resistance, std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (resistance_wire<=60) ORDER BY resistance_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "resistance_wire", resistance, comparation, "DESC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "resistance_wire", resistance, 'l', "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -242,10 +242,10 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByWeight( double weight, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByWeight( double weight, std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (weight_wire<=60) ORDER BY weight_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_wire", weight, comparation, "DESC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_wire", weight, 'l', "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -253,10 +253,10 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByLength( double length, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByLength( double length, std::string type="redondo" ){
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (length_wire<=60) ORDER BY length_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "length_wire", length, comparation, "DESC" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "length_wire", length, 'l', "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -264,10 +264,10 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByFrequency( double frequency, char comparation='l', std::string type="redondo" ){
+        unsigned int findIndexByFrequency( double frequency, std::string type="redondo" ){
             unsigned int index = 0;
-            // SELECT id FROM wires WHERE (type_wire='redondo') AND (frequency_wire<=60) ORDER BY frequency_wire DESC LIMIT 1 //
-            if( this->database->executeSQL( this->queryByTypeAndField( type, "frequency_wire", frequency, comparation, "DESC" ) ) > -1 ){
+            // SELECT id FROM wires WHERE (type_wire='redondo') AND (frequency_wire>=60) ORDER BY frequency_wire ASC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "frequency_wire", frequency, 'g', "ASC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -300,6 +300,9 @@ class Wires{
                             }
                         }
                     }
+                }
+                if( indexTemp > 0 ){
+                    index = indexTemp;
                 }
             }
 			return index;

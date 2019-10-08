@@ -33,10 +33,10 @@ class Transformer{
 		
         double frequency;      // in hertz
 		double flux;           // in Gauss
-		unsigned char style;   // 1 - 1 primary and 1 secondary
-		                       // 2 - 2 primaries and 1 secondary or
-		                       //     1 primary and 2 secondaries
-		                       // 3 - 2 primaries and 2 secondaries
+        unsigned char style;   // 0 - 1 primary and 1 secondary
+                               // 1 - 2 primaries and 1 secondary
+                               // 2 - 1 primary and 2 secondaries
+                               // 3 - 2 primaries and 2 secondaries
 		
         double compensation;
         double percentageLayer;
@@ -282,13 +282,16 @@ class Transformer{
 
 		std::string toString(){
 			std::string txt = "";
-			txt = txt + "   Transformer with: ";
-            if( this->getStyle() == 1 ){
+            txt = txt + "    Transformer with: ";
+            if( this->getStyle() == 0 ){
 				txt = txt + "1 primary and 1 secondary\n";
 			}
-            else if( this->getStyle() == 2 ){
-				txt = txt + "2 primaries and 1 secondary or 1 primary and 2 secondaries\n";
+            else if( this->getStyle() == 1 ){
+                txt = txt + "1 primary and 2 secondaries\n";
 			}
+            else if( this->getStyle() == 2 ){
+                txt = txt + "2 primaries and 1 secondary\n";
+            }
             else if( this->getStyle() == 3 ){
 				txt = txt + "2 primaries and 2 secondaries\n";
 			}
@@ -303,9 +306,9 @@ class Transformer{
             txt = txt + "       Weight Copper: " + std::to_string( this->getWeightCopper()*1000.0 ) + " g\n";
             txt = txt + "Turns Average Length: " + std::to_string( this->getAverageLengthTurn()/10 ) + " cm\n";
             txt = txt + "           Coil Area: " + std::to_string( this->getCoilArea() ) + " mm^2\n";
-            txt = txt + "           Iron Loss: " + std::to_string( this->getLossIron() ) + " watts\n";
-            txt = txt + "         Copper Loss: " + std::to_string( this->getLossCopper() ) + " Watts\n";
-            txt = txt + "          Total Loss: " + std::to_string( this->getLossIron() + this->getLossCopper() ) + " Watts\n";
+            txt = txt + "           Iron Loss: " + std::to_string( this->getLossIron() ) + " W\n";
+            txt = txt + "         Copper Loss: " + std::to_string( this->getLossCopper() ) + " W\n";
+            txt = txt + "          Total Loss: " + std::to_string( this->getLossIron() + this->getLossCopper() ) + " W\n";
             txt = txt + "          Efficiency: " + std::to_string( this->getEfficiency()*100 ) + " %\n";
 			txt = txt + "\n";
             txt = txt + "INPUT:\n";
@@ -326,101 +329,183 @@ class Transformer{
 			return txt;
 		}
 
+        std::string toHTML(){
+            std::string txt = "";
+            txt = txt + "<table align=\"center\">\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Transformer with:</td><td><b>";
+            if( this->getStyle() == 0 ){
+                txt = txt + "1 primary and 1 secondary";
+            }
+            else if( this->getStyle() == 1 ){
+                txt = txt + "1 primary and 2 secondaries";
+            }
+            else if( this->getStyle() == 2 ){
+                txt = txt + "2 primaries and 1 secondary";
+            }
+            else if( this->getStyle() == 3 ){
+                txt = txt + "2 primaries and 2 secondaries";
+            }
+            else{
+                txt = txt + "indefined type";
+            }
+            txt = txt + "</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Magnetic Induction:</td><td><b>" + std::to_string( this->getFlux() ) + " G</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Mean Cur. Density:</td><td><b>" + std::to_string( this->getAverageDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Weigth Iron:</td><td><b>" + std::to_string( this->getWeigthIron()*1000.0 ) + " g</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Weight Copper:</td><td><b>" + std::to_string( this->getWeightCopper()*1000.0 ) + " g</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Turns Average Length:</td><td><b>" + std::to_string( this->getAverageLengthTurn()/10 ) + " cm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Coil Area:</td><td><b>" + std::to_string( this->getCoilArea() ) + " mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Iron Loss:</td><td><b>" + std::to_string( this->getLossIron() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Copper Loss:</td><td><b>" + std::to_string( this->getLossCopper() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Total Loss:</td><td><b>" + std::to_string( this->getLossIron() + this->getLossCopper() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Efficiency:</td><td><b>" + std::to_string( this->getEfficiency()*100 ) + " %</b></td></tr>\n";
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">INPUT</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Voltage:</td><td><b>" + std::to_string( this->getVoltageIN() ) + " V</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getPowerIN() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current:</td><td><b>" + std::to_string( this->getCurrentIN() ) + " A</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">AWG wire:</td><td><b>" + this->getWireIN()->getAWG() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire turns:</td><td><b>" + std::to_string( this->getTurnsIN() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensityIN() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">OUTPUT</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Voltage:</td><td><b>" + std::to_string( this->getVoltageOUT() ) + " V</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getPowerOUT() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current:</td><td><b>" + std::to_string( this->getCurrentOUT() ) + " A</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">AWG wire:</td><td><b>" + this->getWireOUT()->getAWG() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire turns:</td><td><b>" + std::to_string( this->getTurnsOUT() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensityOUT() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">LAMINA</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+            txt = txt + this->getLamina()->toHTML();
+            txt = txt + "\n\t</td></tr>\n";
+
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">BOBBIN</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+            txt = txt + this->getBobbin()->toHTML();
+            txt = txt + "\n\t</td></tr>\n";
+
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">WIRE IN</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+            txt = txt + this->getWireIN()->toHTML();
+            txt = txt + "\n\t</td></tr>\n";
+
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">WIRE OUT</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+            txt = txt + this->getWireOUT()->toHTML();
+            txt = txt + "\n\t</td></tr>\n";
+
+            txt = txt + "</table>";
+            return txt;
+        }
+
         bool calculate(){
             try{
-                double currentOUT  = this->getPowerOUT() / this->getVoltageOUT();
-                double powerIN     = this->getPowerOUT() * (1.0 + this->getCompensation());
-                double currentIN   = powerIN / this->getVoltageIN();
+                this->setPowerIN( (1.0 + this->getCompensation()) * this->getPowerOUT() );
+                this->setCurrentIN( this->getPowerIN() / this->getVoltageIN() );
+                this->setCurrentOUT( this->getPowerOUT() / this->getVoltageOUT() );
 
-                this->wires        = new Wires( this->database );
-                this->wireIN       = new Wire();
-                this->wireOUT      = new Wire();
-			
+                double sectionWireIN  = this->getCurrentIN() / this->getCurrentDensity();
+                double sectionWireOUT = this->getCurrentOUT() / this->getCurrentDensity();
+
                 unsigned int index = 0;
+                std::string typeWireIN  = this->getWireIN()->getType();
+                std::string typeWireOUT = this->getWireOUT()->getType();
+                std::string typeLamina  = this->getLamina()->getType();
+                std::string typeBobbin  = this->getBobbin()->getType();
 
-                double section_wire_1 = currentIN / this->getCurrentDensity();
-                index = this->wires->findIndexByArea( section_wire_1 );
-                this->wireIN = this->wires->getWire( index );
+                index = this->wires->findIndexByArea( sectionWireIN, typeWireIN );
+                this->setWireIN( this->wires->getWire( index ) );
+                index = this->wires->findIndexByArea( sectionWireOUT, typeWireOUT );
+                this->setWireOUT( this->wires->getWire( index ) );
 
-                double section_wire_2 = currentOUT / this->getCurrentDensity();
-                index = this->wires->findIndexByArea( section_wire_2 );
-                this->wireOUT = this->wires->getWire( index );
-			
-                double section_magnetic = this->getPowerOUT() / this->getFrequency();
-                double vStyle = 0.0;
+                double sectionMagnetic = this->getPowerOUT() / this->getFrequency();
 
-                if( this->getStyle() == 0 ) // 1 primary and 1 secondary
-                    vStyle = 1.00;
-                if( (this->getStyle() == 1) || (this->getStyle() == 2) ) // 2 primaries and 1 secondary or 1 primary and 2 secondaries
-                    vStyle = 1.25;
-                if( this->getStyle() == 3 ) // 2 primaries and 2 secondaries
-                    vStyle = 1.50;
-			
-                section_magnetic = sqrt( vStyle * section_magnetic ) * 100; // convert to mm^2 #
+                switch( this->getStyle() ){
+                    case 0: // 1 primary and 1 secondary
+                        sectionMagnetic *= 1.00;
+                        break;
+                    case 1: // 1 primary and 2 secondaries
+                    case 2: // 2 primaries and 1 secondary
+                        sectionMagnetic *= 1.25;
+                        break;
+                    case 3: // 2 primaries and 2 secondaries
+                        sectionMagnetic *= 1.50;
+                }
 
-                if( this->getLamina()->getType() == "padrao" ) // standard laminas
-                    section_magnetic = 7.5 * section_magnetic;
-                if( this->getLamina()->getType() == "especial" ) // long laminas
-                    section_magnetic = 6.0 * section_magnetic;
+                sectionMagnetic = sqrt( sectionMagnetic ) * 100; // convert to mm^2 #
 
-                double section_geometric = this->getPercentageLayer() * section_magnetic; // percentageLayer = 1.1;
-                double width_lamina_min  = sqrt( section_geometric );
-			
-                double width_lamina_min_Temp = width_lamina_min;
-                bool state = false;
-                int i      = 0;
-                int limit  = 1000;
-			
-                unsigned int N1 = 0;
-                unsigned int N2 = 0;
+                if( this->getLamina()->getType() == "padrao" ){ // standard laminas
+                        sectionMagnetic *= 7.5;
+                }
+                else if( this->getLamina()->getType() == "especial" ){ // long laminas
+                        sectionMagnetic *= 6.0;
+                }
+
+                double sectionGeometric = this->getPercentageLayer() * sectionMagnetic; // percentageLayer = 1.1;
+                double widthLaminaMin  = sqrt( sectionGeometric );
+
+                double widthLaminaMinTemp = widthLaminaMin;
+                double length = 0.0;
+                bool state    = false;
+                int i         = 0;
+                int limit     = 1000;
+
+                double section_cu = 0.0;
+                double windowAreaPerSectionCu = 3.0;
 
                 while( i < limit ){
                     i = i + 1;
-                    index = this->laminas->findIndexByWidth( width_lamina_min_Temp );
-                    if( index == 0 )
-                        state = false;
-
-                    this->lamina = this->laminas->getLamina( index );
-                    width_lamina_min = this->lamina->getWidth();
-
-                    index = this->bobbins->findIndexByWidthAndArea( width_lamina_min, section_magnetic );
-                    if( index == 0 )
-                        state = false;
-
-                    this->bobbin = this->bobbins->getBobbin( index );
-                    double length = this->bobbin->getLength();
-
-                    section_geometric = width_lamina_min * length;
-                    section_magnetic = (section_geometric / this->getPercentageLayer()) / 100.0; // convert to cm^2
-
-                    N1 = static_cast<unsigned int>( ceil( (this->getVoltageIN() * 1e8) / (section_magnetic * 4.44 * this->getFlux() * this->getFrequency()) ) );
-                    N2 = static_cast<unsigned int>( ceil( ((this->getVoltageOUT() * 1e8) / (section_magnetic * 4.44 * this->getFlux() * this->getFrequency())) * (1.0 + this->getCompensation()) ) );
-                    double section_cu = N1 * this->wireIN->getArea() + N2 * this->wireOUT->getArea();
-
-                    if( (this->lamina->getWindowArea() / section_cu) < 3 ){
-                        // Recalculando o transformador para uma chapa com janela maior
-                        width_lamina_min_Temp = width_lamina_min_Temp + 0.1;
-                    }
-                    else{
-                        // Calculo correto //
-                        this->setCurrentOUT( currentOUT );
-                        this->setPowerIN( powerIN );
-                        this->setCurrentIN( currentIN );
-                        this->setWireIN( wireIN );
-                        this->setWireOUT( wireOUT );
-                        this->setTurnsIN( N1 );
-                        this->setTurnsOUT( N2 );
-                        this->setLamina( lamina );
-                        this->setBobbin( bobbin );
-                        state = false;
-                        break;
+                    index = this->laminas->findIndexByWidth( widthLaminaMinTemp, typeLamina );
+                    if( index == 0 ){
+                        widthLaminaMinTemp = widthLaminaMinTemp + 0.1;
+                        continue;
                     }
 
-                    return state;
+                    this->setLamina( this->laminas->getLamina( index ) );
+                    widthLaminaMin = this->getLamina()->getWidth();
+
+                    index = this->bobbins->findIndexByWidthAndArea( widthLaminaMin, sectionGeometric, typeBobbin );
+                    if( index == 0 ){
+                        widthLaminaMinTemp = widthLaminaMinTemp + 0.1;
+                        continue;
+                    }
+
+                    this->setBobbin( this->bobbins->getBobbin( index ) );
+                    length = this->getBobbin()->getLength();
+
+                    sectionGeometric = widthLaminaMin * length;
+                    sectionMagnetic = (sectionGeometric / this->getPercentageLayer()) / 100.0; // convert to cm^2
+
+                    this->setTurnsIN( static_cast<unsigned int>( ceil( (this->getVoltageIN() * 1e8) / (sectionMagnetic * 4.44 * this->getFlux() * this->getFrequency()) ) ) );
+                    this->setTurnsOUT( static_cast<unsigned int>( ceil( ((this->getVoltageOUT() * 1e8) / (sectionMagnetic * 4.44 * this->getFlux() * this->getFrequency())) * (1.0 + this->getCompensation()) ) ) );
+                    section_cu = this->getTurnsIN() * this->getWireIN()->getArea() + this->getTurnsOUT() * this->getWireOUT()->getArea();
+
+////////////////////////////////////////////////////////////////////////////////////
+                    if( (this->getLamina()->getWindowArea() / section_cu) < windowAreaPerSectionCu ){
+                        //                                                             ^
+                        //                                                             |
+                        // ------------------------------------------------------------+
+////////////////////////////////////////////////////////////////////////////////////
+                        widthLaminaMinTemp = widthLaminaMinTemp + 0.1;
+                        continue;
+                    }
+
+                    state = true;
+                    break;
                 }
+
+                return state;
             }
             catch( ... ){
-                // Divisao por zero
                 return false;
             }
 
