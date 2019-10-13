@@ -1,0 +1,29 @@
+    Transformer with: 1 primary and 1 secondary
+           Frequency: 50.000000 Hz
+  Magnetic Induction: 11300.000000 G
+     Current Density: 3.000000 A/mm^2
+   Mean Cur. Density: 2.640914 A/mm^2
+         Weigth Iron: 4317.300000 g
+       Weight Copper: 1240.769028 g
+Turns Average Length: 26.053982 cm
+           Coil Area: 535.090000 mm^2
+           Iron Loss: 2.459685 W
+         Copper Loss: 21.028378 W
+          Total Loss: 23.488063 W
+          Efficiency: 92.739125 %
+
+INPUT:
+             Voltage: 120.000000 V
+               Power: 330.000000 W
+             Current: 2.750000 A
+            AWG wire: 17
+          Wire turns: 257
+     Current Density: 2.649326 A/mm^2
+
+OUTPUT:
+             Voltage: 220.000000
+               Power: 300.000000
+             Current: 1.363636
+            AWG wire: 20
+          Wire turns: 518
+     Current Density: 2.632503 A/mm^2

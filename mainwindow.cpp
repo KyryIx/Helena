@@ -102,5 +102,3 @@ void MainWindow::on_action_aboutHelena_triggered(){
     dialog->raise();
     dialog->exec();
 }
-
-

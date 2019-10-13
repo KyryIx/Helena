@@ -1,9 +1,9 @@
 ﻿-- codigo -- codigo do carretel
--- largura  -- largura do nucleo central do carretel
--- comprimento -- comprimento do nucleo central do carretel
--- altura -- altura do nucleo central do carretel
+-- largura  -- largura do nucleo central do carretel em mm
+-- comprimento -- comprimento do nucleo central do carretel em mm
+-- altura -- altura do nucleo central do carretel em mm
 -- tipo -- tipo do carretel
--- temperatura -- temperatura de trabalho do carretel
+-- temperatura -- temperatura de trabalho do carretel em °C
 -- fornecedor -- nome do fornecedor do carretel
 
 CREATE TABLE bobbins (
