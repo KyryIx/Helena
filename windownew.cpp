@@ -41,7 +41,10 @@ void WindowNew::on_pushButton_calculate_clicked(){
     double magneticInduction = ui->lineEdit_magneticInduction->text().toDouble();
     double currentDensity    = ui->lineEdit_currentDensity->text().toDouble();
     double compensationPower = 0.0;
-    if( ui->checkBox_compensation_power->isChecked() ){ compensationPower = ui->lineEdit_compensation_power->text().toDouble(); }
+    if( ui->checkBox_compensation_power->isChecked() ){
+        compensationPower = ui->lineEdit_compensation_power->text().toDouble();
+        transformer->setApplyCompensationTransformer( true );
+    }
     double accommodation     = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
 
     double voltageIN         = ui->lineEdit_voltageInput->text().toDouble();
@@ -61,6 +64,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
     if( text == "especial" ){ typeLamina = "especial"; }
     if( ui->checkBox_laminaCompensation->isChecked() ){
         compensationLamina = ui->lineEdit_laminaCompensation->text().toDouble();
+        transformer->setApplyCompensationLamina( true );
     }
     std::string typeBobbin   = ui->lineEdit_bobbinType->text().toStdString();
 

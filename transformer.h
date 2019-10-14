@@ -16,6 +16,8 @@ class Transformer{
 
 	private:
         bool automatic;
+        bool applyCompensationTransformer;
+        bool applyCompensationLamina;
         DataBase* database;
         Wires* wires;
         Laminas* laminas;
@@ -110,6 +112,22 @@ class Transformer{
 
         bool getAutomatic(){
             return this->automatic;
+        }
+
+        void setApplyCompensationTransformer( bool state ){
+            this->applyCompensationTransformer = state;
+        }
+
+        bool getApplyCompensationTransformer(){
+            return this->applyCompensationTransformer;
+        }
+
+        void setApplyCompensationLamina( bool state ){
+            this->applyCompensationLamina = state;
+        }
+
+        bool getApplyCompensationLamina(){
+            return this->applyCompensationLamina;
         }
 
         void setDatabase( DataBase* database ){
@@ -462,7 +480,12 @@ class Transformer{
             try{
                 this->setCurrentOUT( this->getPowerOUT() / this->getVoltageOUT() );
 
-                this->setPowerIN( (1.0 + this->getCompensationLossTransformer()/100.0) * this->getPowerOUT() );
+                if( this->getApplyCompensationTransformer() ){
+                    this->setPowerIN( (1.0 + this->getCompensationLossTransformer()/100.0) * this->getPowerOUT() );
+                }
+                else{
+                    this->setPowerIN( this->getPowerOUT() );
+                }
                 this->setCurrentIN( this->getPowerIN() / this->getVoltageIN() );
 
                 unsigned int index = 0;
@@ -502,7 +525,14 @@ class Transformer{
                 else if( this->getLamina()->getType() == "especial" ) // long laminas
                         SM *= 6.0;
 
-                double SG             = (1 + this->getLamina()->getThicknessPercent()/100.0) * SM;
+                double SG = 0.0;
+                if( this->getApplyCompensationLamina() ){
+                    SG = (1 + this->getLamina()->getThicknessPercent()/100.0) * SM;
+                }
+                else{
+                    SG = SM;
+                }
+
                 double widthLaminaMin = sqrt( SG );
 
                 int i                 = 0;
@@ -537,9 +567,20 @@ class Transformer{
                     this->setBobbin( this->bobbins->getBobbin( index ) );
 
                     SG = widthLaminaMin * this->getBobbin()->getLength();
-                    SM = (SG / (1 + this->getLamina()->getThicknessPercent()/100.0)) / 100.0; // convert to cm^2
+                    if( this->getApplyCompensationLamina() ){
+                        SM = (SG / (1 + this->getLamina()->getThicknessPercent()/100.0)) / 100.0; // convert to cm^2
+                    }
+                    else{
+                        SM = SG / 100.0; // convert to cm^2
+                    }
 
-                    unsigned int N2 = static_cast<unsigned int>( ceil( ((this->getVoltageOUT() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency())) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                    unsigned int N2 = 0;
+                    if( this->applyCompensationTransformer ){
+                        N2 = static_cast<unsigned int>( ceil( ( (this->getVoltageOUT() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                    }
+                    else{
+                        N2 = static_cast<unsigned int>( ceil( (this->getVoltageOUT() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+                    }
                     this->setWireTurnsOUT( N2 );
 
                     unsigned int N1 = static_cast<unsigned int>( ceil( (this->getVoltageIN() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
