@@ -105,12 +105,23 @@ class Laminas{
         double getWeight( unsigned int index ){
             double weight = 0.0;
             // SELECT weight_lamina FROM laminas WHERE id=10 //
-            if( this->database->executeSQL( this->queryByIndex( index,"weight_lamina" ) ) > -1 ){
+            if( this->database->executeSQL( this->queryByIndex( index, "weight_lamina" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     weight = atof( this->database->returnValue( "weight_lamina" ).c_str() );
                 }
             }
             return weight;
+        }
+
+        double getThicknessPercent( unsigned int index ){
+            double thicknessPercent = 0.0;
+            // SELECT thicknessPercent_lamina FROM laminas WHERE id=10 //
+            if( this->database->executeSQL( this->queryByIndex( index, "thicknessPercent_lamina" ) ) > -1 ){
+                if( this->database->nextRegister() ){
+                    thicknessPercent = atof( this->database->returnValue( "thicknessPercent_lamina" ).c_str() );
+                }
+            }
+            return thicknessPercent;
         }
 
         unsigned int findIndexByWidth( double width, std::string type="padrao" ){
@@ -137,8 +148,19 @@ class Laminas{
 
         unsigned int findIndexByWeight( double weight, std::string type="padrao" ){
             unsigned int index = 0;
-            // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (weght_lamina<=6) ORDER BY weght_lamina DESC LIMIT 1 //
+            // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (weght_lamina<=6) ORDER BY weight_lamina DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_lamina", weight, 'l', "DESC" ) ) > -1 ){
+                if( this->database->nextRegister() ){
+                    index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
+                }
+            }
+            return index;
+        }
+
+        unsigned int findIndexByThicknessPercent( double thicknessPercent, std::string type="padrao" ){
+            unsigned int index = 0;
+            // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (thicknessPercent_lamina<=6) ORDER BY thicknessPercent_lamina DESC LIMIT 1 //
+            if( this->database->executeSQL( this->queryByTypeAndField( type, "thicknessPercent_lamina", thicknessPercent, 'l', "DESC" ) ) > -1 ){
                 if( this->database->nextRegister() ){
                     index = static_cast<unsigned int>( atoi( this->database->returnValue( "id" ).c_str() ) );
                 }
@@ -160,6 +182,7 @@ class Laminas{
                     lamina->setWidth( atof( this->database->returnValue( "width_lamina" ).c_str() ) );
                     lamina->setWindowArea( atof( this->database->returnValue( "area_lamina" ).c_str() ) );
                     lamina->setWeight( atof( this->database->returnValue( "weight_lamina" ).c_str() ) );
+                    lamina->setThicknessPercent( atof( this->database->returnValue( "thicknessPercent_lamina" ).c_str() ) );
                 }
             }
             return lamina;

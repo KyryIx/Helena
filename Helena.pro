@@ -33,8 +33,7 @@ SOURCES += \
         windowlamina.cpp \
         windowbobbin.cpp \
         windowabout.cpp \
-        windowhelp.cpp \
-        database.cpp
+        windowhelp.cpp
 
 HEADERS += \
         mainwindow.h \

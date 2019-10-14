@@ -12,11 +12,13 @@
 
 #include "transformer.h"
 
+#include "database.h"
+
 #include <stdio.h>
 #include <QMessageBox>
 
+/*
 void samples( DataBase* database ){
-    /*
     ///////////////////////////////////////////////////
     // Exemplo baseado na                            //
     // Tabela de fios de cobre esmaltados padrão AWG //
@@ -115,13 +117,15 @@ void samples( DataBase* database ){
     lamina->setWidth( 25.0 );
     lamina->setWindowArea( 468 );
     lamina->setWeight( 0.273 );
+    lamina->setThicknessPercent( 11.0 );
 
-    id                = lamina->getId();
-    type              = lamina->getType();
-    width             = lamina->getWidth();
-    double windowArea = lamina->getWindowArea();
-    weight            = lamina->getWeight();
-    report            = lamina->toString();
+    id                      = lamina->getId();
+    type                    = lamina->getType();
+    width                   = lamina->getWidth();
+    double windowArea       = lamina->getWindowArea();
+    weight                  = lamina->getWeight();
+    double thicknessPercent = lamina->getThicknessPercent();
+    report                  = lamina->toString();
 
     msgBox.setText( report.c_str() );
     msgBox.setIcon( QMessageBox::Warning );
@@ -162,17 +166,17 @@ void samples( DataBase* database ){
     //////////////////////////////////////////
     //            search bobbins            //
     //////////////////////////////////////////
-    Bobbins* bobbins = new Bobbins( database);
+    Bobbins* bobbins = new Bobbins( database );
 
     type   = bobbins->getType( 10 );
     width  = bobbins->getWidth( 10 );
     length = bobbins->getLength( 10 );
     height = bobbins->getHeight( 10 );
 
-    id = bobbins->findIndexByWidth( 29.7 );
-    id = bobbins->findIndexByWidthAndArea( 29.7, 100.0 );
-    id = bobbins->findIndexByLength( 71.0 );
-    id = bobbins->findIndexByHeight( 50.4 );
+    id = bobbins->findIndexByWidth( 29.7, "STSR" );
+    id = bobbins->findIndexByWidthAndArea( 29.7, 100.0, "STSR" );
+    id = bobbins->findIndexByLength( 71.0, "STSR" );
+    id = bobbins->findIndexByHeight( 50.4, "STSR" );
     bobbin = bobbins->getBobbin( 10 );
 
     msgBox.setText( bobbin->toString().c_str() );
@@ -185,30 +189,25 @@ void samples( DataBase* database ){
     //////////////////////////////////////////
     Laminas* laminas = new Laminas( database );
 
-    type       = laminas->getType(2 );
-    width      = laminas->getWidth( 2 );
-    windowArea = laminas->getWindowArea( 2 );
-    weight     = laminas->getWeight( 2 );
+    type             = laminas->getType(2 );
+    width            = laminas->getWidth( 2 );
+    windowArea       = laminas->getWindowArea( 2 );
+    weight           = laminas->getWeight( 2 );
+    thicknessPercent = laminas->getThicknessPercent( 2 );
 
     id = laminas->findIndexByWidth( 22.7 );
     id = laminas->findIndexByWindowArea( 714 );
     id = laminas->findIndexByWeight( 1.5 );
+    id = laminas->findIndexByThicknessPercent( 12.0 );
     lamina = laminas->getLamina( 2 );
 
     msgBox.setText( lamina->toString().c_str() );
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    */
-
-    //Wires* wires     = new Wires( database );
-    //Laminas* laminas = new Laminas( database );
-    //Bobbins* bobbins = new Bobbins( database );
 
     Wire* wireIN   = new Wire();
     Wire* wireOUT  = new Wire();
-    Lamina* lamina = new Lamina();
-    Bobbin* bobbin = new Bobbin();
 
     wireIN->setType( "redondo" );
     wireOUT->setType( "redondo" );
@@ -229,22 +228,25 @@ void samples( DataBase* database ){
     // ## +------------+-----------------+ #
     // #####################################
 
+    // Example 1: Martignoni
     Transformer* transformer1 = new Transformer( database );
     transformer1->setPowerOUT( 300.0 );
     transformer1->setVoltageOUT( 220.0 );
     transformer1->setVoltageIN( 120.0 );
     transformer1->setFrequency( 50 );
-    transformer1->setFlux( 11300.0 );
+    transformer1->setMagneticInduction( 11300.0 );
     transformer1->setCurrentDensity( 3.0 );
-    transformer1->setStyle( 0 );
+    transformer1->setPatternTransformer( 0 );
+    transformer1->setCompensationLossTransformer( 10 ); // 10% //
     transformer1->setLamina( lamina );
     transformer1->setBobbin( bobbin );
     transformer1->setWireIN( wireIN );
     transformer1->setWireOUT( wireOUT );
-    std::string reportTEXT, reportHTML;
+    std::string reportTEXT, reportHTML, reportSQL;
     if( transformer1->calculate() ){
         reportTEXT = transformer1->toString();
         reportHTML = transformer1->toHTML();
+        reportSQL  = transformer1->toSQL();
     }
     else {
         reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
@@ -260,6 +262,8 @@ void samples( DataBase* database ){
         reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
         reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
         reportHTML += "</table>";
+
+        reportSQL  = transformer1->toSQL();
     }
 
     FILE* fp;
@@ -271,6 +275,12 @@ void samples( DataBase* database ){
     fputs( reportHTML.c_str(), fp );
     fclose( fp );
 
+    fp = fopen( "example_1.sql", "w" );
+    fputs( reportSQL.c_str(), fp );
+    fclose( fp );
+
+    database->executeSQL( reportSQL );
+
     // ###################################################
     // ###################################################
     Transformer* transformer2 = new Transformer( database );
@@ -278,9 +288,9 @@ void samples( DataBase* database ){
     transformer2->setVoltageOUT( 24.0 );
     transformer2->setVoltageIN( 220.0 );
     transformer2->setFrequency( 50 );
-    transformer2->setFlux( 11300.0 );
+    transformer2->setMagneticInduction( 11300.0 );
     transformer2->setCurrentDensity( 2.5 );
-    transformer2->setStyle( 0 );
+    transformer2->setPatternTransformer( 0 );
     transformer2->setLamina( lamina );
     transformer2->setBobbin( bobbin );
     transformer2->setWireIN( wireIN );
@@ -288,6 +298,7 @@ void samples( DataBase* database ){
     if( transformer2->calculate() ){
         reportTEXT = transformer2->toString();
         reportHTML = transformer2->toHTML();
+        reportSQL  = transformer2->toSQL();
     }
     else{
         reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
@@ -303,9 +314,51 @@ void samples( DataBase* database ){
         reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
         reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
         reportHTML += "</table>";
+
+        reportSQL  = transformer2->toSQL();
     }
 
-    fp = fopen( "example_2.txt", "w" );
+    fp = fopen( "example_2_1.txt", "w" );
+    fputs( reportTEXT.c_str(), fp );
+    fclose( fp );
+
+    fp = fopen( "example_2_1.html", "w" );
+    fputs( reportHTML.c_str(), fp );
+    fclose( fp );
+
+    fp = fopen( "example_2_1.sql", "w" );
+    fputs( reportSQL.c_str(), fp );
+    fclose( fp );
+
+    database->executeSQL( reportSQL );
+
+    // ###################################################
+    // ###################################################
+    lamina->setType( "especial" );
+    if( transformer2->calculate() ){
+        reportTEXT = transformer2->toString();
+        reportHTML = transformer2->toHTML();
+        reportSQL  = transformer2->toSQL();
+    }
+    else{
+        reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
+        reportTEXT += "           Tipo de lâmina: " + lamina->getType()  + "\n";
+        reportTEXT += "         Tipo de carretel: " + bobbin->getType()  + "\n";
+        reportTEXT += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
+        reportTEXT += "Tipo de fio do secundário: " + wireOUT->getType();
+
+        reportHTML  = "<table align=\"center\">\n";
+        reportHTML += "\t<tr><td align=\"center\" colspan=\"2\">Não houve sucesso no cálculo do transformador</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de lâmina:</td><td>" + lamina->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de carretel:</td><td>" + bobbin->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "</table>";
+
+        reportSQL  = transformer2->toSQL();
+    }
+
+    fp = fopen( "example_2_1.txt", "w" );
     fputs( reportTEXT.c_str(), fp );
     fclose( fp );
 
@@ -313,7 +366,13 @@ void samples( DataBase* database ){
     fputs( reportHTML.c_str(), fp );
     fclose( fp );
 
+    fp = fopen( "example_2.sql", "w" );
+    fputs( reportSQL.c_str(), fp );
+    fclose( fp );
+
+    database->executeSQL( reportSQL );
+
     // refazer o exemplo dois do martignoni acima, abaixo com os dados lamina especial
 }
-
+*/
 #endif // SAMPLES_H

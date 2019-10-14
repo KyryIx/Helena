@@ -1,0 +1,5 @@
+Não houve sucesso no cálculo do transformador, onde
+           Tipo de lâmina: padrao
+         Tipo de carretel: STSR
+  Tipo de fio do primário: redondo
+Tipo de fio do secundário: redondo

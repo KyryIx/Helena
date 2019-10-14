@@ -18,6 +18,7 @@ class Wire{
 		double length;
         std::vector< std::vector<double> > currentMax;
 		double frequency;
+        std::string material;
 	
 	public:
 		Wire(){	
@@ -32,6 +33,7 @@ class Wire{
             this->length     = 0.0;
 			//this.currentMax;
             this->frequency  = 0.0;
+            this->material   = "cobre";
 		}
 
 		unsigned int getId(){
@@ -122,9 +124,18 @@ class Wire{
             this->frequency = frequency;
 		}
 
+        std::string getMaterial(){
+            return this->material;
+        }
+
+        void setMaterial( std::string material ){
+            this->material = material;
+        }
+
 		std::string toString(){
             std::string txt = "";
             txt = txt + "Wire ID: "          + std::to_string( this->getId() )         + "\n";
+            txt = txt + "Wire Type: "        + this->getType()                         + "\n";
             txt = txt + "Wire AWG: "         + this->getAWG()                          + "\n";
             txt = txt + "Wire Diameter: "    + std::to_string( this->getDiameter() )   + " mm\n";
             txt = txt + "Wire Turn per cm: " + std::to_string( this->getTurnsPerCm() ) + " esp/cm\n";
@@ -140,13 +151,15 @@ class Wire{
                 txt = txt + " => ";
                 txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A\n";
             }
+            txt = txt + "Wire Material: "    + this->getMaterial();
 			return txt;
 		}
 
         std::string toHTML(){
             std::string txt = "";
-            txt = txt + "<table align=\"center\">\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire ID:</td><td><b>" + std::to_string( this->getId() ) + "</b></td></tr>\n";
+            txt = txt + "<table align=\"center\" class=\"wire\" width=\"100%\">\n";
+            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Wire ID:</td><td><b>" + std::to_string( this->getId() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Type:</td><td><b>" + this->getType() + "</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Wire AWG:</td><td><b>" + this->getAWG() + "</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Wire Diameter:</td><td><b>" + std::to_string( this->getDiameter() ) + " mm</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Wire Turn per cm:</td><td><b>" + std::to_string( this->getTurnsPerCm() ) + " esp/cm</b></td></tr>\n";
@@ -166,6 +179,7 @@ class Wire{
                     txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A</b></td></tr>\n";
                 }
             }
+            txt = txt + "\t<tr><td align=\"right\">Wire Material:</td><td><b>" + this->getMaterial() + "</b></td></tr>\n";
             txt = txt + "</table>";
             return txt;
         }

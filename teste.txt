@@ -1,0 +1,69 @@
+padrao = 0
+f = 50 Hz
+BM = 11300 G
+d = 3 A/mm^2
+compensacao potencia = 10%
+valor acomodacao = 3
+
+tensao entrada = 120 V
+tensao saida = 220 V
+potencia saida = 300 VA
+
+fio entrada = redondo
+fio saida = redondo
+
+lamina padrao
+compensacao lamina = 10%
+
+carretel tipo STSR
+
+------------- execucao --------------
+currentOUT = 1.3636363636363635 A
+powerIN = 330 VA
+currentIN = 2.75 A
+
+S2 = 0.45454545454545453 mm^2
+	AWG 20
+	area 0.518 mm^2
+	d2 2.632502632502632 A/mm^2
+	
+S1 = 0.9166666666666666 mm^2
+	AWG 17                                  awg 16 => 1.30900
+	area 1.038                              awg 17 => 1.03800
+	d1 2.649325626204239 A/mm^2             awg 18 => 0.82300
+
+SM = 1837.1173070873836 mm^2
+
+SG = 2020.8290377961218 mm^2
+
+a = 44.95363208680831 mm
+a = 4.495363208680831 cm
+
+lamina nº 7                                  a = 40 -> lâmina 6
+                                             a = 50 -> lâmina 7
+
+carretel modelo DR 03
+	largura     = 50 mm
+	comprimento = 41 mm
+	altura      = 75 mm
+	tipo        = STSR
+
+SG = 2050 mm^2
+SM = 18.636363636363637 cm^2
+
+computador  => (1e8) / (4.4 * 11300 * 50 * 18.636363636363637) = 2.138983360653984
+calculadora => (1e8) / (4.4 * 11300 * 50 * 18.636363636363630) = 2,158428663932658
+
+computador  => ((1e8) / (4.4 * 11300 * 50 * 18.636363636363637)) * 220 = 470.5763393438765 espiras
+calculadora => ((1e8) / (4.4 * 11300 * 50 * 18.636363636363630)) * 220 = 474,8543060651847 espiras
+
+computador  => N2 = 470.5763393438765 * 1,1 = 517.6339732782642 => 518 espiras
+calculadora => N2 = 474,8543060651847 * 1,1 = 522,3397366717032 => 523 espiras
+
+computador  => N1 = ((1e8) / (4.4 * 11300 * 50 * 18.636363636363637)) * 120 = 256.6780032784781 espiras
+calculadora => N1 = ((1e8) / (4.4 * 11300 * 50 * 18.636363636363637)) * 120 = 259,0114396719189 espiras
+
+secao dos fios = 535.09 mm^2
+
+1880/535.09 = 3,513427647685436 > 3.0
+

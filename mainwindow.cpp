@@ -12,7 +12,7 @@
 #include "windowhelp.h"
 #include "windowabout.h"
 
-#include "samples.h"
+//#include "samples.h"
 
 #include <QFileDialog>
 #include <string>
@@ -102,5 +102,3 @@ void MainWindow::on_action_aboutHelena_triggered(){
     dialog->raise();
     dialog->exec();
 }
-
-

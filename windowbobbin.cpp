@@ -30,7 +30,6 @@ void WindowBobbin::clearFields(){
     ui->lineEdit_workTemperature->clear();
     ui->lineEdit_type->clear();
     ui->lineEdit_provider->clear();
-    ui->graphicsView_image->repaint( 0, 0, ui->graphicsView_image->x(), ui->graphicsView_image->y() );
 }
 
 void WindowBobbin::updateFields(){
@@ -43,7 +42,6 @@ void WindowBobbin::updateFields(){
     ui->lineEdit_workTemperature->setText( this->database->returnValue( "temperature_bobbin" ).c_str() );
     ui->lineEdit_type->setText( this->database->returnValue( "type_bobbin" ).c_str() );
     ui->lineEdit_provider->setText( this->database->returnValue( "provider_bobbin" ).c_str() );
-    //ui->graphicsView_image->repaint( 0, 0, ui->graphicsView_image->x(), ui->graphicsView_image->y() );
 }
 
 void WindowBobbin::init(){

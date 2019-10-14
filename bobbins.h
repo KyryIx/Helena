@@ -180,6 +180,8 @@ class Bobbins{
                 if( this->database->nextRegister() ){
                     bobbin->setId( index );
                     bobbin->setType( this->database->returnValue( "type_bobbin" ) );
+                    bobbin->setCode( this->database->returnValue( "code_bobbin" ) );
+                    bobbin->setProvider( this->database->returnValue( "provider_bobbin" ) );
                     bobbin->setWidth( atof( this->database->returnValue( "width_bobbin" ).c_str() ) );
                     bobbin->setLength( atof( this->database->returnValue( "length_bobbin" ).c_str() ) );
                     bobbin->setHeight( atof( this->database->returnValue( "height_bobbin" ).c_str() ) );
