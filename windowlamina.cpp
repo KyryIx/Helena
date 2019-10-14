@@ -28,7 +28,6 @@ void WindowLamina::clearFields(){
     ui->lineEdit_weight->clear();
     ui->lineEdit_type->clear();
     ui->textEdit_observation->clear();
-    ui->graphicsView_image->repaint( 0, 0, ui->graphicsView_image->x(), ui->graphicsView_image->y() );
 }
 
 void WindowLamina::updateFields(){
@@ -38,8 +37,8 @@ void WindowLamina::updateFields(){
     ui->lineEdit_area->setText( this->database->returnValue( "area_lamina" ).c_str() );
     ui->lineEdit_weight->setText( this->database->returnValue( "weight_lamina" ).c_str() );
     ui->lineEdit_type->setText( this->database->returnValue( "type_lamina" ).c_str() );
+    ui->lineEdit_thicknessPercent->setText( this->database->returnValue( "thicknessPercent_lamina" ).c_str() );
     //ui->textEdit_observation->setText( this->database->returnValue( "observation_lamina" ).c_str() );
-    //ui->graphicsView_image->repaint( 0, 0, ui->graphicsView_image->x(), ui->graphicsView_image->y() );
 }
 
 void WindowLamina::init(){
