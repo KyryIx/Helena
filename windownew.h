@@ -2,6 +2,8 @@
 #define WINDOWNEW_H
 
 #include <QDialog>
+#include <QMessageBox>
+
 #include "database.h"
 #include "transformer.h"
 
@@ -17,6 +19,8 @@ public:
     explicit WindowNew(QWidget *parent = nullptr,  DataBase* database=nullptr);
     ~WindowNew();
     void setDatabase( DataBase *database );
+    void setStateSave( bool state );
+    bool getStateSave();
 
 public slots:
     void on_pushButton_calculate_clicked();
@@ -26,6 +30,9 @@ public slots:
 private:
     Ui::WindowNew *ui;
     DataBase* database;
+    Transformer* transformer;
+    bool stateSave;
+
     /*
     double frequency;                // Hz
     double magneticInduction;        // G

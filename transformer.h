@@ -21,9 +21,6 @@ class Transformer{
         Laminas* laminas;
         Bobbins* bobbins;
 
-        Lamina* lamina;
-        Bobbin* bobbin;
-
         unsigned int id;
         double frequency;                // Hz
         double magneticInduction;        // G
@@ -31,7 +28,7 @@ class Transformer{
         double averageCurrentDensity;    // A/mm2
         double weigthIron;               // kg
         double weightCopper;             // kg
-        double turnsAverageLength;       // cm
+        double turnsAverageLength;       // mm
         double coilArea;                 // mm^2
         double ironLoss;                 // W
         double copperLoss;               // W
@@ -49,61 +46,22 @@ class Transformer{
         double powerIN;                  // W
         double currentIN;                // A
         double currentDensityIN;         // A/mm2
-
-        Wire* wireIN;
-        //unsigned int wireIDIN;
-        //std::string wireTypeIN;
-        //std::string wireAWGIN;
         unsigned int wireTurnsIN;        // esp
-        //double wireDiameterIN;           // mm
-        //double wireTurnPerCmIN;          // esp/cm
-        //double wireAreaIN;               // mm2
-        //double wireResistanceIN;         // ohm/km
-        //double wireWeightIN;             // kg/km
-        //double wireLengthIN;             // m/kg
-        //double wireFrequencyIN;          // kHz
+        Wire* wireIN;
 
         double voltageOUT;               // V
         double powerOUT;                 // W
         double currentOUT;               // A
         double currentDensityOUT;        // A/mm2
-
-        Wire* wireOUT;
-        //unsigned int wireIDOUT;
-        //std::string wireTypeOUT;
-        //std::string wireAWGOUT;
         unsigned int wireTurnsOUT;       // esp
-        //double wireDiameterOUT;          // mm
-        //double wireTurnPerCmOUT;         // esp/cm
-        //double wireAreaOUT;              // mm2
-        //double wireResistanceOUT;        // ohm/km
-        //double wireWeightOUT;            // kg/km
-        //double wireLengthOUT;            // m/kg
-        //double wireFrequencyOUT;         // kHz
+        Wire* wireOUT;
 
-        //unsigned int laminaID;
-        //std::string laminaType;
-        //double laminaWidth;              // mm
-        //double laminaWindowArea;         // mm^2
-        //double laminaWeight;             // kg/cm
-        //double laminaCompensation;       // 0 <= C.L.T. <= 100%;
+        Lamina* lamina;
+        Bobbin* bobbin;
 
-        //unsigned int bobbinID;
-        //std::string bobbinType;
-        //std::string bobbinCode;
-        //std::string bobbinProvider;
-        //double bobbinWidth;              // mm
-        //double bobbinLength;             // mm
-        //double bobbinHeight;             // mm
-        //double bobbinArea;               // mm^2
-        //double bobbinVolume;             // mm^3
 
         void setAutomatic( bool state ){
             this->automatic = state;
-        }
-
-        bool getAutomatic(){
-            return this->automatic;
         }
 
 	public:
@@ -113,9 +71,6 @@ class Transformer{
             this->wires                       = new Wires( database );
             this->laminas                     = new Laminas( database );
             this->bobbins                     = new Bobbins( database );
-
-            this->lamina                      = new Lamina();
-            this->bobbin                      = new Bobbin();
 
             this->id                          = 0;
             this->frequency                   = 0.0;
@@ -139,77 +94,27 @@ class Transformer{
             this->powerIN                     = 0.0;
             this->currentIN                   = 0.0;
             this->currentDensityIN            = 0.0;
-
-            //this->wireIN                      = new Wire();
-            //this->wireIDIN                    = 0;
-            //this->wireTypeIN                  = "";
-            //this->wireAWGIN                   = "";
             this->wireTurnsIN                 = 0;
-            //this->wireDiameterIN              = 0.0;
-            //this->wireTurnPerCmIN             = 0.0;
-            //this->wireAreaIN                  = 0.0;
-            //this->wireResistanceIN            = 0.0;
-            //this->wireWeightIN                = 0.0;
-            //this->wireLengthIN                = 0.0;
-            //this->wireFrequencyIN             = 0.0;
+            this->wireIN                      = new Wire();
 
             this->voltageOUT                  = 0.0;
             this->powerOUT                    = 0.0;
             this->currentOUT                  = 0.0;
             this->currentDensityOUT           = 0.0;
-
-            this->wireOUT                     = new Wire();
-            //this->wireIDOUT                   = 0;
-            //this->wireTypeOUT                 = "";
-            //this->wireAWGOUT                  = "";
             this->wireTurnsOUT                = 0;
-            //this->wireDiameterOUT             = 0.0;
-            //this->wireTurnPerCmOUT            = 0.0;
-            //this->wireAreaOUT                 = 0.0;
-            //this->wireResistanceOUT           = 0.0;
-            //this->wireWeightOUT               = 0.0;
-            //this->wireLengthOUT               = 0.0;
-            //this->wireFrequencyOUT            = 0.0;
+            this->wireOUT                     = new Wire();
 
-            //this->laminaID                    = 0;
-            //this->laminaType                  = "";
-            //this->laminaWidth                 = 0.0;
-            //this->laminaWindowArea            = 0.0;
-            //this->laminaWeight                = 0.0;
-            //this->laminaCompensation          = 0.0;
-
-            //this->bobbinID                    = 0;
-            //this->bobbinType                  = "";
-            //this->bobbinCode                  = "";
-            //this->bobbinProvider              = "";
-            //this->bobbinWidth                 = 0.0;
-            //this->bobbinLength                = 0.0;
-            //this->bobbinHeight                = 0.0;
-            //this->bobbinArea                  = 0.0;
-            //this->bobbinVolume                = 0.0;
+            this->lamina                      = new Lamina();
+            this->bobbin                      = new Bobbin();
 		}
+
+        bool getAutomatic(){
+            return this->automatic;
+        }
 
         void setDatabase( DataBase* database ){
             this->setAutomatic( false );
             this->database = database;
-        }
-
-        void setLamina( Lamina* lamina ){
-            this->setAutomatic( false );
-            this->lamina = lamina;
-        }
-
-        Lamina* getLamina(){
-            return this->lamina;
-        }
-
-        void setBobbin( Bobbin* bobbin ){
-            this->setAutomatic( false );
-            this->bobbin = bobbin;
-        }
-
-        Bobbin* getBobbin(){
-            return this->bobbin;
         }
 
         void setID( unsigned int id ){
@@ -459,33 +364,6 @@ class Transformer{
             return this->wireIN;
         }
 
-        /*
-        void setWireIDIN( unsigned int id ){
-            this->setAutomatic( false );
-            this->wireIDIN = id;
-        }
-
-        unsigned int getWireIDIN(){
-            return this->wireIDIN;
-        }
-
-        void setWireTypeIN( std::string type ){
-            this->wireTypeIN = type;
-        }
-
-        std::string setWireTypeIN(){
-            return this->wireTypeIN;
-        }
-
-        void setWireAWGIN( std::string awg ){
-            this->setAutomatic( false );
-            this->wireAWGIN = awg;
-        }
-
-        std::string getWireAWGIN(){
-            return this->wireAWGIN;
-        }
-        */
         void setWireTurnsIN( unsigned int turns ){
             this->setAutomatic( false );
             this->wireTurnsIN = turns;
@@ -494,70 +372,7 @@ class Transformer{
         unsigned int getWireTurnsIN(){
             return this->wireTurnsIN;
         }
-        /*
-        void setWireDiameterIN( double diameter ){
-            this->setAutomatic( false );
-            this->wireDiameterIN = diameter;
-        }
 
-        double getWireDiameterIN(){
-            return this->wireDiameterIN;
-        }
-
-        void setWireTurnPerCmIN( double turnPerCm ){
-            this->setAutomatic( false );
-            this->wireTurnPerCmIN = turnPerCm;
-        }
-
-        double getWireTurnPerCmIN(){
-            return this->wireTurnPerCmIN;
-        }
-
-        void setWireAreaIN( double area ){
-            this->setAutomatic( false );
-            this->wireAreaIN = area;
-        }
-
-        double getWireAreaIN(){
-            return this->wireAreaIN;
-        }
-
-        void setWireResistanceIN( double resistance ){
-            this->setAutomatic( false );
-            this->wireResistanceIN = resistance;
-        }
-
-        double getWireResistanceIN(){
-            return this->wireResistanceIN;
-        }
-
-        void setWireWeightIN( double weight ){
-            this->setAutomatic( false );
-            this->wireWeightIN = weight;
-        }
-
-        double getWireWeightIN(){
-            return this->wireWeightIN;
-        }
-
-        void setWireLengthIN( double length ){
-            this->setAutomatic( false );
-            this->wireLengthIN = length;
-        }
-
-        double getWireLengthIN(){
-            return this->wireLengthIN;
-        }
-
-        void setWireFrequencyIN( double frequency ){
-            this->setAutomatic( false );
-            this->wireFrequencyIN = frequency;
-        }
-
-        double getWireFrequencyIN(){
-            return this->wireFrequencyIN;
-        }
-        */
         void setVoltageOUT( double voltage ){
             this->setAutomatic( false );
             this->voltageOUT = voltage;
@@ -616,33 +431,7 @@ class Transformer{
         Wire* getWireOUT(){
             return this->wireOUT;
         }
-        /*
-        void setWireIDOUT( unsigned int id ){
-            this->setAutomatic( false );
-            this->wireIDOUT = id;
-        }
 
-        unsigned int getWireIDOUT(){
-            return this->wireIDOUT;
-        }
-
-        void setWireTypeOUT( std::string type ){
-            this->wireTypeOUT = type;
-        }
-
-        std::string setWireTypeOUT(){
-            return this->wireTypeOUT;
-        }
-
-        void setWireAWGOUT( std::string awg ){
-            this->setAutomatic( false );
-            this->wireAWGOUT = awg;
-        }
-
-        std::string getWireAWGOUT(){
-            return this->wireAWGOUT;
-        }
-        */
         void setWireTurnsOUT( unsigned int turns ){
             this->setAutomatic( false );
             this->wireTurnsOUT = turns;
@@ -651,205 +440,24 @@ class Transformer{
         unsigned int getWireTurnsOUT(){
             return this->wireTurnsOUT;
         }
-        /*
-        void setWireDiameterOUT( double diameter ){
+
+        void setLamina( Lamina* lamina ){
             this->setAutomatic( false );
-            this->wireDiameterOUT = diameter;
+            this->lamina = lamina;
         }
 
-        double getWireDiameterOUT(){
-            return this->wireDiameterOUT;
+        Lamina* getLamina(){
+            return this->lamina;
         }
 
-        void setWireTurnPerCmOUT( double turnPerCm ){
+        void setBobbin( Bobbin* bobbin ){
             this->setAutomatic( false );
-            this->wireTurnPerCmOUT = turnPerCm;
+            this->bobbin = bobbin;
         }
 
-        double getWireTurnPerCmOUT(){
-            return this->wireTurnPerCmOUT;
+        Bobbin* getBobbin(){
+            return this->bobbin;
         }
-
-        void setWireAreaOUT( double area ){
-            this->setAutomatic( false );
-            this->wireAreaOUT = area;
-        }
-
-        double getWireAreaOUT(){
-            return this->wireAreaOUT;
-        }
-
-        void setWireResistanceOUT( double resistance ){
-            this->setAutomatic( false );
-            this->wireResistanceOUT = resistance;
-        }
-
-        double getWireResistanceOUT(){
-            return this->wireResistanceOUT;
-        }
-
-        void setWireWeightOUT( double weight ){
-            this->setAutomatic( false );
-            this->wireWeightOUT = weight;
-        }
-
-        double getWireWeightOUT(){
-            return this->wireWeightOUT;
-        }
-
-        void setWireLengthOUT( double length ){
-            this->setAutomatic( false );
-            this->wireLengthOUT = length;
-        }
-
-        double getWireLengthOUT(){
-            return this->wireLengthOUT;
-        }
-
-        void setWireFrequencyOUT( double frequency ){
-            this->setAutomatic( false );
-            this->wireFrequencyOUT = frequency;
-        }
-
-        double getWireFrequencyOUT(){
-            return this->wireFrequencyOUT;
-        }
-
-        void setLaminaID( unsigned int id ){
-            this->setAutomatic( false );
-            this->laminaID = id;
-        }
-
-        unsigned int getLaminaID(){
-            return this->laminaID;
-        }
-
-        void setLaminaType( std::string type ){
-            this->setAutomatic( false );
-            this->laminaType = type;
-        }
-
-        std::string getLaminaType(){
-            return this->laminaType;
-        }
-
-        void setLaminaWidth( double width ){
-            this->setAutomatic( false );
-            this->laminaWidth = width;
-        }
-
-        double getLaminaWidth(){
-            return this->laminaWidth;
-        }
-
-        void setLaminaWindowArea( double windowArea ){
-            this->setAutomatic( false );
-            this->laminaWindowArea = windowArea;
-        }
-
-        double getLaminaWindowArea(){
-            return this->laminaWindowArea;
-        }
-
-        void setLaminaWeight( double weight ){
-            this->setAutomatic( false );
-            this->laminaWeight = weight;
-        }
-
-        double getLaminaWeight(){
-            return this->laminaWeight;
-        }
-
-        void setLaminaCompensation( double compensation ){
-            this->setAutomatic( false );
-            this->laminaCompensation = compensation;
-        }
-
-        double getLaminaCompensation(){
-            return this->laminaCompensation;
-        }
-
-        void setBobbinID( unsigned int id ){
-            this->setAutomatic( false );
-            this->bobbinID = id;
-        }
-
-        unsigned int getBobbinID(){
-            return this->bobbinID;
-        }
-
-        void setBobbinType( std::string type ){
-            this->setAutomatic( false );
-            this->bobbinType = type;
-        }
-
-        std::string getBobbinType(){
-            return this->bobbinType;
-        }
-
-        void setBobbinCode( std::string code ){
-            this->setAutomatic( false );
-            this->bobbinCode = code;
-        }
-
-        std::string getBobbinCode(){
-            return this->bobbinCode;
-        }
-
-        void setBobbinProvider( std::string provider ){
-            this->setAutomatic( false );
-            this->bobbinProvider = provider;
-        }
-
-        std::string getBobbinProvider(){
-            return this->bobbinProvider;
-        }
-
-        void setBobbinWidth( double width ){
-            this->setAutomatic( false );
-            this->bobbinWidth = width;
-        }
-
-        double getBobbinWidth(){
-            return this->bobbinWidth;
-        }
-
-        void setBobbinLength( double length ){
-            this->setAutomatic( false );
-            this->bobbinLength = length;
-        }
-
-        double getBobbinLength(){
-            return this->bobbinLength;
-        }
-
-        void setBobbinHeight( double height ){
-            this->setAutomatic( false );
-            this->bobbinHeight = height;
-        }
-
-        double getBobbinHeight(){
-            return this->bobbinHeight;
-        }
-
-        void setBobbinArea( double area ){
-            this->setAutomatic( false );
-            this->bobbinArea = area;
-        }
-
-        double getBobbinArea(){
-            return this->bobbinArea;
-        }
-
-        void setBobbinVolume( double volume ){
-            this->setAutomatic( false );
-            this->bobbinVolume = volume;
-        }
-
-        double getBobbinVolume(){
-            return this->bobbinVolume;
-        }
-        */
         bool calculate(){
             try{
                 this->setCurrentOUT( this->getPowerOUT() / this->getVoltageOUT() );
@@ -945,45 +553,6 @@ class Transformer{
                         continue;
                     }
 
-                    //this->setWireIDIN( this->getWireIN()->getId() );
-                    //this->setWireTypeIN( this->getWireIN()->getType() );
-                    //this->setWireAWGIN( this->getWireIN()->getAWG() );
-                    //this->setWireDiameterIN( this->getWireIN()->getDiameter() );
-                    //this->setWireTurnPerCmIN( this->getWireIN()->getTurnsPerCm() );
-                    //this->setWireAreaIN( this->getWireIN()->getArea() );
-                    //this->setWireResistanceIN( this->getWireIN()->getResistance() );
-                    //this->setWireWeightIN( this->getWireIN()->getWeight() );
-                    //this->setWireLengthIN( this->getWireIN()->getLength() );
-                    //this->setWireFrequencyIN( this->getWireIN()->getFrequency() );
-
-                    //this->setWireIDOUT( this->getWireOUT()->getId() );
-                    //this->setWireTypeOUT( this->getWireOUT()->getType() );
-                    //this->setWireAWGOUT( this->getWireOUT()->getAWG() );
-                    //this->setWireDiameterOUT( this->getWireOUT()->getDiameter() );
-                    //this->setWireTurnPerCmOUT( this->getWireOUT()->getTurnsPerCm() );
-                    //this->setWireAreaOUT( this->getWireOUT()->getArea() );
-                    //this->setWireResistanceOUT( this->getWireOUT()->getResistance() );
-                    //this->setWireWeightOUT( this->getWireOUT()->getWeight() );
-                    //this->setWireLengthOUT( this->getWireOUT()->getLength() );
-                    //this->setWireFrequencyOUT( this->getWireOUT()->getFrequency() );
-
-                    //this->setLaminaID( this->getLamina()->getId() );
-                    //this->setLaminaType( this->getLamina()->getType() );
-                    //this->setLaminaWidth( this->getLamina()->getWidth() );
-                    //this->setLaminaWindowArea( this->getLamina()->getWindowArea() );
-                    //this->setLaminaWeight( this->getLamina()->getWeight() );
-
-                    //this->setBobbinID( this->getBobbin()-> getId() );
-                    //this->setBobbinType( this->getBobbin()->getType() );
-                    //this->setBobbinCode( this->getBobbin()->getCode() );
-                    //this->setBobbinProvider( this->getBobbin()->getProvider() );
-                    //this->setBobbinWidth( this->getBobbin()->getWidth() );
-                    //this->setBobbinLength( this->getBobbin()->getLength() );
-                    //this->setBobbinHeight( this->getBobbin()->getHeight() );
-                    //this->setBobbinArea( this->getBobbin()->getArea() );
-                    //this->setBobbinVolume( this->getBobbin()->getVolume() );
-
-                    //this->setAutomatic( true );
                     break;
                 }
             }
@@ -1145,12 +714,12 @@ class Transformer{
             sql = sql + "\n\tvoltageIN, \n\tpowerIN, \n\tcurrentIN, \n\tcurrentDensityIN, ";
 
             sql = sql + "\n\twireIDIN, \n\twireAWGIN, \n\twireTurnsIN, \n\twireDiameterIN, \n\twireTurnPerCmIN, \n\twireAreaIN, ";
-            sql = sql + "\n\twireResistanceIN, \n\twireWeightIN, \n\twireLengthIN, \n\twireFrequencyIN, ";
+            sql = sql + "\n\twireResistanceIN, \n\twireWeightIN, \n\twireLengthIN, \n\twireFrequencyIN, \n\twireMaterialIN, ";
 
             sql = sql + "\n\tvoltageOUT, \n\tpowerOUT, \n\tcurrentOUT, \n\tcurrentDensityOUT, ";
 
             sql = sql + "\n\twireIDOUT, \n\twireAWGOUT, \n\twireTurnsOUT, \n\twireDiameterOUT, \n\twireTurnPerCmOUT, \n\twireAreaOUT, ";
-            sql = sql + "\n\twireResistanceOUT, \n\twireWeightOUT, \n\twireLengthOUT, \n\twireFrequencyOUT, ";
+            sql = sql + "\n\twireResistanceOUT, \n\twireWeightOUT, \n\twireLengthOUT, \n\twireFrequencyOUT, \n\twireMaterialOUT, ";
 
             sql = sql + "\n\tlaminaID, \n\tlaminaType, \n\tlaminaWidth, \n\tlaminaWindowArea, \n\tlaminaWeight, \n\tlaminaCompensation, ";
 
@@ -1192,11 +761,12 @@ class Transformer{
             sql = sql + "\n\t" + std::to_string( this->getWireIN()->getWeight() ) + ", -- wire weight IN";
             sql = sql + "\n\t" + std::to_string( this->getWireIN()->getLength() ) + ", -- wire length IN";
             sql = sql + "\n\t" + std::to_string( this->getWireIN()->getFrequency() ) + ", -- wire frequency IN";
+            sql = sql + "\n\t'" + this->getWireIN()->getMaterial() + "', -- wire material IN";
 
-            sql = sql + "\n\t" + std::to_string( this->getVoltageIN() ) + ", -- voltage  IN";
-            sql = sql + "\n\t" + std::to_string( this->getPowerIN() ) + ", -- power IN";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentIN() ) + ", -- current IN";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentDensityIN() ) + ", -- current density IN";
+            sql = sql + "\n\t" + std::to_string( this->getVoltageIN() ) + ", -- voltage  OUT";
+            sql = sql + "\n\t" + std::to_string( this->getPowerIN() ) + ", -- power OUT";
+            sql = sql + "\n\t" + std::to_string( this->getCurrentIN() ) + ", -- current OUT";
+            sql = sql + "\n\t" + std::to_string( this->getCurrentDensityIN() ) + ", -- current density OUT";
 
             sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getId() ) + ", -- wire ID OUT";
             sql = sql + "\n\t'" + this->getWireOUT()->getAWG() + "', -- wire AWG OUT";
@@ -1208,6 +778,7 @@ class Transformer{
             sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getWeight() ) + ", -- wire weight OUT";
             sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getLength() ) + ", -- wire length OUT";
             sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getFrequency() ) + ", -- wire frequency OUT";
+            sql = sql + "\n\t'" + this->getWireOUT()->getMaterial() + "', -- wire material OUT";
 
             sql = sql + "\n\t" + std::to_string( this->getLamina()->getId() ) + ", -- lamina ID";
             sql = sql + "\n\t'" + this->getLamina()->getType() + "', -- lamina type";

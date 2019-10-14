@@ -29,6 +29,7 @@
 -- wireWeightIN                -- kg/km
 -- wireLengthIN                -- m/kg
 -- wireFrequencyIN             -- kHz
+-- wireMaterialIN
 -- 
 -- voltageOUT                  -- V
 -- powerOUT                    -- W
@@ -45,6 +46,7 @@
 -- wireWeightOUT               -- kg/km
 -- wireLengthOUT               -- m/kg
 -- wireFrequencyOUT            -- kHz
+-- wireMaterialOUT
 -- 
 -- laminaID                    
 -- laminaType                  
@@ -98,6 +100,7 @@ CREATE TABLE transformer (
 	wireWeightIN                FLOAT,        -- kg/km
 	wireLengthIN                FLOAT,        -- m/kg
 	wireFrequencyIN             FLOAT,        -- kHz
+	wireMaterialIN              VARCHAR(64),
 	
 	voltageOUT                  FLOAT,        -- V
 	powerOUT                    FLOAT,        -- W
@@ -114,6 +117,7 @@ CREATE TABLE transformer (
 	wireWeightOUT               FLOAT,        -- kg/km
 	wireLengthOUT               FLOAT,        -- m/kg
 	wireFrequencyOUT            FLOAT,        -- kHz
+	wireMaterialOUT             VARCHAR(64),
 	
 	laminaID                    INTEGER,
 	laminaType                  VARCHAR(64),

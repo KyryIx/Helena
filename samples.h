@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <QMessageBox>
 
+/*
 void samples( DataBase* database ){
     ///////////////////////////////////////////////////
     // Exemplo baseado na                            //
@@ -373,5 +374,5 @@ void samples( DataBase* database ){
 
     // refazer o exemplo dois do martignoni acima, abaixo com os dados lamina especial
 }
-
+*/
 #endif // SAMPLES_H

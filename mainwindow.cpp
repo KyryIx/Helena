@@ -12,7 +12,7 @@
 #include "windowhelp.h"
 #include "windowabout.h"
 
-#include "samples.h"
+//#include "samples.h"
 
 #include <QFileDialog>
 #include <string>
