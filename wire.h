@@ -134,41 +134,43 @@ class Wire{
 
 		std::string toString(){
             std::string txt = "";
-            txt = txt + "Wire ID: "          + std::to_string( this->getId() )         + "\n";
-            txt = txt + "Wire Type: "        + this->getType()                         + "\n";
-            txt = txt + "Wire AWG: "         + this->getAWG()                          + "\n";
-            txt = txt + "Wire Diameter: "    + std::to_string( this->getDiameter() )   + " mm\n";
+            txt = txt + "Wire ID:          " + std::to_string( this->getId() )         + "\n";
+            txt = txt + "Wire Type:        " + this->getType()                         + "\n";
+            txt = txt + "Wire AWG:         " + this->getAWG()                          + "\n";
+            txt = txt + "Wire Diameter:    " + std::to_string( this->getDiameter() )   + " mm\n";
             txt = txt + "Wire Turn per cm: " + std::to_string( this->getTurnsPerCm() ) + " esp/cm\n";
-            txt = txt + "Wire Area: "        + std::to_string( this->getArea() )       + " mm*mm\n";
-            txt = txt + "Wire Resistance: "  + std::to_string( this->getResistance() ) + " ohm/km\n";
-            txt = txt + "Wire Weight: "      + std::to_string( this->getWeight() )     + " kg/km\n";
-            txt = txt + "Wire Length: "      + std::to_string( this->getLength() )     + " m/kg\n";
-            txt = txt + "Wire Frequency: "   + std::to_string( this->getFrequency() )  + " kHz\n";
+            txt = txt + "Wire Area:        " + std::to_string( this->getArea() )       + " mm*mm\n";
+            txt = txt + "Wire Resistance:  " + std::to_string( this->getResistance() ) + " ohm/km\n";
+            txt = txt + "Wire Weight:      " + std::to_string( this->getWeight() )     + " kg/km\n";
+            txt = txt + "Wire Length:      " + std::to_string( this->getLength() )     + " m/kg\n";
+            txt = txt + "Wire Frequency:   " + std::to_string( this->getFrequency() )  + " kHz\n";
+            txt = txt + "Wire Material:    " + this->getMaterial()                     + "\n";
             txt = txt + "Wire Current Max:\n";
             for( unsigned int i=0; i<this->getCurrentMax().size(); i++ ){
-                txt = txt + "                 ";
+                txt = txt + "                  ";
                 txt = txt + std::to_string( this->getCurrentMax().at(i).at(0) ) + " A/(mm*mm)";
                 txt = txt + " => ";
                 txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A\n";
             }
-            txt = txt + "Wire Material: "    + this->getMaterial();
-			return txt;
+
+            return txt.substr(0, txt.size() - 1);
 		}
 
         std::string toHTML(){
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"wire\" width=\"100%\">\n";
-            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Wire ID:</td><td><b>" + std::to_string( this->getId() ) + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Type:</td><td><b>" + this->getType() + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire AWG:</td><td><b>" + this->getAWG() + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Diameter:</td><td><b>" + std::to_string( this->getDiameter() ) + " mm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Turn per cm:</td><td><b>" + std::to_string( this->getTurnsPerCm() ) + " esp/cm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Area:</td><td><b>" + std::to_string( this->getArea() ) + " mm<sup>2</sup></b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Resistance:</td><td><b>" + std::to_string( this->getResistance() ) + " ohm/km</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Weight:</td><td><b>" + std::to_string( this->getWeight() ) + " kg/km</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Length:</td><td><b>" + std::to_string( this->getLength() ) + " m/kg</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " kHz</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\" valign=\"top\" rowspan=\"" + std::to_string( this->getCurrentMax().size() ) + "\">Wire Current Max:</td>";
+            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Wire ID:</td><td><b>" + std::to_string( this->getId() )                + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Type:</td><td><b>"             + this->getType()                                + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire AWG:</td><td><b>"              + this->getAWG()                                 + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Diameter:</td><td><b>"         + std::to_string( this->getDiameter() )          + " mm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Turn per cm:</td><td><b>"      + std::to_string( this->getTurnsPerCm() )        + " esp/cm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Area:</td><td><b>"             + std::to_string( this->getArea() )              + " mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Resistance:</td><td><b>"       + std::to_string( this->getResistance() )        + " ohm/km</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Weight:</td><td><b>"           + std::to_string( this->getWeight() )            + " kg/km</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Length:</td><td><b>"           + std::to_string( this->getLength() )            + " m/kg</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Frequency:</td><td><b>"        + std::to_string( this->getFrequency() )         + " kHz</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire Material:</td><td><b>"         + this->getMaterial()                            + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" valign=\"top\" rowspan=\""          + std::to_string( this->getCurrentMax().size() ) + "\">Wire Current Max:</td>";
             if( this->getCurrentMax().size() > 0 ){
                 txt = txt + "<td><b>" + std::to_string( this->getCurrentMax().at(0).at(0) ) + " A/mm<sup>2</sup>";
                 txt = txt + "=> ";
@@ -179,8 +181,36 @@ class Wire{
                     txt = txt + std::to_string( this->getCurrentMax().at(i).at(1) ) + " A</b></td></tr>\n";
                 }
             }
-            txt = txt + "\t<tr><td align=\"right\">Wire Material:</td><td><b>" + this->getMaterial() + "</b></td></tr>\n";
             txt = txt + "</table>";
+
+            return txt;
+        }
+
+        std::string toSQL(){
+            std::string txt = "";
+            txt = txt + "INSERT INTO wires (";
+            txt = txt + "type_wire, awg_wire, diameter_wire, turnsPerCm_wire, area_wire, resistance_wire, weight_wire, ";
+            txt = txt + "length_wire, currentMaxPerDensity_wire, frequency_wire, material_wire";
+            txt = ") VALUES( ";
+            txt = txt + "'" + this->getType()                   + "', ";
+            txt = txt + "'" + this->getAWG()                    + "', ";
+            txt = txt + std::to_string( this->getDiameter() )   + ", ";
+            txt = txt + std::to_string( this->getTurnsPerCm() ) + ", ";
+            txt = txt + std::to_string( this->getArea() )       + ", ";
+            txt = txt + std::to_string( this->getResistance() ) + ", ";
+            txt = txt + std::to_string( this->getWeight() )     + ", ";
+            txt = txt + std::to_string( this->getLength() )     + ", ";
+            txt = txt + "'";
+            if( this->getCurrentMax().size() > 0 ){
+                for( std::vector< std::vector<double> >::iterator it; it != this->getCurrentMax().end(); it++ ){
+                    txt = txt + std::to_string( it->at(0) ) + ", " + std::to_string( it->at(1) ) + ", ";
+                }
+                txt = txt.substr(0, txt.size() - 2);
+            }
+            txt = txt + "', ";
+            txt = txt + std::to_string( this->getFrequency() )  + ", ";
+            txt = txt + "'" + this->getMaterial()               + "' )";
+
             return txt;
         }
 };

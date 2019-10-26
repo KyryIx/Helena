@@ -19,86 +19,29 @@ public:
     explicit WindowNew(QWidget *parent = nullptr,  DataBase* database=nullptr);
     ~WindowNew();
     void setDatabase( DataBase *database );
-    void setStateSave( bool state );
-    bool getStateSave();
 
 public slots:
     void on_pushButton_calculate_clicked();
     void on_pushButton_save_clicked();
+    void on_pushButton_clear_clicked();
     void on_pushButton_close_clicked();
+    void on_comboBox_patternWinding_currentIndexChanged(int index);
+    void on_lineEdit_voltageInput_1_textChanged( const QString &text );
+    void on_lineEdit_voltageOutput_1_textChanged( const QString &text );
 
 private:
     Ui::WindowNew *ui;
     DataBase* database;
     Transformer* transformer;
-    bool stateSave;
 
-    /*
-    double frequency;                // Hz
-    double magneticInduction;        // G
-    double currentDensity;           // A/mm2
-    double meanCurrentDensity;       // A/mm2
-    double weigthIron;               // g
-    double weightCopper;             // g
-    unsigned int turnsAverageLength; // cm
-    double coilArea;                 // mm^2
-    double ironLoss;                 // W
-    double copperLoss;               // W
-    double totalLoss;                // W
-    double efficiency;               // %
-
-    unsigned int patternTransformer;
-    double compensationLossTransformer;
-    double compensationLamina;
-
-    double voltageIN;           // V
-    double powerIN;             // W
-    double currentIN;           // A
-    double currentDensityIN;    // A/mm2
-
-    unsigned int wireIDIN;
-    std::string wireAWGIN;
-    unsigned int wireTurnsIN;   // esp
-    double wireDiameterIN;      // mm
-    double wireTurnPerCmIN;     // esp/cm
-    double wireAreaIN;          // mm2
-    double wireResistanceIN;    // ohm/km
-    double wireWeightIN;        // kg/km
-    double wireLengthIN;        // m/kg
-    double wireFrequencyIN;     // kHz
-
-    double voltageOUT;          // V
-    double powerOUT;            // W
-    double currentOUT;          // A
-    double currentDensityOUT;   // A/mm2
-
-    unsigned int wireIDOUT;
-    std::string wireAWGOUT;
-    unsigned int wireTurnsOUT;  // esp
-    double wireDiameterOUT;     // mm
-    double wireTurnPerCmOUT;    // esp/cm
-    double wireAreaOUT;         // mm2
-    double wireResistanceOUT;   // ohm/km
-    double wireWeightOUT;       // kg/km
-    double wireLengthOUT;       // m/kg
-    double wireFrequencyOUT;    // kHz
-
-    unsigned int laminaID;
-    std::string laminaType;
-    double laminaWidth;         // mm
-    double laminaWindowArea;    // mm^2
-    double laminaWeight;        // kg/cm
-
-    unsigned int bobbinID;
-    std::string bobbinType;
-    std::string bobbinCode;
-    std::string bobbinProvider;
-    double bobbinWidth;         // mm
-    double bobbinLength;        // mm
-    double bobbinHeight;        // mm
-    double bobbinArea;          // mm^2
-    double bobbinVolume;        // mm^3
-    */
+    void clearFields();
+    void setTransformer();
+    void writeInput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
+    void writeInput2( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
+    void writeOutput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
+    void writeOutput2( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
+    void enableInput2( bool state );
+    void enableOutput2( bool state );
 };
 
 #endif // WINDOWNEW_H

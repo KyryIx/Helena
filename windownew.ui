@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
-    <height>487</height>
+    <width>758</width>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
   <widget class="QPushButton" name="pushButton_save">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>650</x>
      <y>50</y>
      <width>101</width>
      <height>23</height>
@@ -33,7 +33,7 @@
   <widget class="QPushButton" name="pushButton_close">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>650</x>
      <y>447</y>
      <width>101</width>
      <height>23</height>
@@ -46,7 +46,7 @@
   <widget class="QPushButton" name="pushButton_calculate">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>650</x>
      <y>16</y>
      <width>101</width>
      <height>23</height>
@@ -61,8 +61,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>631</width>
-     <height>465</height>
+     <width>634</width>
+     <height>461</height>
     </rect>
    </property>
    <property name="title">
@@ -73,8 +73,8 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>611</width>
-      <height>435</height>
+      <width>616</width>
+      <height>430</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -97,7 +97,7 @@
        <string notr="true">background-color: rgb(140, 230, 255);</string>
       </property>
       <property name="text">
-       <string>3.0</string>
+       <string>3.00</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_currentDensity">
@@ -114,19 +114,6 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_referenceTemperature">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>260</y>
-        <width>111</width>
-        <height>20</height>
-       </rect>
       </property>
      </widget>
      <widget class="QLabel" name="label_magneticInduction">
@@ -161,7 +148,7 @@
        <string notr="true">background-color: rgb(140, 230, 255);</string>
       </property>
       <property name="text">
-       <string>50.0</string>
+       <string>50.00</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_frequency">
@@ -193,26 +180,7 @@
        <string notr="true">background-color: rgb(140, 230, 255);</string>
       </property>
       <property name="text">
-       <string>11300.0</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_referenceTemperature">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>260</y>
-        <width>161</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Temperatura de Referencia (ºC):</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>11300.00</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_compensation_power">
@@ -231,7 +199,7 @@
        <string notr="true">background-color: rgb(140, 230, 255);</string>
       </property>
       <property name="text">
-       <string>10.0</string>
+       <string>10.00</string>
       </property>
      </widget>
      <widget class="QCheckBox" name="checkBox_compensation_power">
@@ -269,7 +237,7 @@
        <string notr="true">background-color: rgb(140, 230, 255);</string>
       </property>
       <property name="text">
-       <string>3.0</string>
+       <string>3.00</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_windowAreaPerSectionTurns">
@@ -585,9 +553,9 @@
      <widget class="QGroupBox" name="groupBox_Input">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>281</width>
+        <x>8</x>
+        <y>6</y>
+        <width>291</width>
         <height>391</height>
        </rect>
       </property>
@@ -610,12 +578,12 @@
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_voltageInput">
+      <widget class="QLineEdit" name="lineEdit_voltageInput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>60</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
@@ -623,7 +591,7 @@
         <string notr="true">background-color: rgb(140, 230, 255);</string>
        </property>
        <property name="text">
-        <string>120.0</string>
+        <string>120.00</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_powerInput">
@@ -663,27 +631,27 @@
         <rect>
          <x>150</x>
          <y>30</y>
-         <width>111</width>
+         <width>131</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_currentInput">
+      <widget class="QLineEdit" name="lineEdit_currentInput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>90</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_densityCurrentInput">
+      <widget class="QLineEdit" name="lineEdit_densityCurrentInput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>120</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
@@ -709,19 +677,19 @@
         <rect>
          <x>9</x>
          <y>150</y>
-         <width>261</width>
+         <width>271</width>
          <height>231</height>
         </rect>
        </property>
        <property name="title">
         <string>FIO DE ENTRADA</string>
        </property>
-       <widget class="QLineEdit" name="lineEdit_wireMaterialInput">
+       <widget class="QLineEdit" name="lineEdit_wireMaterialInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>170</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -732,7 +700,7 @@
        <widget class="QLabel" name="label_wireIDInput">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>20</y>
           <width>81</width>
           <height>20</height>
@@ -745,40 +713,38 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireIDInput">
+       <widget class="QLineEdit" name="lineEdit_wireIDInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>20</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_wireTypeInput">
+       <widget class="QComboBox" name="comboBox_wireTypeInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>50</y>
-          <width>111</width>
+          <width>81</width>
           <height>22</height>
          </rect>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
         </property>
         <item>
          <property name="text">
           <string>redondo</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>retangular</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="label_wireAWGInput">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>80</y>
           <width>81</width>
           <height>20</height>
@@ -794,25 +760,25 @@
        <widget class="QLabel" name="label_wireAreaInput">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>-20</x>
           <y>140</y>
-          <width>111</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>Seção Transversal:</string>
+         <string>Seção Trans.:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireAWGInput">
+       <widget class="QLineEdit" name="lineEdit_wireAWGInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>80</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -823,7 +789,7 @@
        <widget class="QLabel" name="label_wireMaterialInput">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>170</y>
           <width>81</width>
           <height>20</height>
@@ -839,7 +805,7 @@
        <widget class="QLabel" name="label_wireTypeInput">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>50</y>
           <width>81</width>
           <height>20</height>
@@ -855,25 +821,25 @@
        <widget class="QLabel" name="label_wireDiameterInput">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>110</y>
           <width>81</width>
           <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>Diâmetro:</string>
+         <string>Diâmetro (mm):</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireDiameterInput">
+       <widget class="QLineEdit" name="lineEdit_wireDiameterInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>110</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -881,12 +847,12 @@
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireAreaInput">
+       <widget class="QLineEdit" name="lineEdit_wireAreaInput_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>140</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -897,7 +863,7 @@
        <widget class="QLabel" name="label_turnsIN">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>0</x>
           <y>200</y>
           <width>81</width>
           <height>13</height>
@@ -910,24 +876,207 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_turnsIN">
+       <widget class="QLineEdit" name="lineEdit_turnsIN_1">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>90</x>
           <y>200</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
        </widget>
+       <widget class="QLineEdit" name="lineEdit_wireIDInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>20</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_wireTypeInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>50</y>
+          <width>81</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>redondo</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireAWGInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>80</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireDiameterInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>110</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireAreaInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>140</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireMaterialInput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>170</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_turnsIN_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>200</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_voltageInput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>60</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_currentInput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>90</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_densityCurrentInput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>120</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_Output">
       <property name="geometry">
        <rect>
         <x>310</x>
-        <y>10</y>
-        <width>281</width>
+        <y>6</y>
+        <width>291</width>
         <height>391</height>
        </rect>
       </property>
@@ -950,12 +1099,12 @@
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_voltageOutput">
+      <widget class="QLineEdit" name="lineEdit_voltageOutput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>60</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
@@ -963,7 +1112,7 @@
         <string notr="true">background-color: rgb(140, 230, 255);</string>
        </property>
        <property name="text">
-        <string>220.0</string>
+        <string>220.00</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_powerOutput">
@@ -1003,7 +1152,7 @@
         <rect>
          <x>150</x>
          <y>30</y>
-         <width>111</width>
+         <width>131</width>
          <height>20</height>
         </rect>
        </property>
@@ -1011,25 +1160,25 @@
         <string notr="true">background-color: rgb(140, 230, 255);</string>
        </property>
        <property name="text">
-        <string>300.0</string>
+        <string>300.00</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_currentOutput">
+      <widget class="QLineEdit" name="lineEdit_currentOutput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>90</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_densityCurrentOutput">
+      <widget class="QLineEdit" name="lineEdit_densityCurrentOutput_1">
        <property name="geometry">
         <rect>
          <x>150</x>
          <y>120</y>
-         <width>111</width>
+         <width>60</width>
          <height>20</height>
         </rect>
        </property>
@@ -1053,21 +1202,21 @@
       <widget class="QGroupBox" name="groupBox_outputWire">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>150</y>
-         <width>251</width>
+         <width>271</width>
          <height>231</height>
         </rect>
        </property>
        <property name="title">
         <string>FIO DE SAÍDA</string>
        </property>
-       <widget class="QLineEdit" name="lineEdit_wireMaterialOutput">
+       <widget class="QLineEdit" name="lineEdit_wireMaterialOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>170</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -1075,30 +1224,28 @@
          <string/>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_wireTypeOutput">
+       <widget class="QComboBox" name="comboBox_wireTypeOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>50</y>
-          <width>111</width>
+          <width>81</width>
           <height>22</height>
          </rect>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
         </property>
         <item>
          <property name="text">
           <string>redondo</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>retangular</string>
-         </property>
-        </item>
        </widget>
        <widget class="QLabel" name="label_wireTypeOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>50</y>
           <width>81</width>
           <height>20</height>
@@ -1114,25 +1261,25 @@
        <widget class="QLabel" name="label_wireDiameterOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>110</y>
           <width>81</width>
           <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>Diâmetro:</string>
+         <string>Diâmetro (mm):</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireAreaOutput">
+       <widget class="QLineEdit" name="lineEdit_wireAreaOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>140</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -1143,14 +1290,14 @@
        <widget class="QLabel" name="label_wireAreaOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>-20</x>
           <y>140</y>
-          <width>81</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
         <property name="text">
-         <string>Seção:</string>
+         <string>Seção Trans.:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1159,7 +1306,7 @@
        <widget class="QLabel" name="label_wireAWGOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>80</y>
           <width>81</width>
           <height>20</height>
@@ -1172,12 +1319,12 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireIDOutput">
+       <widget class="QLineEdit" name="lineEdit_wireIDOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>20</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -1185,7 +1332,7 @@
        <widget class="QLabel" name="label_wireMaterialOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>170</y>
           <width>81</width>
           <height>20</height>
@@ -1201,7 +1348,7 @@
        <widget class="QLabel" name="label_wireIDOutput">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>20</y>
           <width>81</width>
           <height>20</height>
@@ -1214,12 +1361,12 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireAWGOutput">
+       <widget class="QLineEdit" name="lineEdit_wireAWGOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>80</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -1227,12 +1374,12 @@
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_wireDiameterOutput">
+       <widget class="QLineEdit" name="lineEdit_wireDiameterOutput_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>110</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
@@ -1243,7 +1390,7 @@
        <widget class="QLabel" name="label_turnsOUT">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>0</x>
           <y>200</y>
           <width>81</width>
           <height>13</height>
@@ -1256,16 +1403,199 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_turnsOUT">
+       <widget class="QLineEdit" name="lineEdit_turnsOUT_1">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>90</x>
           <y>200</y>
-          <width>111</width>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
        </widget>
+       <widget class="QLineEdit" name="lineEdit_wireIDOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>20</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_wireTypeOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>50</y>
+          <width>81</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>redondo</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireMaterialOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>170</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireAreaOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>140</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireAWGOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>80</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_turnsOUT_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>200</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_wireDiameterOutput_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>110</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_voltageOutput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>60</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_currentOutput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>90</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_densityCurrentOutput_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>221</x>
+         <y>120</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -1330,19 +1660,12 @@
        <property name="styleSheet">
         <string notr="true"/>
        </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
        <item>
         <property name="text">
          <string>padrao</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>especial</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>com GAP</string>
         </property>
        </item>
        <item>
@@ -1731,6 +2054,19 @@
      </widget>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clear">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>410</y>
+     <width>101</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Limpar Projeto</string>
+   </property>
   </widget>
  </widget>
  <resources>

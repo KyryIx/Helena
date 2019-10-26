@@ -15,9 +15,6 @@
 class Transformer{
 
 	private:
-        bool automatic;
-        bool applyCompensationTransformer;
-        bool applyCompensationLamina;
         DataBase* database;
         Wires* wires;
         Laminas* laminas;
@@ -41,34 +38,45 @@ class Transformer{
                                          // 1 - 2 primaries and 1 secondary
                                          // 2 - 1 primary and 2 secondaries
                                          // 3 - 2 primaries and 2 secondaries
+        bool applyCompensationTransformer;  // true to apply and false, otherwise
         double compensationLossTransformer; // 0 <= C.L.T. <= 100%;
         double windowAreaPerSectionCu;      // 3.0
 
-        double voltageIN;                // V
+        double voltageIN_1;              // V
+        double voltageIN_2;              // V
         double powerIN;                  // W
-        double currentIN;                // A
-        double currentDensityIN;         // A/mm2
-        unsigned int wireTurnsIN;        // esp
-        Wire* wireIN;
+        double currentIN_1;              // A
+        double currentIN_2;              // A
+        double currentDensityIN_1;       // A/mm2
+        double currentDensityIN_2;       // A/mm2
+        unsigned int wireTurnsIN_1;      // esp
+        unsigned int wireTurnsIN_2;      // esp
+        Wire* wireIN_1;
+        Wire* wireIN_2;
 
-        double voltageOUT;               // V
+        double voltageOUT_1;             // V
+        double voltageOUT_2;             // V
         double powerOUT;                 // W
-        double currentOUT;               // A
-        double currentDensityOUT;        // A/mm2
-        unsigned int wireTurnsOUT;       // esp
-        Wire* wireOUT;
+        double currentOUT_1;             // A
+        double currentOUT_2;             // A
+        double currentDensityOUT_1;      // A/mm2
+        double currentDensityOUT_2;      // A/mm2
+        unsigned int wireTurnsOUT_1;     // esp
+        unsigned int wireTurnsOUT_2;     // esp
+        Wire* wireOUT_1;
+        Wire* wireOUT_2;
 
+        double magneticSection;          // cm2
+        double geometricSection;         // cm2
+
+        bool applyCompensationLamina;    // true to apply and false, otherwise
         Lamina* lamina;
         Bobbin* bobbin;
 
-
-        void setAutomatic( bool state ){
-            this->automatic = state;
-        }
+        bool state;                      // true -> automatic and false -> manual
 
 	public:
         Transformer( DataBase* database ){
-            this->automatic                   = false;
             this->database                    = database;
             this->wires                       = new Wires( database );
             this->laminas                     = new Laminas( database );
@@ -89,38 +97,42 @@ class Transformer{
             this->efficiency                  = 0.0;
 
             this->patternTransformer          = 0;
+            this->applyCompensationTransformer= true;
             this->compensationLossTransformer = 0.0;
             this->windowAreaPerSectionCu      = 3.0;
 
-            this->voltageIN                   = 0.0;
+            this->voltageIN_1                 = 0.0;
+            this->voltageIN_2                 = 0.0;
             this->powerIN                     = 0.0;
-            this->currentIN                   = 0.0;
-            this->currentDensityIN            = 0.0;
-            this->wireTurnsIN                 = 0;
-            this->wireIN                      = new Wire();
+            this->currentIN_1                 = 0.0;
+            this->currentIN_2                 = 0.0;
+            this->currentDensityIN_1          = 0.0;
+            this->currentDensityIN_2          = 0.0;
+            this->wireTurnsIN_1               = 0;
+            this->wireTurnsIN_2               = 0;
+            this->wireIN_1                    = new Wire();
+            this->wireIN_2                    = new Wire();
 
-            this->voltageOUT                  = 0.0;
+            this->voltageOUT_1                = 0.0;
+            this->voltageOUT_2                = 0.0;
             this->powerOUT                    = 0.0;
-            this->currentOUT                  = 0.0;
-            this->currentDensityOUT           = 0.0;
-            this->wireTurnsOUT                = 0;
-            this->wireOUT                     = new Wire();
+            this->currentOUT_1                = 0.0;
+            this->currentOUT_2                = 0.0;
+            this->currentDensityOUT_1         = 0.0;
+            this->currentDensityOUT_2         = 0.0;
+            this->wireTurnsOUT_1              = 0;
+            this->wireTurnsOUT_2              = 0;
+            this->wireOUT_1                   = new Wire();
+            this->wireOUT_2                   = new Wire();
+
+            this->magneticSection             = 0.0;
+            this->geometricSection            = 0.0;
 
             this->lamina                      = new Lamina();
             this->bobbin                      = new Bobbin();
+
+            this->state                       = false;
 		}
-
-        bool getAutomatic(){
-            return this->automatic;
-        }
-
-        void setApplyCompensationTransformer( bool state ){
-            this->applyCompensationTransformer = state;
-        }
-
-        bool getApplyCompensationTransformer(){
-            return this->applyCompensationTransformer;
-        }
 
         void setApplyCompensationLamina( bool state ){
             this->applyCompensationLamina = state;
@@ -131,12 +143,10 @@ class Transformer{
         }
 
         void setDatabase( DataBase* database ){
-            this->setAutomatic( false );
             this->database = database;
         }
 
         void setID( unsigned int id ){
-            this->setAutomatic( false );
             this->id = id;
         }
 
@@ -145,7 +155,6 @@ class Transformer{
         }
 
         void setFrequency( double frequency ){
-            this->setAutomatic( false );
             this->frequency = frequency;
         }
 
@@ -154,7 +163,6 @@ class Transformer{
         }
 
         void setMagneticInduction( double magneticInduction ){
-            this->setAutomatic( false );
             this->magneticInduction = magneticInduction;
         }
 
@@ -163,7 +171,6 @@ class Transformer{
         }
 
         void setCurrentDensity( double currentDensity ){
-            this->setAutomatic( false );
             this->currentDensity = currentDensity;
         }
 
@@ -172,133 +179,146 @@ class Transformer{
         }
 
         void setAverageCurrentDensity( double averageCurrentDensity ){
-            this->setAutomatic( false );
             this->averageCurrentDensity = averageCurrentDensity;
         }
 
         double getAverageCurrentDensity(){
-            if( this->getAutomatic() ){
-                return (this->getCurrentDensityIN() + this->getCurrentDensityOUT()) / 2.0;
-            }
             return this->averageCurrentDensity;
         }
 
+        double getAverageCurrentDensityAuto(){
+            switch( this->getPatternTransformer() ){
+                case 0:
+                    return (this->getCurrentDensityIN1() + this->getCurrentDensityOUT1()) / 2.0;
+                case 1:
+                    return (this->getCurrentDensityIN1() + this->getCurrentDensityOUT1() + this->getCurrentDensityOUT2()) / 3.0;
+                case 2:
+                    return (this->getCurrentDensityIN1() + this->getCurrentDensityIN2() + this->getCurrentDensityOUT1()) / 3.0;
+                case 3:
+                    return (this->getCurrentDensityIN1() + this->getCurrentDensityIN2() + this->getCurrentDensityOUT1() + this->getCurrentDensityOUT2()) / 4.0;
+                default:
+                    return 0.0;
+            }
+        }
+
         void setWeigthIron( double weigthIron ){
-            this->setAutomatic( false );
             this->weigthIron = weigthIron;
         }
 
         double getWeigthIron(){
-            if( this->getAutomatic() ){
-                return (this->getBobbin()->getLength() / 10.0) * this->getLamina()->getWeight();
-            }
-            else{
-                return this->weigthIron;
-            }
+            return this->weigthIron;
+        }
+
+        double getWeigthIronAuto(){
+            return (this->getBobbin()->getLength() / 10.0) * this->getLamina()->getWeight();
         }
 
         void setWeightCopper( double weightCopper ){
-            this->setAutomatic( false );
             this->weightCopper = weightCopper;
         }
 
         double getWeightCopper(){
-            if( this->getAutomatic() ){
-                return (this->getCoilArea()/100.0) * (this->getTurnAverageLength()/10.0) * 8.9 / 1000.0;
-            }
-            else{
-                return this->weightCopper;
-            }
+            return this->weightCopper;
+        }
+
+        double getWeightCopperAuto(){
+            return (this->getCoilArea()/100.0) * (this->getTurnAverageLength()/10.0) * 8.9 / 1000.0;
         }
 
         void setTurnsAverageLength( double turnsAverageLength ){
-            this->setAutomatic( false );
             this->turnsAverageLength = turnsAverageLength;
         }
 
         double getTurnAverageLength(){
-            if( this->getAutomatic() ){
-                return (2 + 0.5 * PI) * this->getLamina()->getWidth() + 2 * this->getBobbin()->getLength();
-            }
             return this->turnsAverageLength;
         }
 
+        double getTurnAverageLengthAuto(){
+            return (2 + 0.5 * PI) * this->getLamina()->getWidth() + 2 * this->getBobbin()->getLength();
+        }
+
         void setCoilArea( double coilArea ){
-            this->setAutomatic( false );
             this->coilArea = coilArea;
         }
 
         double getCoilArea(){
-            if( this->getAutomatic() ){
-                return this->getWireTurnsIN() * this->getWireIN()->getArea() + this->getWireTurnsOUT() * this->getWireOUT()->getArea();
-            }
-            else{
-                return this->coilArea;
+            return this->coilArea;
+        }
+
+        double getCoilAreaAuto(){
+            switch( this->getPatternTransformer() ){
+                case 3:
+                    return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsIN2() * this->getWireIN2()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea() + this->getWireTurnsOUT2() * this->getWireOUT2()->getArea();
+                case 2:
+                    return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsIN2() * this->getWireIN2()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea();
+                case 1:
+                    return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea() + this->getWireTurnsOUT2() * this->getWireOUT2()->getArea();
+                case 0:
+                    return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea();
+                default:
+                    return 0.0;
             }
         }
 
         void setIronLoss( double ironLoss ){
-            this->setAutomatic( false );
             this->ironLoss = ironLoss;
         }
 
         double getIronLoss(){
-            if( this->getAutomatic() ){
-                // to acesita 145, thickness of 0,5 mm and frequency 50 Hz
-                double W_kg10 = 1.35;
-                double wfe = W_kg10 * pow(this->getMagneticInduction() / 10000.0, 2.0);
-                return 1.15 * wfe * this->getWeigthIron();
-            }
             return this->ironLoss;
         }
 
+        double getIronLossAuto(){
+            // to acesita 145, thickness of 0,5 mm and frequency 50 Hz
+            double W_kg10 = 1.35;
+            double wfe = W_kg10 * pow(this->getMagneticInduction() / 10000.0, 2.0);
+            return 1.15 * wfe * this->getWeigthIron();
+        }
+
         void setCopperLoss( double copperLoss ){
-            this->setAutomatic( false );
             this->copperLoss = copperLoss;
         }
 
         double getCopperLoss(){
-            if( this->getAutomatic() ){
-                double rho = 0.0216; // to 75 degree //
-                double wcu = pow(this->getAverageCurrentDensity(), 2.0) * (rho / 8.9) * 1e3;
-                return wcu * this->getWeightCopper();
-            }
             return this->copperLoss;
         }
 
+        double getCopperLossAuto(){
+            double rho = 0.0216; // to 75 degree //
+            double wcu = pow(this->getAverageCurrentDensity(), 2.0) * (rho / 8.9) * 1e3;
+            return wcu * this->getWeightCopper();
+        }
+
         void setTotalLoss( double totalLoss ){
-            this->setAutomatic( false );
             this->totalLoss = totalLoss;
         }
 
         double getTotalLoss(){
-            if( this->automatic ){
-                return this->getIronLoss() + this->getCopperLoss();
-            }
             return this->totalLoss;
         }
 
+        double getTotalLossAuto(){
+            return this->getIronLoss() + this->getCopperLoss();
+        }
+
         void setEfficiency( double efficiency ){
-            this->setAutomatic( false );
             this->efficiency = efficiency;
         }
 
         double getEfficiency(){
-            if( this->automatic ){
-                try{
-                    return this->getPowerOUT() / (this->getPowerOUT() + this->getIronLoss() + this->getCopperLoss());
-                }
-                catch( ... ){
-                    return 0.0;
-                }
+            return this->efficiency;
+        }
+
+        double getEfficiencyAuto(){
+            try{
+                return this->getPowerOUT() / (this->getPowerOUT() + this->getIronLoss() + this->getCopperLoss());
             }
-            else{
-                return this->efficiency;
+            catch( ... ){
+                return 0.0;
             }
         }
 
         void setPatternTransformer( unsigned int patternTransformer ){
-            this->setAutomatic( false );
             this->patternTransformer = patternTransformer;
         }
 
@@ -306,8 +326,28 @@ class Transformer{
             return this->patternTransformer;
         }
 
+        std::string getPatternTransformerName(){
+            if( this->getPatternTransformer() == 0 )
+                return "1 primary and 1 secondary";
+            else if( this->getPatternTransformer() == 1 )
+                return "1 primary and 2 secondaries";
+            else if( this->getPatternTransformer() == 2 )
+                return "2 primaries and 1 secondary";
+            else if( this->getPatternTransformer() == 3 )
+                return "2 primaries and 2 secondaries";
+            else
+                return "indefined type";
+        }
+
+        void setApplyCompensationTransformer( bool state ){
+            this->applyCompensationTransformer = state;
+        }
+
+        bool getApplyCompensationTransformer(){
+            return this->applyCompensationTransformer;
+        }
+
         void setCompensationLossTransformer( double compensationLossTransformer ){
-            this->setAutomatic( false );
             this->compensationLossTransformer = compensationLossTransformer;
         }
 
@@ -323,17 +363,23 @@ class Transformer{
             return this->windowAreaPerSectionCu;
         }
 
-        void setVoltageIN( double voltage ){
-            this->setAutomatic( false );
-            this->voltageIN = voltage;
+        void setVoltageIN1( double voltage ){
+            this->voltageIN_1 = voltage;
         }
 
-        double getVoltageIN(){
-            return this->voltageIN;
+        double getVoltageIN1(){
+            return this->voltageIN_1;
+        }
+
+        void setVoltageIN2( double voltage ){
+            this->voltageIN_2 = voltage;
+        }
+
+        double getVoltageIN2(){
+            return this->voltageIN_2;
         }
 
         void setPowerIN( double power ){
-            this->setAutomatic( false );
             this->powerIN = power;
         }
 
@@ -341,67 +387,164 @@ class Transformer{
             return this->powerIN;
         }
 
-        void setCurrentIN( double current ){
-            this->setAutomatic( false );
-            this->currentIN = current;
-        }
-
-        double getCurrentIN(){
-            return this->currentIN;
-        }
-
-        void setCurrentDensityIN( double currentDensity ){
-            this->setAutomatic( false );
-            this->currentDensityIN = currentDensity;
-        }
-
-        double getCurrentDensityIN(){
-            double currentDensity = 0.0;
-
-            if( this->automatic ){
-                try{
-                    currentDensity = this->getCurrentIN() / this->getWireIN()->getArea();
-                }
-                catch( ... ){
-                    currentDensity = 0.0;
-                }
+        double getPowerINAuto(){
+            if( this->getApplyCompensationTransformer() ){
+                return (1.0 + this->getCompensationLossTransformer()/100.0) * this->getPowerOUT();
             }
             else{
-                currentDensity = this->currentDensityIN;
+                return this->getPowerOUT();
             }
-
-            return currentDensity;
         }
 
-        void setWireIN( Wire* wire ){
-            this->setAutomatic( false );
-            this->wireIN = wire;
+        void setCurrentIN1( double current ){
+            this->currentIN_1 = current;
         }
 
-        Wire* getWireIN(){
-            return this->wireIN;
+        double getCurrentIN1(){
+            return this->currentIN_1;
         }
 
-        void setWireTurnsIN( unsigned int turns ){
-            this->setAutomatic( false );
-            this->wireTurnsIN = turns;
+        double getCurrentIN1Auto(){
+            try{
+                return this->getPowerIN() / this->getVoltageIN1();
+            }
+            catch(...){
+                return 0.0;
+            }
         }
 
-        unsigned int getWireTurnsIN(){
-            return this->wireTurnsIN;
+        void setCurrentIN2( double current ){
+            this->currentIN_2 = current;
         }
 
-        void setVoltageOUT( double voltage ){
-            this->setAutomatic( false );
-            this->voltageOUT = voltage;
+        double getCurrentIN2(){
+            return this->currentIN_2;
         }
 
-        double getVoltageOUT(){
-            return this->voltageOUT;
+        double getCurrentIN2Auto(){
+            try{
+                return this->getPowerIN() / this->getVoltageIN2();
+            }
+            catch(...){
+                return 0.0;
+            }
+        }
+
+        void setCurrentDensityIN1( double currentDensity ){
+            this->currentDensityIN_1 = currentDensity;
+        }
+
+        double getCurrentDensityIN1(){
+            return this->currentDensityIN_1;
+        }
+
+        double getCurrentDensityIN1Auto(){
+            try{
+                return this->getCurrentIN1() / this->getWireIN1()->getArea();
+            }
+            catch( ... ){
+                return 0.0;
+            }
+        }
+
+        void setCurrentDensityIN2( double currentDensity ){
+            this->currentDensityIN_2 = currentDensity;
+        }
+
+        double getCurrentDensityIN2(){
+            return this->currentDensityIN_2;
+        }
+
+        double getCurrentDensityIN2Auto(){
+            try{
+                return this->getCurrentIN2() / this->getWireIN2()->getArea();
+            }
+            catch( ... ){
+                return 0.0;
+            }
+        }
+
+        void setWireIN1( Wire* wire ){
+            this->wireIN_1 = wire;
+        }
+
+        Wire* getWireIN1(){
+            return this->wireIN_1;
+        }
+
+        void setWireIN2( Wire* wire ){
+            this->wireIN_2 = wire;
+        }
+
+        Wire* getWireIN2(){
+            return this->wireIN_2;
+        }
+
+        void setWireTurnsIN1( unsigned int turns ){
+            this->wireTurnsIN_1 = turns;
+        }
+
+        unsigned int getWireTurnsIN1(){
+            return this->wireTurnsIN_1;
+        }
+
+        unsigned int getWireTurnsIN1Auto(){
+            try{
+                unsigned int N = 0;
+                if( this->applyCompensationTransformer ){
+                    N = static_cast<unsigned int>( ceil( ( (this->getVoltageIN1() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                }
+                else{
+                    N = static_cast<unsigned int>( ceil( (this->getVoltageIN1() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+                }
+                return N;
+            }
+            catch(...){
+                return 0;
+            }
+        }
+
+        void setWireTurnsIN2( unsigned int turns ){
+            this->wireTurnsIN_2 = turns;
+        }
+
+        unsigned int getWireTurnsIN2(){
+            return this->wireTurnsIN_2;
+        }
+
+        unsigned int getWireTurnsIN2Auto(){
+            try{
+                unsigned int N = 0;
+                if( this->applyCompensationTransformer ){
+                    N = static_cast<unsigned int>( ceil( ( (this->getVoltageIN2() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                }
+                else{
+                    N = static_cast<unsigned int>( ceil( (this->getVoltageIN2() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+                }
+                return N;
+            }
+            catch(...){
+                return 0;
+            }
+        }
+
+        void setVoltageOUT1( double voltage ){
+            this->voltageOUT_1 = voltage;
+        }
+
+        double getVoltageOUT1(){
+            return this->voltageOUT_1;
+        }
+
+        void setVoltageOUT2( double voltage ){
+            this->voltageOUT_2 = voltage;
+        }
+
+        double getVoltageOUT2(){
+            return this->voltageOUT_2;
         }
 
         void setPowerOUT( double power ){
-            this->setAutomatic( false );
             this->powerOUT = power;
         }
 
@@ -409,58 +552,193 @@ class Transformer{
             return this->powerOUT;
         }
 
-        void setCurrentOUT( double current ){
-            this->setAutomatic( false );
-            this->currentOUT = current;
+        void setCurrentOUT1( double current ){
+            this->currentOUT_1 = current;
         }
 
-        double getCurrentOUT(){
-            return this->currentOUT;
+        double getCurrentOUT1(){
+            return this->currentOUT_1;
         }
 
-        void setCurrentDensityOUT( double currentDensity ){
-            this->setAutomatic( false );
-            this->currentDensityOUT = currentDensity;
-        }
-
-        double getCurrentDensityOUT(){
-            double currentDensity = 0.0;
-
-            if( this->automatic ){
-                try{
-                    currentDensity = this->getCurrentOUT() / this->getWireOUT()->getArea();
-                }
-                catch( ... ){
-                    currentDensity = 0.0;
-                }
+        double getCurrentOUT1Auto(){
+            try{
+                return this->getPowerOUT() / this->getVoltageOUT1();
             }
-            else{
-                currentDensity = this->currentDensityOUT;
+            catch(...){
+                return 0.0;
+            }
+        }
+
+        void setCurrentOUT2( double current ){
+            this->currentOUT_2 = current;
+        }
+
+        double getCurrentOUT2(){
+            return this->currentOUT_2;
+        }
+
+        double getCurrentOUT2Auto(){
+            try{
+                return this->getPowerOUT() / this->getVoltageOUT2();
+            }
+            catch(...){
+                return 0.0;
+            }
+        }
+
+        void setCurrentDensityOUT1( double currentDensity ){
+            this->currentDensityOUT_1 = currentDensity;
+        }
+
+        double getCurrentDensityOUT1(){
+            return currentDensityOUT_1;
+        }
+
+        double getCurrentDensityOUT1Auto(){
+            try{
+                return this->getCurrentOUT1() / this->getWireOUT1()->getArea();
+            }
+            catch( ... ){
+                return 0.0;
+            }
+        }
+
+        void setCurrentDensityOUT2( double currentDensity ){
+
+            this->currentDensityOUT_2 = currentDensity;
+        }
+
+        double getCurrentDensityOUT2(){
+            return currentDensityOUT_2;
+        }
+
+        double getCurrentDensityOUT2Auto(){
+            try{
+                return this->getCurrentOUT2() / this->getWireOUT2()->getArea();
+            }
+            catch( ... ){
+                return 0.0;
+            }
+        }
+
+        void setWireOUT1( Wire* wire ){
+            this->wireOUT_1 = wire;
+        }
+
+        Wire* getWireOUT1(){
+            return this->wireOUT_1;
+        }
+
+        void setWireOUT2( Wire* wire ){
+            this->wireOUT_2 = wire;
+        }
+
+        Wire* getWireOUT2(){
+            return this->wireOUT_2;
+        }
+
+        void setWireTurnsOUT1( unsigned int turns ){
+            this->wireTurnsOUT_1 = turns;
+        }
+
+        unsigned int getWireTurnsOUT1(){
+            return this->wireTurnsOUT_1;
+        }
+
+        unsigned int getWireTurnsOUT1Auto(){
+            try{
+                unsigned int N = 0;
+                if( this->applyCompensationTransformer ){
+                    N = static_cast<unsigned int>( ceil( ( (this->getVoltageOUT1() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                }
+                else{
+                    N = static_cast<unsigned int>( ceil( (this->getVoltageOUT1() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+                }
+                return N;
+            }
+            catch(...){
+                return 0;
+            }
+        }
+
+        void setWireTurnsOUT2( unsigned int turns ){
+            this->wireTurnsOUT_2 = turns;
+        }
+
+        unsigned int getWireTurnsOUT2(){
+            return this->wireTurnsOUT_2;
+        }
+
+        unsigned int getWireTurnsOUT2Auto(){
+            try{
+                unsigned int N = 0;
+                if( this->applyCompensationTransformer ){
+                    N = static_cast<unsigned int>( ceil( ( (this->getVoltageOUT2() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                }
+                else{
+                    N = static_cast<unsigned int>( ceil( (this->getVoltageOUT2() * 1e8) / (this->getMagneticSection() * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+                }
+                return N;
+            }
+            catch(...){
+                return 0;
+            }
+        }
+
+        void setMagneticSection( double magneticSection ){
+            this->magneticSection = magneticSection;
+        }
+
+        double getMagneticSection(){
+            return this->magneticSection;
+        }
+
+        double getMagneticSectionAuto(){
+            double SM = this->getPowerOUT() / this->getFrequency();
+
+            switch( this->getPatternTransformer() ){
+                case 0: // 1 primary and 1 secondary
+                    SM *= 1.00;
+                    break;
+                case 1: // 1 primary and 2 secondaries
+                case 2: // 2 primaries and 1 secondary
+                    SM *= 1.25;
+                    break;
+                case 3: // 2 primaries and 2 secondaries
+                    SM *= 1.50;
+                    break;
+                default:
+                    SM *= 0.0;
             }
 
-            return currentDensity;
+            SM = sqrt( SM );
+
+            if( this->getLamina()->getType() == "padrao" ){ // standard laminas
+                    SM *= 7.5;
+            }
+            else if( this->getLamina()->getType() == "compridas" ){ // long laminas
+                    SM *= 6.0;
+            }
+
+            return SM;
         }
 
-        void setWireOUT( Wire* wire ){
-            this->setAutomatic( false );
-            this->wireOUT = wire;
+        void setGeometricSection( double geometricSection ){
+            this->geometricSection = geometricSection;
         }
 
-        Wire* getWireOUT(){
-            return this->wireOUT;
+        double getGeometricSection(){
+            return this->geometricSection;
         }
 
-        void setWireTurnsOUT( unsigned int turns ){
-            this->setAutomatic( false );
-            this->wireTurnsOUT = turns;
-        }
-
-        unsigned int getWireTurnsOUT(){
-            return this->wireTurnsOUT;
+        double getGeometricSectionAuto(){
+            if( this->getApplyCompensationLamina() ){
+                return (1 + this->getLamina()->getThicknessPercent()/100.0) * this->getMagneticSectionAuto();
+            }
+            return 0.0;
         }
 
         void setLamina( Lamina* lamina ){
-            this->setAutomatic( false );
             this->lamina = lamina;
         }
 
@@ -469,71 +747,76 @@ class Transformer{
         }
 
         void setBobbin( Bobbin* bobbin ){
-            this->setAutomatic( false );
             this->bobbin = bobbin;
         }
 
         Bobbin* getBobbin(){
             return this->bobbin;
         }
-        bool calculate(){
+
+        void setState( bool state ){
+            this->state = state;
+        }
+
+        bool getState(){
+            return this->state;
+        }
+
+        int calculate(){
+            // return -1    -> erro relativo a nao encontrar o fio que cumpra o calculo //
+            // return -2    -> erro relativo a nao encontrar o tipo de lamina que satisfaca o calculo //
+            // return -3    -> erro relativo a nao encontrar o tipo de carretel que satisfaca o calculo //
+            // return -4    -> erro relativo a alguma divisao por zero ou outro erro aritmetico //
+            // return -100  -> erro devido a superar o limite de tentativas de solucao
             try{
-                this->setCurrentOUT( this->getPowerOUT() / this->getVoltageOUT() );
+                this->setState( false );
+                unsigned int index  = 0;
 
-                if( this->getApplyCompensationTransformer() ){
-                    this->setPowerIN( (1.0 + this->getCompensationLossTransformer()/100.0) * this->getPowerOUT() );
+                this->setPowerIN( this->getPowerINAuto() );
+                this->setCurrentOUT1( this->getCurrentOUT1Auto() );
+                this->setCurrentIN1( this->getCurrentIN1Auto() );
+
+                double S21 = this->getCurrentOUT1() / this->getCurrentDensity();
+                index   = this->wires->findIndexByArea( S21, this->getWireOUT1()->getType() );
+                if( index == 0 ){
+                    return -1;
                 }
-                else{
-                    this->setPowerIN( this->getPowerOUT() );
+                this->setWireOUT1( this->wires->getWire( index ) );
+
+                double S11 = this->getCurrentIN1() / this->getCurrentDensity();
+                index   = this->wires->findIndexByArea( S11, this->getWireIN1()->getType() );
+                if( index == 0 ){
+                    return -1;
                 }
-                this->setCurrentIN( this->getPowerIN() / this->getVoltageIN() );
+                this->setWireIN1( this->wires->getWire( index ) );
 
-                unsigned int index = 0;
-                double S1          = 0;
-                double S2          = 0;
-                //double d1          = 0;
-                //double d2          = 0;
-
-                S2 = this->getCurrentOUT() / this->getCurrentDensity();
-                index   = this->wires->findIndexByArea( S2, this->getWireOUT()->getType() );
-                this->setWireOUT( this->wires->getWire( index ) );
-                //d2 = this->getCurrentOUT() / this->getWireOUT()->getArea();
-
-                S1 = this->getCurrentIN() / this->getCurrentDensity();
-                index   = this->wires->findIndexByArea( S1, this->getWireIN()->getType() );
-                this->setWireIN( this->wires->getWire( index ) );
-                //d1 = this->getCurrentIN() / this->getWireIN()->getArea();
-
-                double SM = this->getPowerOUT() / this->getFrequency();
-
-                switch( this->getPatternTransformer() ){
-                    case 0: // 1 primary and 1 secondary
-                        SM *= 1.00;
-                        break;
-                    case 1: // 1 primary and 2 secondaries
-                    case 2: // 2 primaries and 1 secondary
-                        SM *= 1.25;
-                        break;
-                    case 3: // 2 primaries and 2 secondaries
-                        SM *= 1.50;
+                if( this->getPatternTransformer() > 1 ){
+                    this->setCurrentIN2( this->getCurrentIN2Auto() );
+                    double S12 = this->getCurrentIN2() / this->getCurrentDensity();
+                    index   = this->wires->findIndexByArea( S12, this->getWireIN2()->getType() );
+                    if( index == 0 ){
+                        return -1;
+                    }
+                    this->setWireIN2( this->wires->getWire( index ) );
                 }
 
-                SM = sqrt( SM ) * 100; // convert to mm^2 #
-
-                if( this->getLamina()->getType() == "padrao" ) // standard laminas
-                        SM *= 7.5;
-                else if( this->getLamina()->getType() == "especial" ) // long laminas
-                        SM *= 6.0;
-
-                double SG = 0.0;
-                if( this->getApplyCompensationLamina() ){
-                    SG = (1 + this->getLamina()->getThicknessPercent()/100.0) * SM;
-                }
-                else{
-                    SG = SM;
+                if( this->getPatternTransformer() % 2 == 1 ){
+                    this->setCurrentOUT2( this->getCurrentOUT2Auto() );
+                    double S22 = this->getCurrentOUT2() / this->getCurrentDensity();
+                    index   = this->wires->findIndexByArea( S22, this->getWireOUT2()->getType() );
+                    if( index == 0 ){
+                        return -1;
+                    }
+                    this->setWireOUT2( this->wires->getWire( index ) );
                 }
 
-                double widthLaminaMin = sqrt( SG );
+                double SM             = this->getMagneticSectionAuto();
+                this->setMagneticSection( SM );
+
+                double SG             = this->getGeometricSectionAuto();
+                this->setGeometricSection( SG );
+
+                double widthLaminaMin = sqrt( SG ) * 10.0; // convert to mm //
 
                 int i                 = 0;
                 int limit             = 1000;
@@ -545,128 +828,172 @@ class Transformer{
                     i = i + 1;
 
                     if( i > limit ){
-                        this->setAutomatic( false );
-                        break;
+                        return -100;
                     }
 
                     index = this->laminas->findIndexByWidth( widthLaminaMin, this->getLamina()->getType() );
                     if( index == 0 ){
-                        this->setAutomatic( false );
-                        break;
+                        return -2;
                     }
 
                     this->setLamina( this->laminas->getLamina( index ) );
+
                     widthLaminaMin = this->getLamina()->getWidth();
 
-                    index = this->bobbins->findIndexByWidthAndArea( widthLaminaMin, SG, this->getBobbin()->getType() );
+                    index = this->bobbins->findIndexByWidthAndArea( widthLaminaMin, (SG * 100.0), this->getBobbin()->getType() );
                     if( index == 0 ){
-                        this->setAutomatic( false );
-                        break;
+                        return -3;
                     }
 
                     this->setBobbin( this->bobbins->getBobbin( index ) );
 
-                    SG = widthLaminaMin * this->getBobbin()->getLength();
+                    SG = (widthLaminaMin * this->getBobbin()->getLength()) / 100.0; // convert to cm^2 //
+
+                    SM = SG;
+
                     if( this->getApplyCompensationLamina() ){
-                        SM = (SG / (1 + this->getLamina()->getThicknessPercent()/100.0)) / 100.0; // convert to cm^2
-                    }
-                    else{
-                        SM = SG / 100.0; // convert to cm^2
+                        SM = SG / (1 + this->getLamina()->getThicknessPercent()/100.0);
                     }
 
-                    unsigned int N2 = 0;
-                    if( this->applyCompensationTransformer ){
-                        N2 = static_cast<unsigned int>( ceil( ( (this->getVoltageOUT() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) * (1.0 + this->getCompensationLossTransformer()/100.0) ) );
+                    this->setGeometricSection( SG );
+                    this->setMagneticSection( SM );
+
+                    // turns = ceil( (this->getVoltageX() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency() ) ) //
+                    this->setWireTurnsIN1( this->getWireTurnsIN1Auto() );
+                    this->setWireTurnsOUT1( this->getWireTurnsOUT1Auto() );
+
+                    if( this->getPatternTransformer() > 1 ){
+                        unsigned int N = this->getWireTurnsIN2Auto() - this->getWireTurnsIN1();
+                        this->setWireTurnsIN2( N );
                     }
-                    else{
-                        N2 = static_cast<unsigned int>( ceil( (this->getVoltageOUT() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
+
+                    if( this->getPatternTransformer() % 2 == 1 ){
+                        this->setWireTurnsOUT2( this->getWireTurnsOUT2Auto() - this->getWireTurnsOUT1() );
                     }
-                    this->setWireTurnsOUT( N2 );
 
-                    unsigned int N1 = static_cast<unsigned int>( ceil( (this->getVoltageIN() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency()) ) );
-                    this->setWireTurnsIN( N1 );
+                    this->setCoilArea( this->getCoilAreaAuto() );
 
-                    this->setCoilArea( this->getWireTurnsIN() * this->getWireIN()->getArea() + this->getWireTurnsOUT() * this->getWireOUT()->getArea() );
-
-                    this->setAutomatic( true );
                     if( (this->getLamina()->getWindowArea() / this->getCoilArea()) < this->getWindowAreaPerSectionCu() ){
                         widthLaminaMin = widthLaminaMin + 0.1;
                         continue;
                     }
 
-                    break;
+                    this->setCurrentDensityIN1( this->getCurrentDensityIN1Auto() );
+                    this->setCurrentDensityOUT1( this->getCurrentDensityOUT1Auto() );
+                    if( this->getPatternTransformer() > 1 ){
+                        this->setCurrentDensityIN2( this->getCurrentDensityIN2Auto() );
+                    }
+                    if( this->getPatternTransformer() % 2 == 1 ){
+                        this->setCurrentDensityOUT2( this->getCurrentDensityOUT2Auto() );
+                    }
+
+                    this->setAverageCurrentDensity( this->getAverageCurrentDensityAuto() );
+                    this->setTurnsAverageLength( this->getTurnAverageLengthAuto() );
+                    this->setWeightCopper( this->getWeightCopperAuto() );
+                    this->setCopperLoss( this->getCopperLossAuto() );
+                    this->setWeigthIron( this->getWeigthIronAuto() );
+                    this->setIronLoss( this->getIronLossAuto() );
+                    this->setTotalLoss( this->getTotalLossAuto() );
+                    this->setEfficiency( this->getEfficiencyAuto() );
+
+                    this->setState( true );
+
+                    return 0;
                 }
             }
             catch( ... ){
-                this->setAutomatic( false );
+                return -4;
             }
-            return this->getAutomatic();
         }
 
         std::string toString(){
             std::string txt = "";
-            txt = txt + "    Transformer with: ";
-            if( this->getPatternTransformer() == 0 )
-                txt = txt + "1 primary and 1 secondary\n";
-            else if( this->getPatternTransformer() == 1 )
-                txt = txt + "1 primary and 2 secondaries\n";
-            else if( this->getPatternTransformer() == 2 )
-                txt = txt + "2 primaries and 1 secondary\n";
-            else if( this->getPatternTransformer() == 3 )
-                txt = txt + "2 primaries and 2 secondaries\n";
-            else
-                txt = txt + "indefined type\n";
+            txt = txt + "--------------------";
+            txt = txt + "GENERAL INFORMATIONS";
+            txt = txt + "--------------------\n";
 
-            txt = txt + "           Frequency: " + std::to_string( this->getFrequency() ) + " Hz\n";
-            txt = txt + "  Magnetic Induction: " + std::to_string( this->getMagneticInduction() ) + " G\n";
-            txt = txt + "     Current Density: " + std::to_string( this->getCurrentDensity() ) + " A/mm^2\n";
+            txt = txt + "Transformer with:     " + this->getPatternTransformerName() + "\n";
+
+            txt = txt + "Frequency:            " + std::to_string( this->getFrequency() )             + " Hz\n";
+            txt = txt + "Magnetic Induction:   " + std::to_string( this->getMagneticInduction() )     + " G\n";
+            txt = txt + "Current Density:      " + std::to_string( this->getCurrentDensity() )        + " A/mm^2\n";
             txt = txt + "Average Cur. Density: " + std::to_string( this->getAverageCurrentDensity() ) + " A/mm^2\n";
-            txt = txt + "         Weigth Iron: " + std::to_string( this->getWeigthIron()*1000.0 ) + " g\n";
-            txt = txt + "       Weight Copper: " + std::to_string( this->getWeightCopper()*1000.0 ) + " g\n";
-            txt = txt + "Turns Average Length: " + std::to_string( this->getTurnAverageLength()/10 ) + " cm\n";
-            txt = txt + "           Coil Area: " + std::to_string( this->getCoilArea() ) + " mm^2\n";
-            txt = txt + "           Iron Loss: " + std::to_string( this->getIronLoss() ) + " W\n";
-            txt = txt + "         Copper Loss: " + std::to_string( this->getCopperLoss() ) + " W\n";
-            txt = txt + "          Total Loss: " + std::to_string( this->getTotalLoss() ) + " W\n";
-            txt = txt + "          Efficiency: " + std::to_string( this->getEfficiency()*100 ) + " %\n";
+            txt = txt + "Weigth Iron:          " + std::to_string( this->getWeigthIron()*1000.0 )     + " g\n";
+            txt = txt + "Weight Copper:        " + std::to_string( this->getWeightCopper()*1000.0 )   + " g\n";
+            txt = txt + "Turns Average Length: " + std::to_string( this->getTurnAverageLength()/10 )  + " cm\n";
+            txt = txt + "Coil Area:            " + std::to_string( this->getCoilArea() )              + " mm^2\n";
+            txt = txt + "Iron Loss:            " + std::to_string( this->getIronLoss() )              + " W\n";
+            txt = txt + "Copper Loss:          " + std::to_string( this->getCopperLoss() )            + " W\n";
+            txt = txt + "Total Loss:           " + std::to_string( this->getTotalLoss() )             + " W\n";
+            txt = txt + "Efficiency:           " + std::to_string( this->getEfficiency()*100 )        + " %\n";
 
             txt = txt + "\n";
-            txt = txt + "\tINPUT\n";
-            txt = txt + "             Voltage: " + std::to_string( this->getVoltageIN() ) + " V\n";
-            txt = txt + "               Power: " + std::to_string( this->getPowerIN() ) + " W\n";
-            txt = txt + "             Current: " + std::to_string( this->getCurrentIN() ) + " A\n";
-            txt = txt + "            AWG wire: " + this->getWireIN()->getAWG() + "\n";
-            txt = txt + "          Wire turns: " + std::to_string( this->getWireTurnsIN() ) + "\n";
-            txt = txt + "     Current Density: " + std::to_string( this->getCurrentDensityIN() ) + " A/mm^2\n";
+            txt = txt + "--------------------";
+            txt = txt + "INPUT";
+            txt = txt + "--------------------\n";
+            txt = txt + "Power:                " + std::to_string( this->getPowerIN() )             + " W\n";
+            txt = txt + "Voltage 1:            " + std::to_string( this->getVoltageIN1() )          + " V\n";
+            txt = txt + "Current 1:            " + std::to_string( this->getCurrentIN1() )          + " A\n";
+            txt = txt + "AWG wire 1:           " + this->getWireIN1()->getAWG()                     + "\n";
+            txt = txt + "Wire turns 1:         " + std::to_string( this->getWireTurnsIN1() )        + "\n";
+            txt = txt + "Current Density 1:    " + std::to_string( this->getCurrentDensityIN1() )   + " A/mm^2\n";
+            txt = txt + "\n";
+            txt = txt + "--> WIRE 1\n";
+            txt = txt + this->getWireIN1()->toString();
+            txt = txt + "\n";
+            if( this->getPatternTransformer() > 1 ){
+                txt = txt + "\n";
+                txt = txt + "Voltage 2:            " + std::to_string( this->getVoltageIN2() )        + " V\n";
+                txt = txt + "Current 2:            " + std::to_string( this->getCurrentIN2() )        + " A\n";
+                txt = txt + "AWG wire 2:           " + this->getWireIN2()->getAWG()                   + "\n";
+                txt = txt + "Wire turns 2:         " + std::to_string( this->getWireTurnsIN2() )      + "\n";
+                txt = txt + "Current Density 2:    " + std::to_string( this->getCurrentDensityIN2() ) + " A/mm^2\n";
+                txt = txt + "\n";
+                txt = txt + "--> WIRE 2\n";
+                txt = txt + this->getWireIN2()->toString();
+                txt = txt + "\n";
+            }
 
             txt = txt + "\n";
-            txt = txt + "\tWIRE IN\n";
-            txt = txt + this->getWireIN()->toString();
+            txt = txt + "--------------------";
+            txt = txt + "OUTPUT";
+            txt = txt + "--------------------\n";
+            txt = txt + "Power:                " + std::to_string( this->getPowerOUT() )           + " W\n";
+            txt = txt + "Voltage 1:            " + std::to_string( this->getVoltageOUT1() )        + " V\n";
+            txt = txt + "Current 1:            " + std::to_string( this->getCurrentOUT1() )        + " A\n";
+            txt = txt + "AWG wire 1:           " + this->getWireOUT1()->getAWG()                   + "\n";
+            txt = txt + "Wire turns 1:         " + std::to_string( this->getWireTurnsOUT1() )      + "\n";
+            txt = txt + "Current Density 1:    " + std::to_string( this->getCurrentDensityOUT1() ) + " A/mm^2\n";
             txt = txt + "\n";
+            txt = txt + "--> WIRE 1\n";
+            txt = txt + this->getWireOUT1()->toString();
+            txt = txt + "\n";
+            if( this->getPatternTransformer() % 2 == 1 ){
+                txt = txt + "\n";
+                txt = txt + "Voltage 2:            " + std::to_string( this->getVoltageOUT2() )        + " V\n";
+                txt = txt + "Power 2:              " + std::to_string( this->getPowerOUT() )           + " W\n";
+                txt = txt + "Current 2:            " + std::to_string( this->getCurrentOUT2() )        + " A\n";
+                txt = txt + "AWG wire 2:           " + this->getWireOUT2()->getAWG()                   + "\n";
+                txt = txt + "Wire turns 2:         " + std::to_string( this->getWireTurnsOUT2() )      + "\n";
+                txt = txt + "Current Density 2:    " + std::to_string( this->getCurrentDensityOUT2() ) + " A/mm^2\n";
+                txt = txt + "\n";
+                txt = txt + "--> WIRE 2\n";
+                txt = txt + this->getWireOUT2()->toString();
+                txt = txt + "\n";
+            }
 
             txt = txt + "\n";
-            txt = txt + "\tOUTPUT\n";
-            txt = txt + "             Voltage: " + std::to_string( this->getVoltageOUT() ) + " V\n";
-            txt = txt + "               Power: " + std::to_string( this->getPowerOUT() ) + " W\n";
-            txt = txt + "             Current: " + std::to_string( this->getCurrentOUT() ) + " A\n";
-            txt = txt + "            AWG wire: " + this->getWireOUT()->getAWG() + "\n";
-            txt = txt + "          Wire turns: " + std::to_string( this->getWireTurnsOUT() ) + "\n";
-            txt = txt + "     Current Density: " + std::to_string( this->getCurrentDensityOUT() ) + " A/mm^2\n";
-
-            txt = txt + "\n";
-            txt = txt + "\tWIRE OUT\n";
-            txt = txt + this->getWireOUT()->toString();
-            txt = txt + "\n";
-
-            txt = txt + "\n";
-            txt = txt + "\tLAMINA\n";
+            txt = txt + "--------------------";
+            txt = txt + "LAMINA";
+            txt = txt + "--------------------\n";
             txt = txt + this->getLamina()->toString();
             txt = txt + "\n";
 
             txt = txt + "\n";
-            txt = txt + "\tBOBBIN\n";
+            txt = txt + "--------------------";
+            txt = txt + "BOBBIN";
+            txt = txt + "--------------------\n";
             txt = txt + this->getBobbin()->toString();
-            txt = txt + "\n";
 
             return txt;
         }
@@ -703,31 +1030,60 @@ class Transformer{
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">INPUT</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Voltage:</td><td><b>" + std::to_string( this->getVoltageIN() ) + " V</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getPowerIN() ) + " W</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Current:</td><td><b>" + std::to_string( this->getCurrentIN() ) + " A</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">AWG wire:</td><td><b>" + this->getWireIN()->getAWG() + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire turns:</td><td><b>" + std::to_string( this->getWireTurnsIN() ) + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensityIN() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Voltage 1:</td><td><b>" + std::to_string( this->getVoltageIN1() ) + " V</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current 1:</td><td><b>" + std::to_string( this->getCurrentIN1() ) + " A</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">AWG wire 1:</td><td><b>" + this->getWireIN1()->getAWG() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire turns 1:</td><td><b>" + std::to_string( this->getWireTurnsIN1() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current Density 1:</td><td><b>" + std::to_string( this->getCurrentDensityIN1() ) + " A/mm<sup>2</sup></b></td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
             txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
-            txt = txt + this->getWireIN()->toHTML();
+            txt = txt + this->getWireIN1()->toHTML();
             txt = txt + "\n\t</td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+
+            if( this->getPatternTransformer() > 1 ){
+                txt = txt + "\t<tr><td align=\"right\">Voltage 2:</td><td><b>" + std::to_string( this->getVoltageIN2() ) + " V</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Current 2:</td><td><b>" + std::to_string( this->getCurrentIN2() ) + " A</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">AWG wire 2:</td><td><b>" + this->getWireIN2()->getAWG() + "</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Wire turns 2:</td><td><b>" + std::to_string( this->getWireTurnsIN2() ) + "</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Current Density 2:</td><td><b>" + std::to_string( this->getCurrentDensityIN2() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+                txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+
+                txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+                txt = txt + this->getWireIN2()->toHTML();
+                txt = txt + "\n\t</td></tr>\n";
+                txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            }
 
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">OUTPUT</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Voltage:</td><td><b>" + std::to_string( this->getVoltageOUT() ) + " V</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getPowerOUT() ) + " W</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Current:</td><td><b>" + std::to_string( this->getCurrentOUT() ) + " A</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">AWG wire:</td><td><b>" + this->getWireOUT()->getAWG() + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Wire turns:</td><td><b>" + std::to_string( this->getWireTurnsOUT() ) + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensityOUT() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Voltage 1:</td><td><b>" + std::to_string( this->getVoltageOUT1() ) + " V</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current 1:</td><td><b>" + std::to_string( this->getCurrentOUT1() ) + " A</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">AWG wire 1:</td><td><b>" + this->getWireOUT1()->getAWG() + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Wire turns 1:</td><td><b>" + std::to_string( this->getWireTurnsOUT1() ) + "</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Current Density 1:</td><td><b>" + std::to_string( this->getCurrentDensityOUT1() ) + " A/mm<sup>2</sup></b></td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
             txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
-            txt = txt + this->getWireOUT()->toHTML();
+            txt = txt + this->getWireOUT1()->toHTML();
             txt = txt + "\n\t</td></tr>\n";
+
+            if( this->getPatternTransformer() % 2 == 1 ){
+                txt = txt + "\t<tr><td align=\"right\">Voltage 2:</td><td><b>" + std::to_string( this->getVoltageOUT2() ) + " V</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Current 2:</td><td><b>" + std::to_string( this->getCurrentOUT2() ) + " A</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">AWG wire 2:</td><td><b>" + this->getWireOUT2()->getAWG() + "</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Wire turns 2:</td><td><b>" + std::to_string( this->getWireTurnsOUT2() ) + "</b></td></tr>\n";
+                txt = txt + "\t<tr><td align=\"right\">Current Density 2:</td><td><b>" + std::to_string( this->getCurrentDensityOUT2() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+                txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+
+                txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+                txt = txt + this->getWireOUT2()->toHTML();
+                txt = txt + "\n\t</td></tr>\n";
+            }
 
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">LAMINA</td></tr>\n";
@@ -742,104 +1098,139 @@ class Transformer{
             txt = txt + "\n\t</td></tr>\n";
 
             txt = txt + "</table>";
+
             return txt;
         }
 
         std::string toSQL(){
             std::string sql = "INSERT INTO transformer";
-            sql = sql + "( \n\tfrequency, \n\tmagneticInduction, \n\tcurrentDensity, \n\taverageCurrentDensity, \n\tweigthIron, ";
-            sql = sql + "\n\tweightCopper, \n\tturnsAverageLength, \n\tcoilArea, \n\tironLoss, \n\tcopperLoss, \n\ttotalLoss, \n\tefficiency, ";
+            sql += "(frequency, magneticInduction, currentDensity, averageCurrentDensity, weigthIron, weightCopper, ";
+            sql += "turnsAverageLength, coilArea, windowAreaPerSectionTurns, ironLoss, copperLoss, totalLoss, efficiency, ";
+            sql += "patternTransformer, compensationLossTransformer, ";
+            sql += "powerIN, voltageIN1, currentIN1, currentDensityIN1, ";
+            sql += "wireIDIN1, wireTypeIN1, wireAWGIN1, wireTurnsIN1, wireDiameterIN1, wireTurnPerCmIN1, wireAreaIN1, ";
+            sql += "wireResistanceIN1, wireWeightIN1, wireLengthIN1, wireFrequencyIN1, wireMaterialIN1, ";
+            sql += "voltageIN2, currentIN2, currentDensityIN2, ";
+            sql += "wireIDIN2, wireTypeIN2, wireAWGIN2, wireTurnsIN2, wireDiameterIN2, wireTurnPerCmIN2, wireAreaIN2, ";
+            sql += "wireResistanceIN2, wireWeightIN2, wireLengthIN2, wireFrequencyIN2, wireMaterialIN2, ";
+            sql += "powerOUT, voltageOUT1, currentOUT1, currentDensityOUT1, ";
+            sql += "wireIDOUT1, wireTypeOUT1, wireAWGOUT1, wireTurnsOUT1, wireDiameterOUT1, wireTurnPerCmOUT1, wireAreaOUT1, ";
+            sql += "wireResistanceOUT1, wireWeightOUT1, wireLengthOUT1, wireFrequencyOUT1, wireMaterialOUT1, ";
+            sql += "voltageOUT2, currentOUT2, currentDensityOUT2, ";
+            sql += "wireIDOUT2, wireTypeOUT2, wireAWGOUT2, wireTurnsOUT2, wireDiameterOUT2, wireTurnPerCmOUT2, wireAreaOUT2, ";
+            sql += "wireResistanceOUT2, wireWeightOUT2, wireLengthOUT2, wireFrequencyOUT2, wireMaterialOUT2, ";
+            sql += "laminaID, laminaType, laminaWidth, laminaWindowArea, laminaWeight, laminaCompensation, ";
+            sql += "bobbinID, bobbinType, bobbinCode, bobbinProvider, bobbinWidth, bobbinLength, bobbinHeight, bobbinArea ) ";
+            sql += "VALUES (";
+            sql += std::to_string( this->getFrequency() ) + ", ";                   // frequency
+            sql += std::to_string( this->getMagneticInduction() ) + ", ";           // magneticInduction
+            sql += std::to_string( this->getCurrentDensity() ) + ", ";              // currentDensity
+            sql += std::to_string( this->getAverageCurrentDensity() ) + ", ";       // averageCurrentDensity
+            sql += std::to_string( this->getWeigthIron() ) + ", ";                  // weigthIron
+            sql += std::to_string( this->getWeightCopper() ) + ", ";                // weightCopper
+            sql += std::to_string( this->getTurnAverageLength() ) + ", ";           // turnsAverageLength
+            sql += std::to_string( this->getCoilArea() ) + ", ";                    // coilArea
+            sql += std::to_string( this->getWindowAreaPerSectionCu() ) + ", ";      // windowAreaPerSectionTurns
+            sql += std::to_string( this->getIronLoss() ) + ", ";                    // ironLoss
+            sql += std::to_string( this->getCopperLoss() ) + ", ";                  // copperLoss
+            sql += std::to_string( this->getTotalLoss() ) + ", ";                   // totalLoss
+            sql += std::to_string( this->getEfficiency() ) + ", ";                  // efficiency
 
-            sql = sql + "\n\tpatternTransformer, \n\tcompensationLossTransformer, ";
+            sql += std::to_string( this->getPatternTransformer() ) + ", ";          // patternTransformer
+            if( this->getApplyCompensationTransformer() ){
+                sql += std::to_string( this->getCompensationLossTransformer() ) + ", "; //compensationLossTransformer
+            }
+            else{
+                sql += "0.0, "; // compensationLossTransformer,
+            }
+            sql += std::to_string( this->getPowerIN() ) + ", ";                     // powerIN
 
-            sql = sql + "\n\tvoltageIN, \n\tpowerIN, \n\tcurrentIN, \n\tcurrentDensityIN, ";
+            sql += std::to_string( this->getVoltageIN1() ) + ",	";                  // voltageIN1
+            sql += std::to_string( this->getCurrentIN1() ) + ", ";                  // currentIN1
+            sql += std::to_string( this->getCurrentDensityIN1() ) + ", ";           // currentDensityIN1
+            sql += std::to_string( this->getWireIN1()->getId() ) + ", ";            // wireIDIN1
+            sql += "'" + this->getWireIN1()->getType() + "', ";                     // wireTypeIN1
+            sql += "'" + this->getWireIN1()->getAWG() + "', ";                      // wireAWGIN1
+            sql += std::to_string( this->getWireIN1()->getTurnsPerCm() ) + ", ";    // wireTurnsIN1
+            sql += std::to_string( this->getWireIN1()->getDiameter() ) + ", ";      // wireDiameterIN1
+            sql += std::to_string( this->getWireIN1()->getTurnsPerCm() ) + ", ";    // wireTurnPerCmIN1
+            sql += std::to_string( this->getWireIN1()->getArea() ) + ", ";          // wireAreaIN1
+            sql += std::to_string( this->getWireIN1()->getResistance() ) + ", ";    // wireResistanceIN1
+            sql += std::to_string( this->getWireIN1()->getWeight() ) + ", ";        // wireWeightIN1
+            sql += std::to_string( this->getWireIN1()->getLength() ) + ", ";        // wireLengthIN1
+            sql += std::to_string( this->getWireIN1()->getFrequency() ) + ", ";     // wireFrequencyIN1
+            sql += "'" + this->getWireIN1()->getMaterial() + "', ";                 // wireMaterialIN1
 
-            sql = sql + "\n\twireIDIN, \n\twireAWGIN, \n\twireTurnsIN, \n\twireDiameterIN, \n\twireTurnPerCmIN, \n\twireAreaIN, ";
-            sql = sql + "\n\twireResistanceIN, \n\twireWeightIN, \n\twireLengthIN, \n\twireFrequencyIN, \n\twireMaterialIN, ";
+            sql += std::to_string( this->getVoltageIN2() ) + ",	";                  // voltageIN2
+            sql += std::to_string( this->getCurrentIN2() ) + ", ";                  // currentIN2
+            sql += std::to_string( this->getCurrentDensityIN2() ) + ", ";           // currentDensityIN2
+            sql += std::to_string( this->getWireIN2()->getId() ) + ", ";            // wireIDIN2
+            sql += "'" + this->getWireIN2()->getType() + "', ";                     // wireTypeIN2
+            sql += "'" + this->getWireIN2()->getAWG() + "', ";                      // wireAWGIN2
+            sql += std::to_string( this->getWireIN2()->getTurnsPerCm() ) + ", ";    // wireTurnsIN2
+            sql += std::to_string( this->getWireIN2()->getDiameter() ) + ", ";      // wireDiameterIN2
+            sql += std::to_string( this->getWireIN2()->getTurnsPerCm() ) + ", ";    // wireTurnPerCmIN2
+            sql += std::to_string( this->getWireIN2()->getArea() ) + ", ";          // wireAreaIN2
+            sql += std::to_string( this->getWireIN2()->getResistance() ) + ", ";    // wireResistanceIN2
+            sql += std::to_string( this->getWireIN2()->getWeight() ) + ", ";        // wireWeightIN2
+            sql += std::to_string( this->getWireIN2()->getLength() ) + ", ";        // wireLengthIN2
+            sql += std::to_string( this->getWireIN2()->getFrequency() ) + ", ";     // wireFrequencyIN2
+            sql += "'" + this->getWireIN2()->getMaterial() + "', ";                 // wireMaterialIN2
 
-            sql = sql + "\n\tvoltageOUT, \n\tpowerOUT, \n\tcurrentOUT, \n\tcurrentDensityOUT, ";
+            sql += std::to_string( this->getPowerOUT() ) + ", ";                    // powerOUT
 
-            sql = sql + "\n\twireIDOUT, \n\twireAWGOUT, \n\twireTurnsOUT, \n\twireDiameterOUT, \n\twireTurnPerCmOUT, \n\twireAreaOUT, ";
-            sql = sql + "\n\twireResistanceOUT, \n\twireWeightOUT, \n\twireLengthOUT, \n\twireFrequencyOUT, \n\twireMaterialOUT, ";
+            sql += std::to_string( this->getVoltageOUT1() ) + ",	";              // voltageOUT1
+            sql += std::to_string( this->getCurrentOUT1() ) + ", ";                 // currentOUT1
+            sql += std::to_string( this->getCurrentDensityOUT1() ) + ", ";          // currentDensityOUT1
+            sql += std::to_string( this->getWireOUT1()->getId() ) + ", ";           // wireIDOUT1
+            sql += "'" + this->getWireOUT1()->getType() + "', ";                    // wireTypeOUT1
+            sql += "'" + this->getWireOUT1()->getAWG() + "', ";                     // wireAWGOUT1
+            sql += std::to_string( this->getWireOUT1()->getTurnsPerCm() ) + ", ";   // wireTurnsOUT1
+            sql += std::to_string( this->getWireOUT1()->getDiameter() ) + ", ";     // wireDiameterOUT1
+            sql += std::to_string( this->getWireOUT1()->getTurnsPerCm() ) + ", ";   // wireTurnPerCmOUT1
+            sql += std::to_string( this->getWireOUT1()->getArea() ) + ", ";         // wireAreaOUT1
+            sql += std::to_string( this->getWireOUT1()->getResistance() ) + ", ";   // wireResistanceOUT1
+            sql += std::to_string( this->getWireOUT1()->getWeight() ) + ", ";       // wireWeightOUT1
+            sql += std::to_string( this->getWireOUT1()->getLength() ) + ", ";       // wireLengthOUT1
+            sql += std::to_string( this->getWireOUT1()->getFrequency() ) + ", ";    // wireFrequencyOUT1
+            sql += "'" + this->getWireOUT1()->getMaterial() + "', ";                // wireMaterialOUT1
 
-            sql = sql + "\n\tlaminaID, \n\tlaminaType, \n\tlaminaWidth, \n\tlaminaWindowArea, \n\tlaminaWeight, \n\tlaminaCompensation, ";
+            sql += std::to_string( this->getVoltageOUT2() ) + ",	";              // voltageOUT2
+            sql += std::to_string( this->getCurrentOUT2() ) + ", ";                 // currentOUT2
+            sql += std::to_string( this->getCurrentDensityOUT2() ) + ", ";          // currentDensityOUT2
+            sql += std::to_string( this->getWireOUT2()->getId() ) + ", ";           // wireIDOUT2
+            sql += "'" + this->getWireOUT2()->getType() + "', ";                    // wireTypeOUT2
+            sql += "'" + this->getWireOUT2()->getAWG() + "', ";                     // wireAWGOUT2
+            sql += std::to_string( this->getWireOUT2()->getTurnsPerCm() ) + ", ";   // wireTurnsOUT2
+            sql += std::to_string( this->getWireOUT2()->getDiameter() ) + ", ";     // wireDiameterOUT2
+            sql += std::to_string( this->getWireOUT2()->getTurnsPerCm() ) + ", ";   // wireTurnPerCmOUT2
+            sql += std::to_string( this->getWireOUT2()->getArea() ) + ", ";         // wireAreaOUT2
+            sql += std::to_string( this->getWireOUT2()->getResistance() ) + ", ";   // wireResistanceOUT2
+            sql += std::to_string( this->getWireOUT2()->getWeight() ) + ", ";       // wireWeightOUT2
+            sql += std::to_string( this->getWireOUT2()->getLength() ) + ", ";       // wireLengthOUT2
+            sql += std::to_string( this->getWireOUT2()->getFrequency() ) + ", ";    // wireFrequencyOUT2
+            sql += "'" + this->getWireOUT2()->getMaterial() + "', ";                // wireMaterialOUT2
 
-            sql = sql + "\n\tbobbinID, \n\tbobbinType, \n\tbobbinCode, \n\tbobbinProvider, \n\tbobbinWidth, \n\tbobbinLength, ";
-            sql = sql + "\n\tbobbinHeight, \n\tbobbinArea, \n\tbobbinVolume, ";
+            sql += std::to_string( this->getLamina()->getId() ) + ", ";             // laminaID
+            sql += "'" + this->getLamina()->getType() + "', ";                       // laminaType
+            sql += std::to_string( this->getLamina()->getWidth() ) + ", ";           // laminaWidth
+            sql += std::to_string( this->getLamina()->getWindowArea() ) + ", ";      // laminaWindowArea
+            sql += std::to_string( this->getLamina()->getWeight() ) + ", ";          // laminaWeight
+            if( this->getApplyCompensationLamina() ){
+                sql += std::to_string( this->getLamina()->getThicknessPercent() ) + ", ";// laminaCompensation
+            }
+            else{
+                sql += "0.0, "; // laminaCompensation,
+            }
 
-            sql = sql + "\n\tstateProject \n) ";
-
-            sql = sql + "\nVALUES";
-
-            sql = sql + "(\n\t" + std::to_string( this->getFrequency() ) + ", -- frequency";
-            sql = sql + "\n\t" + std::to_string( this->getMagneticInduction() ) + ", -- magnetic induction";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentDensity() ) + ", -- current density";
-            sql = sql + "\n\t" + std::to_string( this->getAverageCurrentDensity() ) + ", -- average current density";
-            sql = sql + "\n\t" + std::to_string( this->getWeigthIron() ) + ", -- weigth iron";
-            sql = sql + "\n\t" + std::to_string( this->getWeightCopper() ) + ", -- weight copper";
-            sql = sql + "\n\t" + std::to_string( this->getTurnAverageLength() ) + ", -- turn average length";
-            sql = sql + "\n\t" + std::to_string( this->getCoilArea() ) + ", -- coil area";
-            sql = sql + "\n\t" + std::to_string( this->getIronLoss() ) + ", -- iron loss";
-            sql = sql + "\n\t" + std::to_string( this->getCopperLoss() ) + ", -- copper loss";
-            sql = sql + "\n\t" + std::to_string( this->getTotalLoss() ) + ", -- total loss";
-            sql = sql + "\n\t" + std::to_string( this->getEfficiency() ) + ", -- efficiency";
-
-            sql = sql + "\n\t" + std::to_string( this->getPatternTransformer() ) + ", -- pattern transformer";
-            sql = sql + "\n\t" + std::to_string( this->getCompensationLossTransformer() ) + ", -- compensation loss transformer";
-
-            sql = sql + "\n\t" + std::to_string( this->getVoltageIN() ) + ", -- voltage IN";
-            sql = sql + "\n\t" + std::to_string( this->getPowerIN() ) + ", -- power IN";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentIN() ) + ", -- current IN";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentDensityIN() ) + ", -- current density IN";
-
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getId() ) + ", -- wire ID IN";
-            sql = sql + "\n\t'" + this->getWireIN()->getAWG() + "', -- wire AWG IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireTurnsIN() ) + ", -- wire turns IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getDiameter() ) + ", -- wire diameter IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getTurnsPerCm() ) + ", -- wire turn per cm IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getArea() ) + ", -- wire area IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getResistance() ) + ", -- wire resistance IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getWeight() ) + ", -- wire weight IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getLength() ) + ", -- wire length IN";
-            sql = sql + "\n\t" + std::to_string( this->getWireIN()->getFrequency() ) + ", -- wire frequency IN";
-            sql = sql + "\n\t'" + this->getWireIN()->getMaterial() + "', -- wire material IN";
-
-            sql = sql + "\n\t" + std::to_string( this->getVoltageIN() ) + ", -- voltage  OUT";
-            sql = sql + "\n\t" + std::to_string( this->getPowerIN() ) + ", -- power OUT";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentIN() ) + ", -- current OUT";
-            sql = sql + "\n\t" + std::to_string( this->getCurrentDensityIN() ) + ", -- current density OUT";
-
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getId() ) + ", -- wire ID OUT";
-            sql = sql + "\n\t'" + this->getWireOUT()->getAWG() + "', -- wire AWG OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireTurnsOUT() ) + ", -- wire turns OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getDiameter() ) + ", -- wire diameter OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getTurnsPerCm() ) + ", -- wire turn per cm OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getArea() ) + ", -- wire area OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getResistance() ) + ", -- wire resistance OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getWeight() ) + ", -- wire weight OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getLength() ) + ", -- wire length OUT";
-            sql = sql + "\n\t" + std::to_string( this->getWireOUT()->getFrequency() ) + ", -- wire frequency OUT";
-            sql = sql + "\n\t'" + this->getWireOUT()->getMaterial() + "', -- wire material OUT";
-
-            sql = sql + "\n\t" + std::to_string( this->getLamina()->getId() ) + ", -- lamina ID";
-            sql = sql + "\n\t'" + this->getLamina()->getType() + "', -- lamina type";
-            sql = sql + "\n\t" + std::to_string( this->getLamina()->getWidth() ) + ", -- lamina width";
-            sql = sql + "\n\t" + std::to_string( this->getLamina()->getWindowArea() ) + ", -- lamina window area";
-            sql = sql + "\n\t" + std::to_string( this->getLamina()->getWeight() ) + ", -- lamina weight";
-            sql = sql + "\n\t" + std::to_string( this->getLamina()->getThicknessPercent() ) + ", -- lamina compensation";
-
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getId() ) + ", -- bobbin ID";
-            sql = sql + "\n\t'" + this->getBobbin()->getType() + "', -- bobbin type";
-            sql = sql + "\n\t'" + this->getBobbin()->getCode() + "', -- bobbin code";
-            sql = sql + "\n\t'" + this->getBobbin()->getProvider() + "', -- bobbin provider";
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getWidth() ) + ", -- bobbin width";
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getLength() ) + ", -- bobbin length";
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getHeight() ) + ", -- bobbin height";
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getArea() ) + ", -- bobbin area";
-            sql = sql + "\n\t" + std::to_string( this->getBobbin()->getVolume() ) + ", -- bobbin volume";
-
-            sql = sql + "\n\t'" + (this->getAutomatic() ? "automatic" : "manual") +  "' -- project create";
-            sql = sql + "\n);";
+            sql += std::to_string( this->getBobbin()->getId() ) + ", ";              // bobbinID
+            sql += "'" + this->getBobbin()->getType() + "', ";                       // bobbinType
+            sql += "'" + this->getBobbin()->getCode() + "', ";                       // bobbinCode
+            sql += "'" + this->getBobbin()->getProvider() + "', ";                   // bobbinProvider
+            sql += std::to_string( this->getBobbin()->getWidth() ) + ", ";           // bobbinWidth
+            sql += std::to_string( this->getBobbin()->getLength() ) + ", ";          // bobbinLength
+            sql += std::to_string( this->getBobbin()->getHeight() ) + ", ";          // bobbinHeight
+            sql += std::to_string( this->getBobbin()->getArea() ) + " )";            // bobbinArea
 
             return sql;
         }

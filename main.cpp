@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 
     /*
         Em calculate transformador
+        -> verificar o delay ao precisar dar dois cliques no botao voltar apos excluir um projeto de transformador
+
         campos a serem alimentados pelos usuario //
         -> potencia de saida
         -> tensao de saida

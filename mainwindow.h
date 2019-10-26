@@ -20,8 +20,6 @@ public:
 public slots:
     void on_action_newProject_triggered();
     void on_action_openProject_triggered();
-    void on_action_saveProject_triggered();
-    void on_action_closeProject_triggered();
     void on_action_exit_triggered();
 
     void on_action_preferences_triggered();

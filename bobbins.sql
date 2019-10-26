@@ -6,7 +6,7 @@
 -- temperatura -- temperatura de trabalho do carretel em °C
 -- fornecedor -- nome do fornecedor do carretel
 
-CREATE TABLE bobbins (
+CREATE TABLE IF NOT EXISTS bobbins (
 	id                  INTEGER      PRIMARY KEY AUTOINCREMENT,
 	code_bobbin         VARCHAR(64),
 	width_bobbin        DOUBLE,
