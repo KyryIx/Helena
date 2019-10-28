@@ -29,7 +29,7 @@ class Bobbin{
             this->id = id;
 		}
 
-		unsigned int getId(){
+        unsigned int getId() const{
             return this->id;
 		}
 
@@ -37,7 +37,7 @@ class Bobbin{
             this->type = type;
 		}
 
-		std::string getType(){
+        std::string getType() const{
             return this->type;
 		}
 
@@ -45,7 +45,7 @@ class Bobbin{
             this->code = code;
         }
 
-        std::string getCode(){
+        std::string getCode() const{
             return this->code;
         }
 
@@ -53,7 +53,7 @@ class Bobbin{
             this->provider = provider;
         }
 
-        std::string getProvider(){
+        std::string getProvider() const{
             return this->provider;
         }
 
@@ -61,7 +61,7 @@ class Bobbin{
             this->width = width;
 		}
 
-		double getWidth(){
+        double getWidth() const{
             return this->width;
 		}
 
@@ -69,7 +69,7 @@ class Bobbin{
             this->length = length;
 		}
 
-		double getLength(){
+        double getLength() const{
             return this->length;
 		}
 
@@ -77,19 +77,19 @@ class Bobbin{
             this->height = height;
 		}
 
-		double getHeight(){
+        double getHeight() const{
             return this->height;
 		}
 
-		double getArea(){
+        double getArea() const{
             return this->getWidth() * this->getLength();
 		}
 
-		double getVolume(){
+        double getVolume() const{
             return this->getWidth() * this->getLength() * this->getHeight();
 		}
 
-		std::string toString(){
+        std::string toString() const{
 			std::string txt = "";
             txt = txt + "Bobbin ID:       " + std::to_string( this->getId() )     + "\n";
             txt = txt + "Bobbin Type:     " + this->getType()                     + "\n";
@@ -104,7 +104,7 @@ class Bobbin{
 			return txt;
 		}
 
-        std::string toHTML(){
+        std::string toHTML() const{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"bobbin\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Bobbin ID:</td><td><b>" + std::to_string( this->getId() )     + "</b></td></tr>\n";
@@ -121,7 +121,7 @@ class Bobbin{
             return txt;
         }
 
-        std::string toSQL(){
+        std::string toSQL() const{
             std::string txt = "";
             txt = txt + "INSERT INTO bobbins (";
             txt = txt + "code_bobbin, width_bobbin, width_error_bobbin, length_bobbin, length_error_bobbin, ";

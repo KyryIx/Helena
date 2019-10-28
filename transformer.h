@@ -138,7 +138,7 @@ class Transformer{
             this->applyCompensationLamina = state;
         }
 
-        bool getApplyCompensationLamina(){
+        bool getApplyCompensationLamina() const{
             return this->applyCompensationLamina;
         }
 
@@ -150,7 +150,7 @@ class Transformer{
             this->id = id;
         }
 
-        unsigned int getID(){
+        unsigned int getID() const{
             return this->id;
         }
 
@@ -158,7 +158,7 @@ class Transformer{
             this->frequency = frequency;
         }
 
-        double getFrequency(){
+        double getFrequency() const{
             return this->frequency;
         }
 
@@ -166,7 +166,7 @@ class Transformer{
             this->magneticInduction = magneticInduction;
         }
 
-        double getMagneticInduction(){
+        double getMagneticInduction() const{
             return this->magneticInduction;
         }
 
@@ -174,7 +174,7 @@ class Transformer{
             this->currentDensity = currentDensity;
         }
 
-        double getCurrentDensity(){
+        double getCurrentDensity() const{
             return this->currentDensity;
         }
 
@@ -182,11 +182,11 @@ class Transformer{
             this->averageCurrentDensity = averageCurrentDensity;
         }
 
-        double getAverageCurrentDensity(){
+        double getAverageCurrentDensity() const{
             return this->averageCurrentDensity;
         }
 
-        double getAverageCurrentDensityAuto(){
+        double getAverageCurrentDensityAuto() const{
             switch( this->getPatternTransformer() ){
                 case 0:
                     return (this->getCurrentDensityIN1() + this->getCurrentDensityOUT1()) / 2.0;
@@ -205,11 +205,11 @@ class Transformer{
             this->weigthIron = weigthIron;
         }
 
-        double getWeigthIron(){
+        double getWeigthIron() const{
             return this->weigthIron;
         }
 
-        double getWeigthIronAuto(){
+        double getWeigthIronAuto() const{
             return (this->getBobbin()->getLength() / 10.0) * this->getLamina()->getWeight();
         }
 
@@ -217,11 +217,11 @@ class Transformer{
             this->weightCopper = weightCopper;
         }
 
-        double getWeightCopper(){
+        double getWeightCopper() const{
             return this->weightCopper;
         }
 
-        double getWeightCopperAuto(){
+        double getWeightCopperAuto() const{
             return (this->getCoilArea()/100.0) * (this->getTurnAverageLength()/10.0) * 8.9 / 1000.0;
         }
 
@@ -229,11 +229,11 @@ class Transformer{
             this->turnsAverageLength = turnsAverageLength;
         }
 
-        double getTurnAverageLength(){
+        double getTurnAverageLength() const{
             return this->turnsAverageLength;
         }
 
-        double getTurnAverageLengthAuto(){
+        double getTurnAverageLengthAuto() const{
             return (2 + 0.5 * PI) * this->getLamina()->getWidth() + 2 * this->getBobbin()->getLength();
         }
 
@@ -241,11 +241,11 @@ class Transformer{
             this->coilArea = coilArea;
         }
 
-        double getCoilArea(){
+        double getCoilArea() const{
             return this->coilArea;
         }
 
-        double getCoilAreaAuto(){
+        double getCoilAreaAuto() const{
             switch( this->getPatternTransformer() ){
                 case 3:
                     return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsIN2() * this->getWireIN2()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea() + this->getWireTurnsOUT2() * this->getWireOUT2()->getArea();
@@ -264,11 +264,11 @@ class Transformer{
             this->ironLoss = ironLoss;
         }
 
-        double getIronLoss(){
+        double getIronLoss() const{
             return this->ironLoss;
         }
 
-        double getIronLossAuto(){
+        double getIronLossAuto() const{
             // to acesita 145, thickness of 0,5 mm and frequency 50 Hz
             double W_kg10 = 1.35;
             double wfe = W_kg10 * pow(this->getMagneticInduction() / 10000.0, 2.0);
@@ -279,11 +279,11 @@ class Transformer{
             this->copperLoss = copperLoss;
         }
 
-        double getCopperLoss(){
+        double getCopperLoss() const{
             return this->copperLoss;
         }
 
-        double getCopperLossAuto(){
+        double getCopperLossAuto() const{
             double rho = 0.0216; // to 75 degree //
             double wcu = pow(this->getAverageCurrentDensity(), 2.0) * (rho / 8.9) * 1e3;
             return wcu * this->getWeightCopper();
@@ -293,11 +293,11 @@ class Transformer{
             this->totalLoss = totalLoss;
         }
 
-        double getTotalLoss(){
+        double getTotalLoss() const{
             return this->totalLoss;
         }
 
-        double getTotalLossAuto(){
+        double getTotalLossAuto() const{
             return this->getIronLoss() + this->getCopperLoss();
         }
 
@@ -305,11 +305,11 @@ class Transformer{
             this->efficiency = efficiency;
         }
 
-        double getEfficiency(){
+        double getEfficiency() const{
             return this->efficiency;
         }
 
-        double getEfficiencyAuto(){
+        double getEfficiencyAuto() const{
             try{
                 return this->getPowerOUT() / (this->getPowerOUT() + this->getIronLoss() + this->getCopperLoss());
             }
@@ -322,11 +322,11 @@ class Transformer{
             this->patternTransformer = patternTransformer;
         }
 
-        unsigned int getPatternTransformer(){
+        unsigned int getPatternTransformer() const{
             return this->patternTransformer;
         }
 
-        std::string getPatternTransformerName(){
+        std::string getPatternTransformerName() const{
             if( this->getPatternTransformer() == 0 )
                 return "1 primary and 1 secondary";
             else if( this->getPatternTransformer() == 1 )
@@ -343,7 +343,7 @@ class Transformer{
             this->applyCompensationTransformer = state;
         }
 
-        bool getApplyCompensationTransformer(){
+        bool getApplyCompensationTransformer() const{
             return this->applyCompensationTransformer;
         }
 
@@ -351,7 +351,7 @@ class Transformer{
             this->compensationLossTransformer = compensationLossTransformer;
         }
 
-        double getCompensationLossTransformer(){
+        double getCompensationLossTransformer() const{
             return this->compensationLossTransformer;
         }
 
@@ -359,7 +359,7 @@ class Transformer{
             this->windowAreaPerSectionCu = windowAreaPerSectionCu;
         }
 
-        double getWindowAreaPerSectionCu(){
+        double getWindowAreaPerSectionCu() const{
             return this->windowAreaPerSectionCu;
         }
 
@@ -367,7 +367,7 @@ class Transformer{
             this->voltageIN_1 = voltage;
         }
 
-        double getVoltageIN1(){
+        double getVoltageIN1() const{
             return this->voltageIN_1;
         }
 
@@ -375,7 +375,7 @@ class Transformer{
             this->voltageIN_2 = voltage;
         }
 
-        double getVoltageIN2(){
+        double getVoltageIN2() const{
             return this->voltageIN_2;
         }
 
@@ -383,11 +383,11 @@ class Transformer{
             this->powerIN = power;
         }
 
-        double getPowerIN(){
+        double getPowerIN() const{
             return this->powerIN;
         }
 
-        double getPowerINAuto(){
+        double getPowerINAuto() const{
             if( this->getApplyCompensationTransformer() ){
                 return (1.0 + this->getCompensationLossTransformer()/100.0) * this->getPowerOUT();
             }
@@ -400,11 +400,11 @@ class Transformer{
             this->currentIN_1 = current;
         }
 
-        double getCurrentIN1(){
+        double getCurrentIN1() const{
             return this->currentIN_1;
         }
 
-        double getCurrentIN1Auto(){
+        double getCurrentIN1Auto() const{
             try{
                 return this->getPowerIN() / this->getVoltageIN1();
             }
@@ -417,11 +417,11 @@ class Transformer{
             this->currentIN_2 = current;
         }
 
-        double getCurrentIN2(){
+        double getCurrentIN2() const{
             return this->currentIN_2;
         }
 
-        double getCurrentIN2Auto(){
+        double getCurrentIN2Auto() const{
             try{
                 return this->getPowerIN() / this->getVoltageIN2();
             }
@@ -434,11 +434,11 @@ class Transformer{
             this->currentDensityIN_1 = currentDensity;
         }
 
-        double getCurrentDensityIN1(){
+        double getCurrentDensityIN1() const{
             return this->currentDensityIN_1;
         }
 
-        double getCurrentDensityIN1Auto(){
+        double getCurrentDensityIN1Auto() const{
             try{
                 return this->getCurrentIN1() / this->getWireIN1()->getArea();
             }
@@ -451,11 +451,11 @@ class Transformer{
             this->currentDensityIN_2 = currentDensity;
         }
 
-        double getCurrentDensityIN2(){
+        double getCurrentDensityIN2() const{
             return this->currentDensityIN_2;
         }
 
-        double getCurrentDensityIN2Auto(){
+        double getCurrentDensityIN2Auto() const{
             try{
                 return this->getCurrentIN2() / this->getWireIN2()->getArea();
             }
@@ -468,7 +468,7 @@ class Transformer{
             this->wireIN_1 = wire;
         }
 
-        Wire* getWireIN1(){
+        Wire* getWireIN1() const{
             return this->wireIN_1;
         }
 
@@ -476,7 +476,7 @@ class Transformer{
             this->wireIN_2 = wire;
         }
 
-        Wire* getWireIN2(){
+        Wire* getWireIN2() const{
             return this->wireIN_2;
         }
 
@@ -484,11 +484,11 @@ class Transformer{
             this->wireTurnsIN_1 = turns;
         }
 
-        unsigned int getWireTurnsIN1(){
+        unsigned int getWireTurnsIN1() const{
             return this->wireTurnsIN_1;
         }
 
-        unsigned int getWireTurnsIN1Auto(){
+        unsigned int getWireTurnsIN1Auto() const{
             try{
                 unsigned int N = 0;
                 if( this->applyCompensationTransformer ){
@@ -508,11 +508,11 @@ class Transformer{
             this->wireTurnsIN_2 = turns;
         }
 
-        unsigned int getWireTurnsIN2(){
+        unsigned int getWireTurnsIN2() const{
             return this->wireTurnsIN_2;
         }
 
-        unsigned int getWireTurnsIN2Auto(){
+        unsigned int getWireTurnsIN2Auto() const{
             try{
                 unsigned int N = 0;
                 if( this->applyCompensationTransformer ){
@@ -532,7 +532,7 @@ class Transformer{
             this->voltageOUT_1 = voltage;
         }
 
-        double getVoltageOUT1(){
+        double getVoltageOUT1() const{
             return this->voltageOUT_1;
         }
 
@@ -540,7 +540,7 @@ class Transformer{
             this->voltageOUT_2 = voltage;
         }
 
-        double getVoltageOUT2(){
+        double getVoltageOUT2() const{
             return this->voltageOUT_2;
         }
 
@@ -548,7 +548,7 @@ class Transformer{
             this->powerOUT = power;
         }
 
-        double getPowerOUT(){
+        double getPowerOUT() const{
             return this->powerOUT;
         }
 
@@ -556,11 +556,11 @@ class Transformer{
             this->currentOUT_1 = current;
         }
 
-        double getCurrentOUT1(){
+        double getCurrentOUT1() const{
             return this->currentOUT_1;
         }
 
-        double getCurrentOUT1Auto(){
+        double getCurrentOUT1Auto() const{
             try{
                 return this->getPowerOUT() / this->getVoltageOUT1();
             }
@@ -573,11 +573,11 @@ class Transformer{
             this->currentOUT_2 = current;
         }
 
-        double getCurrentOUT2(){
+        double getCurrentOUT2() const{
             return this->currentOUT_2;
         }
 
-        double getCurrentOUT2Auto(){
+        double getCurrentOUT2Auto() const{
             try{
                 return this->getPowerOUT() / this->getVoltageOUT2();
             }
@@ -590,11 +590,11 @@ class Transformer{
             this->currentDensityOUT_1 = currentDensity;
         }
 
-        double getCurrentDensityOUT1(){
+        double getCurrentDensityOUT1() const{
             return currentDensityOUT_1;
         }
 
-        double getCurrentDensityOUT1Auto(){
+        double getCurrentDensityOUT1Auto() const{
             try{
                 return this->getCurrentOUT1() / this->getWireOUT1()->getArea();
             }
@@ -608,11 +608,11 @@ class Transformer{
             this->currentDensityOUT_2 = currentDensity;
         }
 
-        double getCurrentDensityOUT2(){
+        double getCurrentDensityOUT2() const{
             return currentDensityOUT_2;
         }
 
-        double getCurrentDensityOUT2Auto(){
+        double getCurrentDensityOUT2Auto() const{
             try{
                 return this->getCurrentOUT2() / this->getWireOUT2()->getArea();
             }
@@ -625,7 +625,7 @@ class Transformer{
             this->wireOUT_1 = wire;
         }
 
-        Wire* getWireOUT1(){
+        Wire* getWireOUT1() const{
             return this->wireOUT_1;
         }
 
@@ -633,7 +633,7 @@ class Transformer{
             this->wireOUT_2 = wire;
         }
 
-        Wire* getWireOUT2(){
+        Wire* getWireOUT2() const{
             return this->wireOUT_2;
         }
 
@@ -641,11 +641,11 @@ class Transformer{
             this->wireTurnsOUT_1 = turns;
         }
 
-        unsigned int getWireTurnsOUT1(){
+        unsigned int getWireTurnsOUT1() const{
             return this->wireTurnsOUT_1;
         }
 
-        unsigned int getWireTurnsOUT1Auto(){
+        unsigned int getWireTurnsOUT1Auto() const{
             try{
                 unsigned int N = 0;
                 if( this->applyCompensationTransformer ){
@@ -665,11 +665,11 @@ class Transformer{
             this->wireTurnsOUT_2 = turns;
         }
 
-        unsigned int getWireTurnsOUT2(){
+        unsigned int getWireTurnsOUT2() const{
             return this->wireTurnsOUT_2;
         }
 
-        unsigned int getWireTurnsOUT2Auto(){
+        unsigned int getWireTurnsOUT2Auto() const{
             try{
                 unsigned int N = 0;
                 if( this->applyCompensationTransformer ){
@@ -689,11 +689,11 @@ class Transformer{
             this->magneticSection = magneticSection;
         }
 
-        double getMagneticSection(){
+        double getMagneticSection() const{
             return this->magneticSection;
         }
 
-        double getMagneticSectionAuto(){
+        double getMagneticSectionAuto() const{
             double SM = this->getPowerOUT() / this->getFrequency();
 
             switch( this->getPatternTransformer() ){
@@ -727,11 +727,11 @@ class Transformer{
             this->geometricSection = geometricSection;
         }
 
-        double getGeometricSection(){
+        double getGeometricSection() const{
             return this->geometricSection;
         }
 
-        double getGeometricSectionAuto(){
+        double getGeometricSectionAuto() const{
             if( this->getApplyCompensationLamina() ){
                 return (1 + this->getLamina()->getThicknessPercent()/100.0) * this->getMagneticSectionAuto();
             }
@@ -742,7 +742,7 @@ class Transformer{
             this->lamina = lamina;
         }
 
-        Lamina* getLamina(){
+        Lamina* getLamina() const{
             return this->lamina;
         }
 
@@ -750,7 +750,7 @@ class Transformer{
             this->bobbin = bobbin;
         }
 
-        Bobbin* getBobbin(){
+        Bobbin* getBobbin() const{
             return this->bobbin;
         }
 
@@ -758,7 +758,7 @@ class Transformer{
             this->state = state;
         }
 
-        bool getState(){
+        bool getState() const{
             return this->state;
         }
 
@@ -906,7 +906,7 @@ class Transformer{
             }
         }
 
-        std::string toString(){
+        std::string toString() const{
             std::string txt = "";
             txt = txt + "--------------------";
             txt = txt + "GENERAL INFORMATIONS";
@@ -998,7 +998,7 @@ class Transformer{
             return txt;
         }
 
-        std::string toHTML(){
+        std::string toHTML() const{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"transformer\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
@@ -1102,7 +1102,7 @@ class Transformer{
             return txt;
         }
 
-        std::string toSQL(){
+        std::string toSQL() const{
             std::string sql = "INSERT INTO transformer";
             sql += "(frequency, magneticInduction, currentDensity, averageCurrentDensity, weigthIron, weightCopper, ";
             sql += "turnsAverageLength, coilArea, windowAreaPerSectionTurns, ironLoss, copperLoss, totalLoss, efficiency, ";

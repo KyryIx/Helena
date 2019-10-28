@@ -38,7 +38,7 @@ class DataBase
             this->query = QSqlQuery( this->database );
         }
 
-        bool getStateConnection(){
+        bool getStateConnection() const{
             return this->stateConnection;
         }
 
@@ -78,11 +78,11 @@ class DataBase
             return 0;
         }
 
-        int numberRowsAffected(){
+        int numberRowsAffected() const{
             return this->query.numRowsAffected();
         }
 
-        int numberRowsReturned(){
+        int numberRowsReturned() const{
             return this->query.size();
         }
 
@@ -94,7 +94,7 @@ class DataBase
             return this->query.next();
         }
 
-        std::string returnValue( std::string field ){
+        std::string returnValue( std::string field ) const{
             return this->query.value( field.c_str() ).toString().toStdString();
         }
 

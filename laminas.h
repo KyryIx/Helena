@@ -8,7 +8,7 @@ class Laminas{
     private:
         DataBase* database;
 
-        std::string comparation( char option_comparation ){
+        std::string comparation( char option_comparation ) const{
             std::string str = "";
             switch( option_comparation ){
                 case 'e': // equal //
@@ -24,7 +24,7 @@ class Laminas{
             return str;
         }
 
-        std::string queryByIndex( unsigned int index, std::string field ){
+        std::string queryByIndex( unsigned int index, std::string field ) const{
             // SELECT
             //         [field]
             // FROM
@@ -38,7 +38,7 @@ class Laminas{
             return sql;
         }
 
-        std::string queryByTypeAndField( std::string type, std::string field, double value, char comparation, std::string order="ASC" ){
+        std::string queryByTypeAndField( std::string type, std::string field, double value, char comparation, std::string order="ASC" ) const{
             // SELECT
             //          id
             // FROM
@@ -69,7 +69,7 @@ class Laminas{
             this->database = database;
         }
 
-        std::string getType( unsigned int index ){
+        std::string getType( unsigned int index ) const{
             std::string type_tmp = "";
             // SELECT type_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "type_lamina" ) ) > -1 ){
@@ -80,7 +80,7 @@ class Laminas{
             return type_tmp;
         }
 
-        double getWidth( unsigned int index ){
+        double getWidth( unsigned int index ) const{
             double thickness = 0.0;
             // SELECT width_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "width_lamina" ) ) > -1 ){
@@ -91,7 +91,7 @@ class Laminas{
             return thickness;
         }
 
-        double getWindowArea( unsigned int index ){
+        double getWindowArea( unsigned int index ) const{
             double windowArea = 0.0;
             // SELECT area_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "area_lamina" ) ) > -1 ){
@@ -102,7 +102,7 @@ class Laminas{
             return windowArea;
         }
 
-        double getWeight( unsigned int index ){
+        double getWeight( unsigned int index ) const{
             double weight = 0.0;
             // SELECT weight_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "weight_lamina" ) ) > -1 ){
@@ -113,7 +113,7 @@ class Laminas{
             return weight;
         }
 
-        double getThicknessPercent( unsigned int index ){
+        double getThicknessPercent( unsigned int index ) const{
             double thicknessPercent = 0.0;
             // SELECT thicknessPercent_lamina FROM laminas WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "thicknessPercent_lamina" ) ) > -1 ){
@@ -124,7 +124,7 @@ class Laminas{
             return thicknessPercent;
         }
 
-        unsigned int findIndexByWidth( double width, std::string type="padrao" ){
+        unsigned int findIndexByWidth( double width, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (width_lamina>=6) ORDER BY width_lamina ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "width_lamina", width, 'g', "ASC" ) ) > -1 ){
@@ -135,7 +135,7 @@ class Laminas{
             return index;
         }
 
-        unsigned int findIndexByWindowArea( double windowArea, std::string type="padrao" ){
+        unsigned int findIndexByWindowArea( double windowArea, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (area_lamina>=6) ORDER BY area_lamina ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "area_lamina", windowArea, 'g', "ASC" ) ) > -1 ){
@@ -146,7 +146,7 @@ class Laminas{
             return index;
         }
 
-        unsigned int findIndexByWeight( double weight, std::string type="padrao" ){
+        unsigned int findIndexByWeight( double weight, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (weght_lamina<=6) ORDER BY weight_lamina DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_lamina", weight, 'l', "DESC" ) ) > -1 ){
@@ -157,7 +157,7 @@ class Laminas{
             return index;
         }
 
-        unsigned int findIndexByThicknessPercent( double thicknessPercent, std::string type="padrao" ){
+        unsigned int findIndexByThicknessPercent( double thicknessPercent, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM laminas WHERE (type_lamina='padrao') AND (thicknessPercent_lamina<=6) ORDER BY thicknessPercent_lamina DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "thicknessPercent_lamina", thicknessPercent, 'l', "DESC" ) ) > -1 ){
@@ -168,7 +168,7 @@ class Laminas{
             return index;
         }
 
-        Lamina* getLamina( unsigned int index ){
+        Lamina* getLamina( unsigned int index ) const{
             Lamina* lamina = new Lamina();
             std::string sql = "";
             sql = sql + "SELECT * ";

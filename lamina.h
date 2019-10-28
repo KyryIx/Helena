@@ -27,7 +27,7 @@ class Lamina{
             this->id = id;
 		}
 
-		unsigned int getId(){
+        unsigned int getId() const{
             return this->id;
 		}
 
@@ -35,7 +35,7 @@ class Lamina{
             this->type = type;
 		}
 
-		std::string getType(){
+        std::string getType() const{
             return this->type;
 		}
 
@@ -43,7 +43,7 @@ class Lamina{
             this->width = width;
 		}
 
-        double getWidth(){
+        double getWidth() const{
             return this->width;
 		}
 
@@ -51,7 +51,7 @@ class Lamina{
             this->windowArea = windowArea;
 		}
 
-		double getWindowArea(){
+        double getWindowArea() const{
             return this->windowArea;
 		}
 
@@ -59,7 +59,7 @@ class Lamina{
             this->weight = weight;
 		}
 
-		double getWeight(){
+        double getWeight() const{
             return this->weight;
 		}
 
@@ -67,11 +67,11 @@ class Lamina{
             this->thicknessPercent = thicknessPercent;
         }
 
-        double getThicknessPercent(){
+        double getThicknessPercent() const{
             return this->thicknessPercent;
         }
 
-		std::string toString(){
+        std::string toString() const{
 			std::string txt = "";
             txt = txt + "Lamina ID:                " + std::to_string( this->getId() )         + "\n";
             txt = txt + "Lamina Type:              " + this->getType()                         + "\n";
@@ -83,7 +83,7 @@ class Lamina{
 			return txt;
 		}
 
-        std::string toHTML(){
+        std::string toHTML() const{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"lamina\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Lamina ID:</td><td><b>"  + std::to_string( this->getId() )               + "</b></td></tr>\n";
@@ -97,7 +97,7 @@ class Lamina{
             return txt;
         }
 
-        std::string toSQL(){
+        std::string toSQL() const{
             std::string txt = "";
             txt = txt + "INSERT INTO laminas (";
             txt = txt + "width_lamina, area_lamina, weight_lamina, thicknessPercent_lamina, type_lamina";

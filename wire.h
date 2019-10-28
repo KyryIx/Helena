@@ -36,7 +36,7 @@ class Wire{
             this->material   = "cobre";
 		}
 
-		unsigned int getId(){
+        unsigned int getId() const{
             return this->id;
 		}
 
@@ -44,7 +44,7 @@ class Wire{
             this->id = id;
 		}
 
-		std::string getType(){
+        std::string getType() const{
             return this->type;
 		}
 
@@ -52,7 +52,7 @@ class Wire{
             this->type = type;
 		}
 
-		std::string getAWG(){
+        std::string getAWG() const{
             return this->awg;
 		}
 
@@ -60,7 +60,7 @@ class Wire{
             this->awg = awg;
 		}
 
-		double getDiameter(){
+        double getDiameter() const{
             return this->diameter;
 		}
 
@@ -68,7 +68,7 @@ class Wire{
             this->diameter = diameter;
 		}
 
-		double getTurnsPerCm(){
+        double getTurnsPerCm() const{
             return this->turnsPerCm;
 		}
 
@@ -76,7 +76,7 @@ class Wire{
             this->turnsPerCm = turnsPerCm;
 		}
 
-		double getArea(){
+        double getArea() const{
             return this->area;
 		}
 
@@ -84,7 +84,7 @@ class Wire{
             this->area = area;
 		}
 
-		double getResistance(){
+        double getResistance() const{
             return this->resistance;
 		}
 
@@ -92,7 +92,7 @@ class Wire{
             this->resistance = resistance;
 		}
 
-		double getWeight(){
+        double getWeight() const{
             return this->weight;
 		}
 
@@ -100,7 +100,7 @@ class Wire{
             this->weight = weight;
 		}
 
-		double getLength(){
+        double getLength() const{
             return this->length;
 		}
 
@@ -108,7 +108,7 @@ class Wire{
             this->length = length;
 		}
 
-        std::vector< std::vector<double> > getCurrentMax(){
+        std::vector< std::vector<double> > getCurrentMax() const{
             return this->currentMax;
 		}
 
@@ -116,7 +116,7 @@ class Wire{
             this->currentMax = currentMax;
 		}
 
-		double getFrequency(){
+        double getFrequency() const{
             return this->frequency;
 		}
 
@@ -124,7 +124,7 @@ class Wire{
             this->frequency = frequency;
 		}
 
-        std::string getMaterial(){
+        std::string getMaterial() const{
             return this->material;
         }
 
@@ -132,7 +132,7 @@ class Wire{
             this->material = material;
         }
 
-		std::string toString(){
+        std::string toString() const{
             std::string txt = "";
             txt = txt + "Wire ID:          " + std::to_string( this->getId() )         + "\n";
             txt = txt + "Wire Type:        " + this->getType()                         + "\n";
@@ -156,7 +156,7 @@ class Wire{
             return txt.substr(0, txt.size() - 1);
 		}
 
-        std::string toHTML(){
+        std::string toHTML() const{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"wire\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Wire ID:</td><td><b>" + std::to_string( this->getId() )                + "</b></td></tr>\n";
@@ -186,7 +186,7 @@ class Wire{
             return txt;
         }
 
-        std::string toSQL(){
+        std::string toSQL() const{
             std::string txt = "";
             txt = txt + "INSERT INTO wires (";
             txt = txt + "type_wire, awg_wire, diameter_wire, turnsPerCm_wire, area_wire, resistance_wire, weight_wire, ";

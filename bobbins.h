@@ -8,7 +8,7 @@ class Bobbins{
     private:
         DataBase* database;
 
-        std::string comparation( char option_comparation ){
+        std::string comparation( char option_comparation ) const{
             std::string str = "";
             switch( option_comparation ){
                 case 'e': // equal //
@@ -24,7 +24,7 @@ class Bobbins{
             return str;
         }
 
-        std::string queryByIndex( unsigned int index, std::string field ){
+        std::string queryByIndex( unsigned int index, std::string field ) const{
             // SELECT
             //          [field]
             // FROM
@@ -38,7 +38,7 @@ class Bobbins{
             return sql;
         }
 
-        std::string queryByField( std::string field, double value, char comparation, std::string order="ASC", std::string type="padrao" ){
+        std::string queryByField( std::string field, double value, char comparation, std::string order="ASC", std::string type="padrao" ) const{
             // SELECT
             //         id
             // FROM
@@ -69,7 +69,7 @@ class Bobbins{
             this->database = database;
         }
 
-        std::string getType( unsigned int index ){
+        std::string getType( unsigned int index ) const{
             std::string type_tmp = "";
             // SELECT type_bobbin FROM bobbins WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "type_bobbin" ) ) > -1 ){
@@ -80,7 +80,7 @@ class Bobbins{
             return type_tmp;
         }
 
-        double getWidth( unsigned int index ){
+        double getWidth( unsigned int index ) const{
             double width = 0.0;
             // SELECT width_bobbin FROM bobbins WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "width_bobbin" ) ) > -1 ){
@@ -91,7 +91,7 @@ class Bobbins{
             return width;
         }
 
-        double getLength( unsigned int index ){
+        double getLength( unsigned int index ) const{
             double lenght = 0.0;
             // SELECT lenght_bobbin FROM bobbins WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "length_bobbin" ).c_str() ) > -1 ){
@@ -102,7 +102,7 @@ class Bobbins{
             return lenght;
         }
 
-        double getHeight( unsigned int index ){
+        double getHeight( unsigned int index ) const{
             double height = 0.0;
             // SELECT height_bobbin FROM bobbins WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "height_bobbin" ).c_str() ) > -1 ){
@@ -113,7 +113,7 @@ class Bobbins{
             return height;
         }
 
-        unsigned int findIndexByWidth( double width, std::string type="padrao" ){
+        unsigned int findIndexByWidth( double width, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM bobbins WHERE (type_bobbin='STSR') AND width_bobbin>=6 ORDER BY width_bobbin ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByField( "width_bobbin", width, 'g', "ASC", type ) ) > -1 ){
@@ -124,7 +124,7 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByWidthAndArea( double width, double area, std::string type="padrao" ){
+        unsigned int findIndexByWidthAndArea( double width, double area, std::string type="padrao" ) const{
             unsigned int index = 0;
             std::string sql = "";
             sql = sql + "SELECT id ";
@@ -147,7 +147,7 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByLength( double length, std::string type="padrao" ){
+        unsigned int findIndexByLength( double length, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM bobbins WHERE (type_bobbin='padrao') AND (length_bobbin>=6) ORDER BY length_bobbin ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByField( "length_bobbin", length, 'g', "ASC", type ) ) > -1 ){
@@ -158,7 +158,7 @@ class Bobbins{
             return index;
         }
 
-        unsigned int findIndexByHeight( double height, std::string type="padrao" ){
+        unsigned int findIndexByHeight( double height, std::string type="padrao" ) const{
             unsigned int index = 0;
             // SELECT id FROM bobbins WHERE (type_bobbin='STSR') AND (height_bobbin>=6) ORDER BY height_bobbin ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByField( "height_bobbin", height, 'g', "ASC", type ) ) > -1 ){
@@ -169,7 +169,7 @@ class Bobbins{
             return index;
         }
 
-        Bobbin* getBobbin( unsigned int index ){
+        Bobbin* getBobbin( unsigned int index ) const{
             Bobbin* bobbin = new Bobbin();
             std::string sql = "";
             sql = sql + "SELECT * ";
