@@ -36,6 +36,7 @@ void WindowOpen::clearFields(){
     ui->lineEdit_ironLoss->setText( "" );
     ui->lineEdit_totalLoss->setText( "" );
     ui->lineEdit_efficiency->setText( "" );
+    ui->textEdit_observation->setText( "" );
 
     ui->lineEdit_powerInput->setText( "" );
     ui->lineEdit_voltageInput_1->setText( "" );
@@ -115,6 +116,7 @@ void WindowOpen::updateFields(){
     ui->lineEdit_TurnsLoss->setText( this->database->returnValue( "copperLoss" ).c_str() );
     ui->lineEdit_totalLoss->setText( this->database->returnValue( "totalLoss" ).c_str() );
     ui->lineEdit_efficiency->setText( this->database->returnValue( "efficiency" ).c_str() );
+    ui->textEdit_observation->setText( this->database->returnValue( "observation" ).c_str() );
 
     ui->lineEdit_patternWinding->setText( this->database->returnValue( "patternTransformer" ).c_str() );
     double valueD = atof( this->database->returnValue( "compensationLossTransformer" ).c_str() );

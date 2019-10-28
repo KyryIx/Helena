@@ -34,7 +34,7 @@ SOURCES += \
         windowbobbin.cpp \
         windowabout.cpp \
         windowhelp.cpp \
-    windowopen.cpp
+        windowopen.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -54,7 +54,7 @@ HEADERS += \
         laminas.h \
         transformer.h \
         samples.h \
-    windowopen.h
+        windowopen.h
 
 FORMS += \
         mainwindow.ui \
@@ -65,7 +65,7 @@ FORMS += \
         windowlamina.ui \
         windowabout.ui \
         windowhelp.ui \
-    windowopen.ui
+        windowopen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

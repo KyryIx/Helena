@@ -73,6 +73,8 @@ class Transformer{
         Lamina* lamina;
         Bobbin* bobbin;
 
+        std::string observation;
+
         bool state;                      // true -> automatic and false -> manual
 
 	public:
@@ -130,6 +132,8 @@ class Transformer{
 
             this->lamina                      = new Lamina();
             this->bobbin                      = new Bobbin();
+
+            this->observation                 = "";
 
             this->state                       = false;
 		}
@@ -754,6 +758,14 @@ class Transformer{
             return this->bobbin;
         }
 
+        void setObservation( std::string observation ){
+            this->observation = observation;
+        }
+
+        std::string getObservation() const{
+            return this->observation;
+        }
+
         void setState( bool state ){
             this->state = state;
         }
@@ -994,6 +1006,13 @@ class Transformer{
             txt = txt + "BOBBIN";
             txt = txt + "--------------------\n";
             txt = txt + this->getBobbin()->toString();
+            txt = txt + "\n";
+
+            txt = txt + "\n";
+            txt = txt + "--------------------";
+            txt = txt + "OBSERVATIONS:";
+            txt = txt + "--------------------\n";
+            txt = txt + this->getObservation();
 
             return txt;
         }
@@ -1097,6 +1116,12 @@ class Transformer{
             txt = txt + this->getBobbin()->toHTML();
             txt = txt + "\n\t</td></tr>\n";
 
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">OBSERVATIONS</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+            txt = txt + this->getObservation();
+            txt = txt + "\n\t</td></tr>\n";
+
             txt = txt + "</table>";
 
             return txt;
@@ -1120,7 +1145,7 @@ class Transformer{
             sql += "wireIDOUT2, wireTypeOUT2, wireAWGOUT2, wireTurnsOUT2, wireDiameterOUT2, wireTurnPerCmOUT2, wireAreaOUT2, ";
             sql += "wireResistanceOUT2, wireWeightOUT2, wireLengthOUT2, wireFrequencyOUT2, wireMaterialOUT2, ";
             sql += "laminaID, laminaType, laminaWidth, laminaWindowArea, laminaWeight, laminaCompensation, ";
-            sql += "bobbinID, bobbinType, bobbinCode, bobbinProvider, bobbinWidth, bobbinLength, bobbinHeight, bobbinArea ) ";
+            sql += "bobbinID, bobbinType, bobbinCode, bobbinProvider, bobbinWidth, bobbinLength, bobbinHeight, bobbinArea, observation ) ";
             sql += "VALUES (";
             sql += std::to_string( this->getFrequency() ) + ", ";                   // frequency
             sql += std::to_string( this->getMagneticInduction() ) + ", ";           // magneticInduction
@@ -1230,7 +1255,9 @@ class Transformer{
             sql += std::to_string( this->getBobbin()->getWidth() ) + ", ";           // bobbinWidth
             sql += std::to_string( this->getBobbin()->getLength() ) + ", ";          // bobbinLength
             sql += std::to_string( this->getBobbin()->getHeight() ) + ", ";          // bobbinHeight
-            sql += std::to_string( this->getBobbin()->getArea() ) + " )";            // bobbinArea
+            sql += std::to_string( this->getBobbin()->getArea() ) + ", ";            // bobbinArea
+
+            sql += "'" + this->getObservation() + "' )";                             // observation
 
             return sql;
         }

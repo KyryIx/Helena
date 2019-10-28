@@ -38,6 +38,7 @@ void WindowNew::clearFields(){
     ui->lineEdit_totalLoss->setText( "" );
     ui->lineEdit_turnsArea->setText( "" );
     ui->lineEdit_efficiency->setText( "" );
+    ui->textEdit_observation->setText( "" );
 
     ui->lineEdit_powerInput->setText( "" );
     ui->lineEdit_voltageInput_1->setText( "" );
@@ -99,6 +100,8 @@ void WindowNew::clearFields(){
     ui->lineEdit_bobbinLength->setText( "" );
     ui->lineEdit_bobbinHeight->setText( "" );
     ui->lineEdit_bobbinArea->setText( "" );
+
+    this->transformer = new Transformer( this->database );
 }
 
 void WindowNew::setTransformer(){
@@ -124,6 +127,7 @@ void WindowNew::setTransformer(){
     Wire* wireOUT_2                 = new Wire();
     Lamina* lamina                  = new Lamina();
     Bobbin* bobbin                  = new Bobbin();
+    std::string observation         = ui->textEdit_observation->toPlainText().toStdString();
 
     double compensationPower  = 0.0;
     if( ui->checkBox_compensation_power->isChecked() ){
@@ -161,6 +165,7 @@ void WindowNew::setTransformer(){
     this->transformer->setWireIN2( wireIN_2 );
     this->transformer->setWireOUT1( wireOUT_1 );
     this->transformer->setWireOUT2( wireOUT_2 );
+    this->transformer->setObservation( observation );
 }
 
 void WindowNew::writeInput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned int type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
