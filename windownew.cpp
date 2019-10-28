@@ -1,14 +1,15 @@
 #include "windownew.h"
 #include "ui_windownew.h"
 
-WindowNew::WindowNew(QWidget *parent,  DataBase* database) :
+#define precision 2
+
+WindowNew::WindowNew(QWidget *parent, DataBase* database) :
     QDialog(parent),
     ui(new Ui::WindowNew)
 {
     ui->setupUi(this);
     this->setDatabase( database );
-    this->setStateSave( false );
-    transformer = new Transformer( database );
+    this->transformer = new Transformer( database );
 }
 
 WindowNew::~WindowNew()
@@ -20,381 +21,437 @@ void WindowNew::setDatabase( DataBase *database ){
     this->database = database;
 }
 
-void WindowNew::setStateSave( bool state ){
-    this->stateSave = state;
+void WindowNew::clearFields(){
+    ui->comboBox_patternWinding->setCurrentIndex( 0 );
+    ui->lineEdit_frequency->setText( QString::number( 60.0, 'f', precision ) );
+    ui->lineEdit_magneticInduction->setText( QString::number( 11300, 'f', precision ) );
+    ui->lineEdit_currentDensity->setText( QString::number( 3.0, 'f', precision ) );
+    ui->lineEdit_densityAverageCurrent->setText( "" );
+    ui->checkBox_compensation_power->setEnabled( true );
+    ui->lineEdit_compensation_power->setText( QString::number( 10.0, 'f', precision ) );
+    ui->lineEdit_windowAreaPerSectionTurns->setText( QString::number( 3.0, 'f', precision ) );
+    ui->lineEdit_weightTurns->setText( "" );
+    ui->lineEdit_ironWeight->setText( "" );
+    ui->lineEdit_TurnsLoss->setText( "" );
+    ui->lineEdit_ironLoss->setText( "" );
+    ui->lineEdit_averageTurnLength->setText( "" );
+    ui->lineEdit_totalLoss->setText( "" );
+    ui->lineEdit_turnsArea->setText( "" );
+    ui->lineEdit_efficiency->setText( "" );
+
+    ui->lineEdit_powerInput->setText( "" );
+    ui->lineEdit_voltageInput_1->setText( "" );
+    ui->lineEdit_voltageInput_2->setText( "" );
+    ui->lineEdit_currentInput_1->setText( "" );
+    ui->lineEdit_currentInput_2->setText( "" );
+    ui->lineEdit_densityCurrentInput_1->setText( "" );
+    ui->lineEdit_densityCurrentInput_2->setText( "" );
+    ui->lineEdit_wireIDInput_1->setText( "" );
+    ui->lineEdit_wireIDInput_2->setText( "" );
+    //ui->comboBox_wireTypeInput_1->setText( "" );
+    //ui->comboBox_wireTypeInput_2->setText( "" );
+    ui->lineEdit_wireAWGInput_1->setText( "" );
+    ui->lineEdit_wireAWGInput_2->setText( "" );
+    ui->lineEdit_wireDiameterInput_1->setText( "" );
+    ui->lineEdit_wireDiameterInput_2->setText( "" );
+    ui->lineEdit_wireAreaInput_1->setText( "" );
+    ui->lineEdit_wireAreaInput_2->setText( "" );
+    ui->lineEdit_wireMaterialInput_1->setText( "" );
+    ui->lineEdit_wireMaterialInput_2->setText( "" );
+    ui->lineEdit_turnsIN_1->setText( "" );
+    ui->lineEdit_turnsIN_2->setText( "" );
+
+    ui->lineEdit_powerOutput->setText( "" );
+    ui->lineEdit_voltageOutput_1->setText( "" );
+    ui->lineEdit_voltageOutput_2->setText( "" );
+    ui->lineEdit_currentOutput_1->setText( "" );
+    ui->lineEdit_currentOutput_2->setText( "" );
+    ui->lineEdit_densityCurrentOutput_1->setText( "" );
+    ui->lineEdit_densityCurrentOutput_2->setText( "" );
+    ui->lineEdit_wireIDOutput_1->setText( "" );
+    ui->lineEdit_wireIDOutput_2->setText( "" );
+    //ui->comboBox_wireTypeOutput_1->setText( "" );
+    //ui->comboBox_wireTypeOutput_2->setText( "" );
+    ui->lineEdit_wireAWGOutput_1->setText( "" );
+    ui->lineEdit_wireAWGOutput_2->setText( "" );
+    ui->lineEdit_wireDiameterOutput_1->setText( "" );
+    ui->lineEdit_wireDiameterOutput_2->setText( "" );
+    ui->lineEdit_wireAreaOutput_1->setText( "" );
+    ui->lineEdit_wireAreaOutput_2->setText( "" );
+    ui->lineEdit_wireMaterialOutput_1->setText( "" );
+    ui->lineEdit_wireMaterialOutput_2->setText( "" );
+    ui->lineEdit_turnsOUT_1->setText( "" );
+    ui->lineEdit_turnsOUT_2->setText( "" );
+
+    ui->lineEdit_laminaID->setText( "" );
+    //ui->comboBox_laminaType->setText( "" );
+    ui->lineEdit_laminaWidth->setText( "" );
+    ui->lineEdit_laminaArea->setText( "" );
+    ui->lineEdit_laminaWeight->setText( "" );
+    //ui->checkBox_laminaCompensation->setText( "" );
+    ui->lineEdit_laminaCompensation->setText( "" );
+
+    ui->lineEdit_bobbinID->setText( "" );
+    ui->lineEdit_bobbinType->setText( "" );
+    ui->lineEdit_bobbinCode->setText( "" );
+    ui->lineEdit_bobbinProvider->setText( "" );
+    ui->lineEdit_bobbinWidth->setText( "" );
+    ui->lineEdit_bobbinLength->setText( "" );
+    ui->lineEdit_bobbinHeight->setText( "" );
+    ui->lineEdit_bobbinArea->setText( "" );
 }
 
-bool WindowNew::getStateSave(){
-    return this->stateSave;
-}
+void WindowNew::setTransformer(){
+    double frequency                = ui->lineEdit_frequency->text().toDouble();
+    double magneticInduction        = ui->lineEdit_magneticInduction->text().toDouble();
+    double currentDensity           = ui->lineEdit_currentDensity->text().toDouble();
+    double voltageIN_1              = ui->lineEdit_voltageInput_1->text().toDouble();
+    double voltageIN_2              = ui->lineEdit_voltageInput_2->text().toDouble();
+    double powerOUT                 = ui->lineEdit_powerOutput->text().toDouble();
+    double voltageOUT_1             = ui->lineEdit_voltageOutput_1->text().toDouble();
+    double voltageOUT_2             = ui->lineEdit_voltageOutput_2->text().toDouble();
+    unsigned int patternTransformer = static_cast<unsigned int>( ui->comboBox_patternWinding->currentIndex() );
+    double accommodation            = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
+    std::string typeWireIN_1        = ui->comboBox_wireTypeInput_1->currentText().toStdString();
+    std::string typeWireIN_2        = ui->comboBox_wireTypeInput_2->currentText().toStdString();
+    std::string typeWireOUT_1       = ui->comboBox_wireTypeOutput_1->currentText().toStdString();
+    std::string typeWireOUT_2       = ui->comboBox_wireTypeOutput_2->currentText().toStdString();
+    std::string typeLamina          = ui->comboBox_laminaType->currentText().toStdString();
+    std::string typeBobbin          = ui->lineEdit_bobbinType->text().toStdString();
+    Wire* wireIN_1                  = new Wire();
+    Wire* wireIN_2                  = new Wire();
+    Wire* wireOUT_1                 = new Wire();
+    Wire* wireOUT_2                 = new Wire();
+    Lamina* lamina                  = new Lamina();
+    Bobbin* bobbin                  = new Bobbin();
 
-void WindowNew::on_pushButton_calculate_clicked(){
-    this->setStateSave( false );
-    QMessageBox msgBox;
-    unsigned int patternTransformer = 4;
-    QString text   = ui->comboBox_patternWinding->currentText();
-    if( text ==  "2 primários / 2 secundários" ){ patternTransformer = 3; }
-    else if( text == "2 primários / 1 secundário" ){ patternTransformer = 2; }
-    else if( text == "1 primário / 2 secundários" ){ patternTransformer = 1; }
-    else{ patternTransformer = 0; /* patterText == "1 primário / 1 secundário" */ }
-    double frequency         = ui->lineEdit_frequency->text().toDouble();
-    double magneticInduction = ui->lineEdit_magneticInduction->text().toDouble();
-    double currentDensity    = ui->lineEdit_currentDensity->text().toDouble();
-    double compensationPower = 0.0;
+    double compensationPower  = 0.0;
     if( ui->checkBox_compensation_power->isChecked() ){
         compensationPower = ui->lineEdit_compensation_power->text().toDouble();
-        transformer->setApplyCompensationTransformer( true );
+        this->transformer->setApplyCompensationTransformer( true );
     }
-    double accommodation     = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
-
-    double voltageIN         = ui->lineEdit_voltageInput->text().toDouble();
-    double powerOUT          = ui->lineEdit_powerOutput->text().toDouble();
-    double voltageOUT        = ui->lineEdit_voltageOutput->text().toDouble();
-    std::string typeWireIN   = "";
-    std::string typeWireOUT  = "";
-    text = ui->comboBox_wireTypeInput->currentText();
-    if( text == "redondo" ){ typeWireIN = "redondo"; }
-    text = ui->comboBox_wireTypeOutput->currentText();
-    if( text == "redondo" ){ typeWireOUT = "redondo"; }
-
-    std::string typeLamina    = "";
     double compensationLamina = 0.0;
-    text = ui->comboBox_laminaType->currentText();
-    if( text == "padrao" ){ typeLamina = "padrao"; }
-    if( text == "especial" ){ typeLamina = "especial"; }
     if( ui->checkBox_laminaCompensation->isChecked() ){
         compensationLamina = ui->lineEdit_laminaCompensation->text().toDouble();
-        transformer->setApplyCompensationLamina( true );
+        this->transformer->setApplyCompensationLamina( true );
     }
-    std::string typeBobbin   = ui->lineEdit_bobbinType->text().toStdString();
 
-    Wire* wireIN   = new Wire();
-    Wire* wireOUT  = new Wire();
-    Lamina* lamina = new Lamina();
-    Bobbin* bobbin = new Bobbin();
-
-    wireIN->setType( typeWireIN );
-    wireOUT->setType( typeWireOUT );
+    wireIN_1->setType( typeWireIN_1 );
+    wireIN_2->setType( typeWireIN_2 );
+    wireOUT_1->setType( typeWireOUT_1 );
+    wireOUT_2->setType( typeWireOUT_2 );
     lamina->setType( typeLamina );
     lamina->setThicknessPercent( compensationLamina );
     bobbin->setType( typeBobbin );
 
-    transformer->setPowerOUT( powerOUT );
-    transformer->setVoltageOUT( voltageOUT );
-    transformer->setVoltageIN( voltageIN );
-    transformer->setFrequency( frequency );
-    transformer->setMagneticInduction( magneticInduction );
-    transformer->setCurrentDensity( currentDensity );
-    transformer->setPatternTransformer( patternTransformer );
-    transformer->setCompensationLossTransformer( compensationPower );
-    transformer->setWindowAreaPerSectionCu( accommodation );
-    transformer->setLamina( lamina );
-    transformer->setBobbin( bobbin );
-    transformer->setWireIN( wireIN );
-    transformer->setWireOUT( wireOUT );
-    std::string reportTEXT, reportHTML, reportSQL;
-    if( transformer->calculate() ){
-        std::string text = "";
+    this->transformer->setPowerOUT( powerOUT );
+    this->transformer->setVoltageOUT1( voltageOUT_1 );
+    this->transformer->setVoltageOUT2( voltageOUT_2 );
+    this->transformer->setVoltageIN1( voltageIN_1 );
+    this->transformer->setVoltageIN2( voltageIN_2 );
+    this->transformer->setFrequency( frequency );
+    this->transformer->setMagneticInduction( magneticInduction );
+    this->transformer->setCurrentDensity( currentDensity );
+    this->transformer->setPatternTransformer( patternTransformer );
+    this->transformer->setCompensationLossTransformer( compensationPower );
+    this->transformer->setWindowAreaPerSectionCu( accommodation );
+    this->transformer->setLamina( lamina );
+    this->transformer->setBobbin( bobbin );
+    this->transformer->setWireIN1( wireIN_1 );
+    this->transformer->setWireIN2( wireIN_2 );
+    this->transformer->setWireOUT1( wireOUT_1 );
+    this->transformer->setWireOUT2( wireOUT_2 );
+}
 
+void WindowNew::writeInput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned int type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
+    ui->lineEdit_voltageInput_1->setText( QString::number( voltage, 'f', precision ) );
+    ui->lineEdit_currentInput_1->setText( QString::number( current, 'f', precision ) );
+    ui->lineEdit_densityCurrentInput_1->setText( QString::number( densityCurrent, 'f', precision ) );
+    ui->lineEdit_wireIDInput_1->setText( std::to_string( id ).c_str() );
+    ui->comboBox_wireTypeInput_1->setCurrentIndex( static_cast<int>( type ) );
+    ui->lineEdit_wireAWGInput_1->setText( awg );
+    ui->lineEdit_wireDiameterInput_1->setText( QString::number( diameter, 'f', precision ) );
+    ui->lineEdit_wireAreaInput_1->setText( QString::number( area, 'f', precision ) );
+    ui->lineEdit_wireMaterialInput_1->setText( material );
+    ui->lineEdit_turnsIN_1->setText( std::to_string( turns ).c_str() );
+}
+
+void WindowNew::writeInput2( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
+    ui->lineEdit_voltageInput_2->setText( QString::number( voltage, 'f', precision ) );
+    ui->lineEdit_currentInput_2->setText( QString::number( current, 'f', precision ) );
+    ui->lineEdit_densityCurrentInput_2->setText( QString::number( densityCurrent, 'f', precision ) );
+    ui->lineEdit_wireIDInput_2->setText( std::to_string( id ).c_str() );
+    ui->comboBox_wireTypeInput_2->setCurrentIndex( static_cast<int>( type ) );
+    ui->lineEdit_wireAWGInput_2->setText( awg );
+    ui->lineEdit_wireDiameterInput_2->setText( QString::number( diameter, 'f', precision ) );
+    ui->lineEdit_wireAreaInput_2->setText( QString::number( area, 'f', precision ) );
+    ui->lineEdit_wireMaterialInput_2->setText( material );
+    ui->lineEdit_turnsIN_2->setText( std::to_string( turns ).c_str() );
+}
+
+void WindowNew::writeOutput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
+    ui->lineEdit_voltageOutput_1->setText( QString::number( voltage, 'f', precision ) );
+    ui->lineEdit_currentOutput_1->setText( QString::number( current, 'f', precision ) );
+    ui->lineEdit_densityCurrentOutput_1->setText( QString::number( densityCurrent, 'f', precision ) );
+    ui->lineEdit_wireIDOutput_1->setText( std::to_string( id ).c_str() );
+    ui->comboBox_wireTypeOutput_1->setCurrentIndex( static_cast<int>( type ) );
+    ui->lineEdit_wireAWGOutput_1->setText( awg );
+    ui->lineEdit_wireDiameterOutput_1->setText( QString::number( diameter, 'f', precision ) );
+    ui->lineEdit_wireAreaOutput_1->setText( QString::number( area, 'f', precision ) );
+    ui->lineEdit_wireMaterialOutput_1->setText( material );
+    ui->lineEdit_turnsOUT_1->setText( std::to_string( turns ).c_str() );
+}
+
+void WindowNew::writeOutput2( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
+    ui->lineEdit_voltageOutput_2->setText( QString::number( voltage, 'f', precision ) );
+    ui->lineEdit_currentOutput_2->setText( QString::number( current, 'f', precision ) );
+    ui->lineEdit_densityCurrentOutput_2->setText( QString::number( densityCurrent, 'f', precision ) );
+    ui->lineEdit_wireIDOutput_2->setText( std::to_string( id ).c_str() );
+    ui->comboBox_wireTypeOutput_2->setCurrentIndex( static_cast<int>( type ) );
+    ui->lineEdit_wireAWGOutput_2->setText( awg );
+    ui->lineEdit_wireDiameterOutput_2->setText( QString::number( diameter, 'f', precision ) );
+    ui->lineEdit_wireAreaOutput_2->setText( QString::number( area, 'f', precision ) );
+    ui->lineEdit_wireMaterialOutput_2->setText( material );
+    ui->lineEdit_turnsOUT_2->setText( std::to_string( turns ).c_str() );
+}
+
+void WindowNew::enableInput2( bool state ){
+    ui->lineEdit_voltageInput_2->setEnabled( state );
+    ui->lineEdit_currentInput_2->setEnabled( state );
+    ui->lineEdit_densityCurrentInput_2->setEnabled( state );
+    ui->lineEdit_wireIDInput_2->setEnabled( state );
+    ui->comboBox_wireTypeInput_2->setEnabled( state );
+    ui->lineEdit_wireAWGInput_2->setEnabled( state );
+    ui->lineEdit_wireDiameterInput_2->setEnabled( state );
+    ui->lineEdit_wireAreaInput_2->setEnabled( state );
+    ui->lineEdit_wireMaterialInput_2->setEnabled( state );
+    ui->lineEdit_turnsIN_2->setEnabled( state );
+}
+
+void WindowNew::enableOutput2( bool state ){
+    ui->lineEdit_voltageOutput_2->setEnabled( state );
+    ui->lineEdit_currentOutput_2->setEnabled( state );
+    ui->lineEdit_densityCurrentOutput_2->setEnabled( state );
+    ui->lineEdit_wireIDOutput_2->setEnabled( state );
+    ui->comboBox_wireTypeOutput_2->setEnabled( state );
+    ui->lineEdit_wireAWGOutput_2->setEnabled( state );
+    ui->lineEdit_wireDiameterOutput_2->setEnabled( state );
+    ui->lineEdit_wireAreaOutput_2->setEnabled( state );
+    ui->lineEdit_wireMaterialOutput_2->setEnabled( state );
+    ui->lineEdit_turnsOUT_2->setEnabled( state );
+}
+
+void  WindowNew::on_comboBox_patternWinding_currentIndexChanged(int index){
+    switch( index ){
+        case 0:
+            enableInput2( false );
+            enableOutput2( false );
+            break;
+        case 1:
+            enableInput2( false );
+            enableOutput2( true );
+            ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
+            break;
+        case 2:
+            enableInput2( true );
+            enableOutput2( false );
+            ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
+            break;
+        case 3:
+            enableInput2( true );
+            enableOutput2( true );
+            ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
+            ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
+            break;
+    }
+}
+
+void WindowNew::on_lineEdit_voltageInput_1_textChanged( const QString &text ){
+    if( ui->comboBox_patternWinding->currentIndex() > 1 ){
+        ui->lineEdit_voltageInput_2->setText( QString::number( 2 * text.toDouble(), 'f', precision ) );
+    }
+}
+
+void WindowNew::on_lineEdit_voltageOutput_1_textChanged( const QString &text ){
+    if( ui->comboBox_patternWinding->currentIndex() % 2 == 1 ){
+        ui->lineEdit_voltageOutput_2->setText( QString::number( 2 * text.toDouble(), 'f', precision ) );
+    }
+}
+
+void WindowNew::on_pushButton_calculate_clicked(){
+    QMessageBox msgBox;
+    std::string text;
+    msgBox.setIcon( QMessageBox::Warning );
+
+    this->setTransformer();
+    int option = transformer->calculate();
+
+    if( option == 0 ){
         // general informations //
-        text = std::to_string( transformer->getAverageCurrentDensity() );
-        ui->lineEdit_densityAverageCurrent->setText( text.c_str() );
-        text = std::to_string( transformer->getWeightCopper() );
-        ui->lineEdit_weightTurns->setText( text.c_str() );
-        text = std::to_string( transformer->getWeigthIron() );
-        ui->lineEdit_ironWeight->setText( text.c_str() );
-        text = std::to_string( transformer->getCopperLoss() );
-        ui->lineEdit_TurnsLoss->setText( text.c_str() );
-        text = std::to_string( transformer->getIronLoss() );
-        ui->lineEdit_ironLoss->setText( text.c_str() );
-        text = std::to_string( transformer->getTurnAverageLength() / 10.0 );
-        ui->lineEdit_averageTurnLength->setText( text.c_str() );
-        text = std::to_string( transformer->getTotalLoss() );
-        ui->lineEdit_totalLoss->setText( text.c_str() );
-        text = std::to_string( transformer->getCoilArea() );
-        ui->lineEdit_turnsArea->setText( text.c_str() );
-        text = std::to_string( transformer->getEfficiency() * 100.0 );
-        ui->lineEdit_efficiency->setText( text.c_str() );
+        ui->lineEdit_densityAverageCurrent->setText( QString::number( transformer->getAverageCurrentDensity(), 'f', precision ) );
+        ui->lineEdit_weightTurns->setText( QString::number( transformer->getWeightCopper(), 'f', precision ) );
+        ui->lineEdit_ironWeight->setText( QString::number( transformer->getWeigthIron(), 'f', precision ) );
+        ui->lineEdit_TurnsLoss->setText( QString::number( transformer->getCopperLoss(), 'f', precision ) );
+        ui->lineEdit_ironLoss->setText( QString::number( transformer->getIronLoss(), 'f', precision ) );
+        ui->lineEdit_averageTurnLength->setText( QString::number( transformer->getTurnAverageLength() / 10.0, 'f', precision ) );
+        ui->lineEdit_totalLoss->setText( QString::number( transformer->getTotalLoss(), 'f', precision ) );
+        ui->lineEdit_turnsArea->setText( QString::number( transformer->getCoilArea(), 'f', precision ) );
+        ui->lineEdit_efficiency->setText( QString::number( transformer->getEfficiency() * 100.0, 'f', precision ) );
 
         // input/output informations //
-        text = std::to_string( transformer->getPowerIN() );
-        ui->lineEdit_powerInput->setText( text.c_str() );
-        text = std::to_string( transformer->getCurrentIN() );
-        ui->lineEdit_currentInput->setText( text.c_str() );
-        text = std::to_string( transformer->getCurrentDensityIN() );
-        ui->lineEdit_densityCurrentInput->setText( text.c_str() );
-        text = std::to_string( transformer->getCurrentOUT() );
-        ui->lineEdit_currentOutput->setText( text.c_str() );
-        text = std::to_string( transformer->getCurrentDensityOUT() );
-        ui->lineEdit_densityCurrentOutput->setText( text.c_str() );
-        text = std::to_string( transformer->getWireIN()->getId() );
-        ui->lineEdit_wireIDInput->setText( text.c_str() );
-        ui->lineEdit_wireAWGInput->setText( transformer->getWireIN()->getAWG().c_str() );
-        text = std::to_string( transformer->getWireIN()->getDiameter() );
-        ui->lineEdit_wireDiameterInput->setText( text.c_str() );
-        text = std::to_string( transformer->getWireIN()->getArea() );
-        ui->lineEdit_wireAreaInput->setText( text.c_str() );
-        ui->lineEdit_wireMaterialInput->setText( transformer->getWireIN()->getMaterial().c_str() );
-        text = std::to_string( transformer->getWireTurnsIN() );
-        ui->lineEdit_turnsIN->setText( text.c_str() );
-        text = std::to_string( transformer->getWireOUT()->getId() );
-        ui->lineEdit_wireIDOutput->setText( text.c_str() );
-        ui->lineEdit_wireAWGOutput->setText( transformer->getWireOUT()->getAWG().c_str() );
-        text = std::to_string( transformer->getWireOUT()->getDiameter() );
-        ui->lineEdit_wireDiameterOutput->setText( text.c_str() );
-        text = std::to_string( transformer->getWireOUT()->getArea() );
-        ui->lineEdit_wireAreaOutput->setText( text.c_str() );
-        ui->lineEdit_wireMaterialOutput->setText( transformer->getWireOUT()->getMaterial().c_str() );
-        text = std::to_string( transformer->getWireTurnsOUT() );
-        ui->lineEdit_turnsOUT->setText( text.c_str() );
+        ui->lineEdit_powerInput->setText( std::to_string( transformer->getPowerIN() ).c_str() );
+
+        this->writeInput1(
+                    transformer->getVoltageIN1(),
+                    transformer->getCurrentIN1(),
+                    transformer->getCurrentDensityIN1(),
+                    transformer->getWireIN1()->getId(),
+                    0, //transformer->getWireIN1()->getType(),
+                    transformer->getWireIN1()->getAWG().c_str(),
+                    transformer->getWireIN1()->getDiameter(),
+                    transformer->getWireIN1()->getArea(),
+                    transformer->getWireIN1()->getMaterial().c_str(),
+                    transformer->getWireTurnsIN1()
+        );
+
+        this->writeOutput1(
+                    transformer->getVoltageOUT1(),
+                    transformer->getCurrentOUT1(),
+                    transformer->getCurrentDensityOUT1(),
+                    transformer->getWireOUT1()->getId(),
+                    0, //transformer->getWireOUT1()->getType(),
+                    transformer->getWireOUT1()->getAWG().c_str(),
+                    transformer->getWireOUT1()->getDiameter(),
+                    transformer->getWireOUT1()->getArea(),
+                    transformer->getWireOUT1()->getMaterial().c_str(),
+                    transformer->getWireTurnsOUT1()
+        );
+
+        this->writeInput2( 0.0, 0.0, 0.0, 0, 0, "-", 0.0, 0.0, "-", 0 );
+        this->writeOutput2( 0.0, 0.0, 0.0, 0, 0, "-", 0.0, 0.0, "-", 0 );
+        this->enableInput2( false );
+        this->enableOutput2( false );
+
+        if( this->transformer->getPatternTransformer() > 1 ){
+            this->writeInput2(
+                        transformer->getVoltageIN2(),
+                        transformer->getCurrentIN2(),
+                        transformer->getCurrentDensityIN2(),
+                        transformer->getWireIN2()->getId(),
+                        0, //transformer->getWireIN2()->getType(),
+                        transformer->getWireIN2()->getAWG().c_str(),
+                        transformer->getWireIN2()->getDiameter(),
+                        transformer->getWireIN2()->getArea(),
+                        transformer->getWireIN2()->getMaterial().c_str(),
+                        transformer->getWireTurnsIN2()
+            );
+            this->enableInput2( true );
+        }
+
+        if( this->transformer->getPatternTransformer() % 2 == 1 ){
+            this->writeOutput2(
+                        transformer->getVoltageOUT2(),
+                        transformer->getCurrentOUT2(),
+                        transformer->getCurrentDensityOUT2(),
+                        transformer->getWireOUT2()->getId(),
+                        0, //transformer->getWireOUT2()->getType(),
+                        transformer->getWireOUT2()->getAWG().c_str(),
+                        transformer->getWireOUT2()->getDiameter(),
+                        transformer->getWireOUT2()->getArea(),
+                        transformer->getWireOUT2()->getMaterial().c_str(),
+                        transformer->getWireTurnsOUT2()
+            );
+            this->enableOutput2( true );
+        }
 
         // lamina and bobbin informations //
-        text = std::to_string( transformer->getLamina()->getId() );
-        ui->lineEdit_laminaID->setText( text.c_str() );
-        text = std::to_string( transformer->getLamina()->getWidth() );
-        ui->lineEdit_laminaWidth->setText( text.c_str() );
-        text = std::to_string( transformer->getLamina()->getWindowArea() );
-        ui->lineEdit_laminaArea->setText( text.c_str() );
-        text = std::to_string( transformer->getLamina()->getWeight() );
-        ui->lineEdit_laminaWeight->setText( text.c_str() );
-        text = std::to_string( transformer->getLamina()->getThicknessPercent() );
-        ui->lineEdit_laminaCompensation->setText( text.c_str() );
-        text = std::to_string( transformer->getBobbin()->getId() );
-        ui->lineEdit_bobbinID->setText( text.c_str() );
+        ui->lineEdit_laminaID->setText( std::to_string( transformer->getLamina()->getId() ).c_str() );
+        ui->lineEdit_laminaWidth->setText( QString::number( transformer->getLamina()->getWidth(), 'f', precision ) );
+        ui->lineEdit_laminaArea->setText( QString::number( transformer->getLamina()->getWindowArea(), 'f', precision ) );
+        ui->lineEdit_laminaWeight->setText( QString::number( transformer->getLamina()->getWeight(), 'f', precision ) );
+        ui->lineEdit_laminaCompensation->setText( QString::number( transformer->getLamina()->getThicknessPercent(), 'f', precision ) );
+        ui->lineEdit_bobbinID->setText( std::to_string( transformer->getBobbin()->getId() ).c_str() );
         ui->lineEdit_bobbinCode->setText( transformer->getBobbin()->getCode().c_str() );
         ui->lineEdit_bobbinProvider->setText( transformer->getBobbin()->getProvider().c_str() );
-        text = std::to_string( transformer->getBobbin()->getWidth() );
-        ui->lineEdit_bobbinWidth->setText( text.c_str() );
-        text = std::to_string( transformer->getBobbin()->getLength() );
-        ui->lineEdit_bobbinLength->setText( text.c_str() );
-        text = std::to_string( transformer->getBobbin()->getHeight() );
-        ui->lineEdit_bobbinHeight->setText( text.c_str() );
-        text = std::to_string( transformer->getBobbin()->getArea() );
-        ui->lineEdit_bobbinArea->setText( text.c_str() );
+        ui->lineEdit_bobbinWidth->setText( QString::number( transformer->getBobbin()->getWidth(), 'f', precision ) );
+        ui->lineEdit_bobbinLength->setText( QString::number( transformer->getBobbin()->getLength(), 'f', precision ) );
+        ui->lineEdit_bobbinHeight->setText( QString::number( transformer->getBobbin()->getHeight(), 'f', precision ) );
+        ui->lineEdit_bobbinArea->setText( QString::number( transformer->getBobbin()->getArea(), 'f', precision ) );
 
-        msgBox.setText( "Projeto calculado com sucesso." );
+        FILE* fp1 = fopen( "example.txt", "w" );
+        FILE* fp2 = fopen( "example.html", "w" );
+        FILE* fp3 = fopen( "example.sql", "w" );
+        fputs( transformer->toString().c_str(), fp1 );
+        fputs( transformer->toHTML().c_str(), fp2 );
+        fputs( transformer->toSQL().c_str(), fp3 );
+        fclose( fp1 );
+        fclose( fp2 );
+        fclose( fp3 );
+
+        text = "Projeto calculado com sucesso.";
         msgBox.setIcon( QMessageBox::Information );
     }
-    else {
-        std::string text = "";
-        text  = "Não houve sucesso no cálculo do transformador, onde\n";
-        text += "           Tipo de lâmina: " + lamina->getType()  + "\n";
-        text += "         Tipo de carretel: " + bobbin->getType()  + "\n";
-        text += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
-        text += "Tipo de fio do secundário: " + wireOUT->getType();
-        msgBox.setText( text.c_str() );
+    else{
+        text  = "Não houve sucesso no cálculo do transformador\n";
+        text += " pois ";
+        switch( option ) {
+            case -1:
+                text += "nao encontrou-se o fio que cumpra o calculo\n";
+                break;
+            case -2:
+                text += "nao encontrou-se o lamina que cumpra o calculo\n";
+                break;
+            case -3:
+                text += "nao encontrou-se o carretel que cumpra o calculo\n";
+                break;
+            case -4:
+                text += "pois houve divisao por zero ou outro erro aritmetico\n";
+                break;
+            case -100:
+                text += "pois superou o limite de tentativas de solucao\n";
+                break;
+        }
+        text += "onde\n";
+        text += "Tipo de lâmina: " + ui->comboBox_laminaType->currentText().toStdString() + "\n";
+        text += "Tipo de carretel: " + ui->lineEdit_bobbinType->text().toStdString()  + "\n";
+        switch( transformer->getPatternTransformer() ) {
+            case 0:
+                text += "Tipo de fio do primário: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "\n";
+                text += "Tipo de fio do secundário: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString();
+                break;
+            case 1:
+                text += "Tipo de fio do primário: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "\n";
+                text += "Tipo de fio do secundários: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeOutput_2->currentText().toStdString();
+                break;
+            case 2:
+                text += "Tipo de fio do primários: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeInput_2->currentText().toStdString() + "\n";
+                text += "Tipo de fio do secundário: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString();
+                break;
+            case 3:
+                text += "Tipo de fio do primários: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeInput_2->currentText().toStdString() + "\n";
+                text += "Tipo de fio do secundários: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeOutput_2->currentText().toStdString();
+            break;
+        }
+
         msgBox.setIcon( QMessageBox::Warning );
     }
+
+    msgBox.setText( text.c_str() );
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
-    /*
-    Wire* wireIN   = new Wire();
-    Wire* wireOUT  = new Wire();
-    Lamina* lamina = new Lamina();
-    Bobbin* bobbin = new Bobbin();
+}
 
-    wireIN->setType( "redondo" );
-    wireOUT->setType( "redondo" );
-    lamina->setType( "padrao" );
-    bobbin->setType( "STSR" );
-
-    // #####################################
-    // ## Current Density value by Power   #
-    // ## +------------+-----------------+ #
-    // ## |   Power    | Current Density | #
-    // ## |    (VA)    |    (A/mm^2)     | #
-    // ## +------------+-----------------+ #
-    // ## |   0 ~ 500  |        3        | #
-    // ## +------------+-----------------+ #
-    // ## | 500 ~ 1000 |       2.5       | #
-    // ## +------------+-----------------+ #
-    // ## |1000 ~ 3000 |        2        | #
-    // ## +------------+-----------------+ #
-    // #####################################
-
-    Transformer* transformer1 = new Transformer( this->database );
-    transformer1->setPowerOUT( 300.0 );
-    transformer1->setVoltageOUT( 220.0 );
-    transformer1->setVoltageIN( 120.0 );
-    transformer1->setFrequency( 50 );
-    transformer1->setMagneticInduction( 11300.0 );
-    transformer1->setCurrentDensity( 3.0 );
-    transformer1->setPatternTransformer( 0 );
-    transformer1->setLamina( lamina );
-    transformer1->setBobbin( bobbin );
-    transformer1->setWireIN( wireIN );
-    transformer1->setWireOUT( wireOUT );
-    std::string reportTEXT, reportHTML;
-    if( transformer1->calculate() ){
-        reportTEXT = transformer1->toString();
-        reportHTML = transformer1->toHTML();
-    }
-    else {
-        reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
-        reportTEXT += "           Tipo de lâmina: " + lamina->getType()  + "\n";
-        reportTEXT += "         Tipo de carretel: " + bobbin->getType()  + "\n";
-        reportTEXT += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
-        reportTEXT += "Tipo de fio do secundário: " + wireOUT->getType();
-
-        reportHTML  = "<table align=\"center\">\n";
-        reportHTML += "\t<tr><td align=\"center\" colspan=\"2\">Não houve sucesso no cálculo do transformador</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de lâmina:</td><td>" + lamina->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de carretel:</td><td>" + bobbin->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
-        reportHTML += "</table>";
-    }
-
-    FILE* fp;
-    fp = fopen( "example_1.txt", "w" );
-    fputs( reportTEXT.c_str(), fp );
-    fclose( fp );
-
-    fp = fopen( "example_1.html", "w" );
-    fputs( reportHTML.c_str(), fp );
-    fclose( fp );
-
-    // ###################################################
-    // ###################################################
-    Transformer* transformer2 = new Transformer( this->database );
-    transformer2->setPowerOUT( 1000.0 );
-    transformer2->setVoltageOUT( 24.0 );
-    transformer2->setVoltageIN( 220.0 );
-    transformer2->setFrequency( 50 );
-    transformer2->setMagneticInduction( 11300.0 );
-    transformer2->setCurrentDensity( 2.5 );
-    transformer2->setPatternTransformer( 0 );
-    transformer2->setLamina( lamina );
-    transformer2->setBobbin( bobbin );
-    transformer2->setWireIN( wireIN );
-    transformer2->setWireOUT( wireOUT );
-    if( transformer2->calculate() ){
-        reportTEXT = transformer2->toString();
-        reportHTML = transformer2->toHTML();
-    }
-    else{
-        reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
-        reportTEXT += "           Tipo de lâmina: " + lamina->getType()  + "\n";
-        reportTEXT += "         Tipo de carretel: " + bobbin->getType()  + "\n";
-        reportTEXT += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
-        reportTEXT += "Tipo de fio do secundário: " + wireOUT->getType();
-
-        reportHTML  = "<table align=\"center\">\n";
-        reportHTML += "\t<tr><td align=\"center\" colspan=\"2\">Não houve sucesso no cálculo do transformador</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de lâmina:</td><td>" + lamina->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de carretel:</td><td>" + bobbin->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
-        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
-        reportHTML += "</table>";
-    }
-
-    fp = fopen( "example_2.txt", "w" );
-    fputs( reportTEXT.c_str(), fp );
-    fclose( fp );
-
-    fp = fopen( "example_2.html", "w" );
-    fputs( reportHTML.c_str(), fp );
-    fclose( fp );
-
-    // refazer o exemplo dois do martignoni acima, abaixo com os dados lamina especial
-    */
+void WindowNew::on_pushButton_clear_clicked(){
+    this->clearFields();
 }
 
 void WindowNew::on_pushButton_save_clicked(){
-    if( transformer->getAutomatic() == false ){
-        transformer->setFrequency( atof( ui->lineEdit_frequency->text().toStdString().c_str() ) );
-        transformer->setMagneticInduction( atof( ui->lineEdit_magneticInduction->text().toStdString().c_str() ) );
-        transformer->setCurrentDensity( atof( ui->lineEdit_currentDensity->text().toStdString().c_str() ) );
-        transformer->setAverageCurrentDensity( atof( ui->lineEdit_densityAverageCurrent->text().toStdString().c_str() ) );
-        transformer->setWeigthIron( atof( ui->lineEdit_ironWeight->text().toStdString().c_str() ) );
-        transformer->setWeightCopper( atof( ui->lineEdit_weightTurns->text().toStdString().c_str() ) );
-        transformer->setTurnsAverageLength( atof( ui->lineEdit_averageTurnLength->text().toStdString().c_str() ) );
-        transformer->setCoilArea( atof( ui->lineEdit_turnsArea->text().toStdString().c_str() ) );
-        transformer->setIronLoss( atof( ui->lineEdit_ironLoss->text().toStdString().c_str() ) );
-        transformer->setCopperLoss( atof( ui->lineEdit_totalLoss->text().toStdString().c_str() ) );
-        transformer->setEfficiency( atof( ui->lineEdit_efficiency->text().toStdString().c_str() ) );
+    QMessageBox msgBox;
 
-        QString text   = ui->comboBox_patternWinding->currentText();
-        if( text ==  "2 primários / 2 secundários" ){
-            transformer->setPatternTransformer( 3 );
-        }
-        else if( text == "2 primários / 1 secundário" ){
-            transformer->setPatternTransformer( 2 );
-        }
-        else if( text == "1 primário / 2 secundários" ){
-            transformer->setPatternTransformer( 1 );
-        }
-        else{ /* patterText == "1 primário / 1 secundário" */
-            transformer->setPatternTransformer( 0 );
-        }
-        if( ui->checkBox_compensation_power->isChecked() ){
-            transformer->setCompensationLossTransformer( atof( ui->lineEdit_compensation_power->text().toStdString().c_str() ) );
-        }
-        else{
-            transformer->setCompensationLossTransformer( 0.0 );
-        }
-
-        transformer->setVoltageIN( atof( ui->lineEdit_voltageInput->text().toStdString().c_str() ) );
-        transformer->setPowerIN( atof( ui->lineEdit_powerInput->text().toStdString().c_str() ) );
-        transformer->setCurrentIN( atof( ui->lineEdit_currentInput->text().toStdString().c_str() ) );
-        transformer->setCurrentDensityIN( atof( ui->lineEdit_densityCurrentInput->text().toStdString().c_str() ) );
-
-        Wire* wireIN = new Wire();
-        transformer->setWireTurnsIN( static_cast<unsigned int>( atoi( ui->lineEdit_turnsIN->text().toStdString().c_str() ) ) );
-        wireIN->setId( static_cast<unsigned int>( atoi( ui->lineEdit_wireIDInput->text().toStdString().c_str() ) )  );
-        wireIN->setAWG( ui->lineEdit_wireAWGInput->text().toStdString() );
-        wireIN->setDiameter( atof( ui->lineEdit_wireDiameterInput->text().toStdString().c_str() ) );
-        // falta: wire turn per cm IN";
-        wireIN->setArea( atof( ui->lineEdit_wireAreaInput->text().toStdString().c_str() ) );
-        // falta: wire resistance IN";
-        // falta: wire weight IN";
-        // falta: wire length IN";
-        // falta: wire frequency IN";
-        wireIN->setMaterial( ui->lineEdit_wireMaterialInput->text().toStdString() );
-        transformer->setWireIN( wireIN );
-
-        transformer->setVoltageOUT( atof( ui->lineEdit_voltageOutput->text().toStdString().c_str() ) );
-        transformer->setPowerOUT( atof( ui->lineEdit_powerOutput->text().toStdString().c_str() ) );
-        transformer->setCurrentOUT( atof( ui->lineEdit_currentOutput->text().toStdString().c_str() ) );
-        transformer->setCurrentDensityOUT( atof( ui->lineEdit_densityCurrentOutput->text().toStdString().c_str() ) );
-
-        Wire* wireOUT = new Wire();
-        transformer->setWireTurnsOUT( static_cast<unsigned int>( atoi( ui->lineEdit_turnsOUT->text().toStdString().c_str() ) ) );
-        wireOUT->setId( static_cast<unsigned int>( atoi( ui->lineEdit_wireIDOutput->text().toStdString().c_str() ) )  );
-        wireOUT->setAWG( ui->lineEdit_wireAWGOutput->text().toStdString() );
-        wireOUT->setDiameter( atof( ui->lineEdit_wireDiameterOutput->text().toStdString().c_str() ) );
-        // falta: wire turn per cm OUT";
-        wireOUT->setArea( atof( ui->lineEdit_wireAreaOutput->text().toStdString().c_str() ) );
-        // falta: wire resistance OUT";
-        // falta: wire weight OUT";
-        // falta: wire length OUT";
-        // falta: wire frequency OUT";
-        wireOUT->setMaterial( ui->lineEdit_wireMaterialOutput->text().toStdString() );
-        transformer->setWireIN( wireOUT );
-
-        Lamina* lamina = new Lamina();
-        lamina->setId( static_cast<unsigned int>( atoi( ui->lineEdit_laminaID->text().toStdString().c_str() ) ) );
-        lamina->setType( ui->comboBox_laminaType->currentText().toStdString() );
-        lamina->setWidth( atof( ui->lineEdit_laminaWidth->text().toStdString().c_str() ) );
-        lamina->setWindowArea( atof( ui->lineEdit_laminaArea->text().toStdString().c_str() ) );
-        lamina->setWeight( atof( ui->lineEdit_laminaWeight->text().toStdString().c_str() ) );
-        if( ui->checkBox_laminaCompensation->isChecked() ){
-            lamina->setThicknessPercent( atof( ui->lineEdit_laminaCompensation->text().toStdString().c_str() ) );
-        }
-        transformer->setLamina( lamina );
-
-        Bobbin* bobbin = new Bobbin();
-        bobbin->setId( static_cast<unsigned int>( atoi( ui->lineEdit_bobbinID->text().toStdString().c_str() ) ) );
-        bobbin->setType( ui->lineEdit_bobbinType->text().toStdString() );
-        bobbin->setCode( ui->lineEdit_bobbinCode->text().toStdString() );
-        bobbin->setProvider( ui->lineEdit_bobbinProvider->text().toStdString() );
-        bobbin->setWidth( atof( ui->lineEdit_bobbinWidth->text().toStdString().c_str() ) );
-        bobbin->setLength( atof( ui->lineEdit_bobbinLength->text().toStdString().c_str() ) );
-        bobbin->setHeight( atof( ui->lineEdit_bobbinHeight->text().toStdString().c_str() ) );
-        transformer->setBobbin( bobbin );
+    if( this->transformer->getState() == false ){
+        this->setTransformer();
     }
 
-    QMessageBox msgBox;
     if( this->database->executeSQL( transformer->toSQL() ) == 0 ){
         msgBox.setText( "Projeto salvo com sucesso." );
         msgBox.setIcon( QMessageBox::Information );
@@ -403,12 +460,16 @@ void WindowNew::on_pushButton_save_clicked(){
         msgBox.setText( "Projeto não foi salvo. Erros ocorreram." );
         msgBox.setIcon( QMessageBox::Warning );
     }
+
     msgBox.setStandardButtons( QMessageBox::Ok );
     msgBox.exec();
 }
 
 void WindowNew::on_pushButton_close_clicked(){
-    if( this->getStateSave() == false ){
+    this->close();
+    //if( this->getStateSave() == false ){
+    /*
+    if( false ){
         QMessageBox msgBox;
         msgBox.setText( "Deseja sair sem salvar o projeto" );
         msgBox.setIcon( QMessageBox::Warning );
@@ -426,4 +487,5 @@ void WindowNew::on_pushButton_close_clicked(){
     else{
         this->close();
     }
+    */
 }

@@ -8,7 +8,7 @@ class Wires{
     private:
         DataBase* database;
 
-        std::string comparation( char option_comparation ){
+        std::string comparation( char option_comparation ) const{
             std::string str = "";
             switch( option_comparation ){
                 case 'e': // equal //
@@ -24,7 +24,7 @@ class Wires{
             return str;
         }
 
-        std::string queryByIndex( unsigned int index, std::string field ){
+        std::string queryByIndex( unsigned int index, std::string field ) const{
             // SELECT
             //         [field]
             // FROM
@@ -38,7 +38,7 @@ class Wires{
             return sql;
         }
 
-        std::string queryByTypeAndField( std::string type, std::string field, double value, char comparation, std::string order="ASC" ){
+        std::string queryByTypeAndField( std::string type, std::string field, double value, char comparation, std::string order="ASC" ) const{
             // SELECT
             //          id
             // FROM
@@ -59,7 +59,7 @@ class Wires{
             return sql;
         }
 
-        std::vector< std::vector<double> > string2Vector( std::string text, char separator ){
+        std::vector< std::vector<double> > string2Vector( std::string text, char separator ) const{
             std::vector< std::vector<double> > values;
             std::size_t found1, found2;
             found1 = 0;
@@ -88,7 +88,7 @@ class Wires{
             this->database = database;
         }
 
-        std::string getType( unsigned int index ){
+        std::string getType( unsigned int index ) const{
 			std::string type_tmp = "";
             // SELECT type_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "type_wire" ) ) > -1 ){
@@ -99,7 +99,7 @@ class Wires{
 			return type_tmp;
 		}
 
-        std::string getAWG( unsigned int index ){
+        std::string getAWG( unsigned int index ) const{
 			std::string awg = "";
             // SELECT awg_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "awg_wire" ) ) > -1 ){
@@ -110,7 +110,7 @@ class Wires{
 			return awg;
 		}
 
-        double getDiameter( unsigned int index ){
+        double getDiameter( unsigned int index ) const{
 			double diameter = 0.0;
             // SELECT diameter_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "diameter_wire" ) ) > -1 ){
@@ -121,7 +121,7 @@ class Wires{
 			return diameter;
 		}
 
-        double getTurnsPerCm( unsigned int index ){
+        double getTurnsPerCm( unsigned int index ) const{
 			double turnsPerCm = 0.0;
             // SELECT turnsPerCm_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "turnsPerCm_wire" ) ) > -1 ){
@@ -132,7 +132,7 @@ class Wires{
             return turnsPerCm;
 		}
 
-        double getArea( unsigned int index ){
+        double getArea( unsigned int index ) const{
 			double area = 0.0;
             // SELECT area_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "area_wire" ) ) > -1 ){
@@ -143,7 +143,7 @@ class Wires{
 			return area;
 		}
 
-        double getResistance( unsigned int index ){
+        double getResistance( unsigned int index ) const{
 			double resistance = 0.0;
             // SELECT resistance_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "resistance_wire" ) ) > -1 ){
@@ -154,7 +154,7 @@ class Wires{
 			return resistance;
 		}
 
-        double getWeight( unsigned int index ){
+        double getWeight( unsigned int index ) const{
 			double weight = 0.0;
             // SELECT weight_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "weight_wire" ) ) > -1 ){
@@ -165,7 +165,7 @@ class Wires{
 			return weight;
 		}
 
-        double getLength( unsigned int index ){
+        double getLength( unsigned int index ) const{
 			double length = 0.0;
             // SELECT length_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "length_wire" ) ) > -1 ){
@@ -176,7 +176,7 @@ class Wires{
 			return length;
 		}
 
-        double getFrequency( unsigned int index ){
+        double getFrequency( unsigned int index ) const{
             double frequency = 0.0;
             // SELECT frequency_wire FROM wires WHERE id=10 //
             if( this->database->executeSQL( this->queryByIndex( index, "frequency_wire" ).c_str() ) > -1 ){
@@ -187,7 +187,7 @@ class Wires{
             return frequency;
         }
 
-        std::vector< std::vector<double> > getCurrentMax( unsigned int index ){
+        std::vector< std::vector<double> > getCurrentMax( unsigned int index ) const{
             std::vector< std::vector<double> >currentMax;
             // SELECT currentMaxPerDensity_wire FROM wires WHERE id=10 //
              if( this->database->executeSQL( this->queryByIndex( index, "currentMaxPerDensity_wire" ).c_str() ) > -1 ){
@@ -198,7 +198,7 @@ class Wires{
 			return currentMax;
 		}
 
-        unsigned int findIndexByDiameter( double diameter, std::string type="redondo" ){
+        unsigned int findIndexByDiameter( double diameter, std::string type="redondo" ) const{
 			unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (diameter_wire>=6) ORDER BY diameter_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "diameter_wire", diameter, 'g', "ASC" ) ) > -1 ){
@@ -209,7 +209,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByTurnsPerCm( double turnPerCm, std::string type="redondo" ){
+        unsigned int findIndexByTurnsPerCm( double turnPerCm, std::string type="redondo" ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (turnsPerCm_wire<=60) ORDER BY turnsPerCm_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "turnsPerCm_wire", turnPerCm, 'l', "DESC" ) ) > -1 ){
@@ -220,7 +220,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByArea( double area, std::string type="redondo" ){
+        unsigned int findIndexByArea( double area, std::string type="redondo" ) const{
 			unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (area_wire>=0.92) ORDER BY area_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "area_wire", area, 'g', "ASC" ) ) > -1 ){
@@ -231,7 +231,7 @@ class Wires{
 			return index;
         }
 
-        unsigned int findIndexByResistance( double resistance, std::string type="redondo" ){
+        unsigned int findIndexByResistance( double resistance, std::string type="redondo" ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (resistance_wire<=60) ORDER BY resistance_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "resistance_wire", resistance, 'l', "DESC" ) ) > -1 ){
@@ -242,7 +242,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByWeight( double weight, std::string type="redondo" ){
+        unsigned int findIndexByWeight( double weight, std::string type="redondo" ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (weight_wire<=60) ORDER BY weight_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_wire", weight, 'l', "DESC" ) ) > -1 ){
@@ -253,7 +253,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByLength( double length, std::string type="redondo" ){
+        unsigned int findIndexByLength( double length, std::string type="redondo" ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (length_wire<=60) ORDER BY length_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "length_wire", length, 'l', "DESC" ) ) > -1 ){
@@ -264,7 +264,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByFrequency( double frequency, std::string type="redondo" ){
+        unsigned int findIndexByFrequency( double frequency, std::string type="redondo" ) const{
             unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (frequency_wire>=60) ORDER BY frequency_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "frequency_wire", frequency, 'g', "ASC" ) ) > -1 ){
@@ -276,7 +276,7 @@ class Wires{
         }
 
 // To Do - this->database->executeSQL( sql ) null
-        unsigned int findIndexByCurrentMax( double currentMax, double density=3.0, std::string type="redondo" ){
+        unsigned int findIndexByCurrentMax( double currentMax, double density=3.0, std::string type="redondo" ) const{
             unsigned int index = 0;
             std::string sql = "";
             sql = sql + "SELECT id, currentMaxPerDensity_wire ";
@@ -308,7 +308,7 @@ class Wires{
 			return index;
 		}
 
-        Wire* getWire( unsigned int index ){
+        Wire* getWire( unsigned int index ) const{
             Wire* wire = new Wire();
             std::string sql = "";
             sql = sql + "SELECT * ";

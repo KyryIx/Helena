@@ -10,7 +10,7 @@
 --                 frequencia: frequencia maxima em kHz
 --                   material: material do fio
 			
-CREATE TABLE wires (
+CREATE TABLE IF NOT EXISTS wires (
 	id                        INTEGER      PRIMARY KEY AUTOINCREMENT,
 	type_wire                 VARCHAR(64),
 	awg_wire                  VARCHAR(6),

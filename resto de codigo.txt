@@ -1,0 +1,203 @@
+/*
+    double frequency;                // Hz
+    double magneticInduction;        // G
+    double currentDensity;           // A/mm2
+    double meanCurrentDensity;       // A/mm2
+    double weigthIron;               // g
+    double weightCopper;             // g
+    unsigned int turnsAverageLength; // cm
+    double coilArea;                 // mm^2
+    double ironLoss;                 // W
+    double copperLoss;               // W
+    double totalLoss;                // W
+    double efficiency;               // %
+
+    unsigned int patternTransformer;
+    double compensationLossTransformer;
+    double compensationLamina;
+
+    double voltageIN;           // V
+    double powerIN;             // W
+    double currentIN;           // A
+    double currentDensityIN;    // A/mm2
+
+    unsigned int wireIDIN;
+    std::string wireAWGIN;
+    unsigned int wireTurnsIN;   // esp
+    double wireDiameterIN;      // mm
+    double wireTurnPerCmIN;     // esp/cm
+    double wireAreaIN;          // mm2
+    double wireResistanceIN;    // ohm/km
+    double wireWeightIN;        // kg/km
+    double wireLengthIN;        // m/kg
+    double wireFrequencyIN;     // kHz
+
+    double voltageOUT;          // V
+    double powerOUT;            // W
+    double currentOUT;          // A
+    double currentDensityOUT;   // A/mm2
+
+    unsigned int wireIDOUT;
+    std::string wireAWGOUT;
+    unsigned int wireTurnsOUT;  // esp
+    double wireDiameterOUT;     // mm
+    double wireTurnPerCmOUT;    // esp/cm
+    double wireAreaOUT;         // mm2
+    double wireResistanceOUT;   // ohm/km
+    double wireWeightOUT;       // kg/km
+    double wireLengthOUT;       // m/kg
+    double wireFrequencyOUT;    // kHz
+
+    unsigned int laminaID;
+    std::string laminaType;
+    double laminaWidth;         // mm
+    double laminaWindowArea;    // mm^2
+    double laminaWeight;        // kg/cm
+
+    unsigned int bobbinID;
+    std::string bobbinType;
+    std::string bobbinCode;
+    std::string bobbinProvider;
+    double bobbinWidth;         // mm
+    double bobbinLength;        // mm
+    double bobbinHeight;        // mm
+    double bobbinArea;          // mm^2
+    double bobbinVolume;        // mm^3
+    */
+
+void WindowNew::on_lineEdit_voltageInput_1_textChanged(){
+    if( )
+    void WindowNew::duplicateValues(){
+        ui->lineEdit_voltageInput_2->setText( ui->lineEdit_voltageInput_1->text() );
+        ui->lineEdit_voltageOutput_2->setText( ui->lineEdit_voltageOutput_1->text() );
+        ui->lineEdit_currentInput_2->setText( ui->lineEdit_currentInput_1->text() );
+        ui->lineEdit_currentOutput_2->setText( ui->lineEdit_currentOutput_1->text() );
+    }
+    this->duplicateValues();
+}
+
+void WindowNew::on_lineEdit_voltageOutput_1_textChanged(){
+    this->duplicateValues();
+}
+
+
+//void WindowNew::setStateSave( bool state ){
+//    this->stateSave = state;
+//}
+
+//bool WindowNew::getStateSave(){
+//    return this->stateSave;
+//}
+
+
+    /*
+    Wire* wireIN   = new Wire();
+    Wire* wireOUT  = new Wire();
+    Lamina* lamina = new Lamina();
+    Bobbin* bobbin = new Bobbin();
+
+    wireIN->setType( "redondo" );
+    wireOUT->setType( "redondo" );
+    lamina->setType( "padrao" );
+    bobbin->setType( "STSR" );
+
+    // #####################################
+    // ## Current Density value by Power   #
+    // ## +------------+-----------------+ #
+    // ## |   Power    | Current Density | #
+    // ## |    (VA)    |    (A/mm^2)     | #
+    // ## +------------+-----------------+ #
+    // ## |   0 ~ 500  |        3        | #
+    // ## +------------+-----------------+ #
+    // ## | 500 ~ 1000 |       2.5       | #
+    // ## +------------+-----------------+ #
+    // ## |1000 ~ 3000 |        2        | #
+    // ## +------------+-----------------+ #
+    // #####################################
+
+    Transformer* transformer1 = new Transformer( this->database );
+    transformer1->setPowerOUT( 300.0 );
+    transformer1->setVoltageOUT( 220.0 );
+    transformer1->setVoltageIN( 120.0 );
+    transformer1->setFrequency( 50 );
+    transformer1->setMagneticInduction( 11300.0 );
+    transformer1->setCurrentDensity( 3.0 );
+    transformer1->setPatternTransformer( 0 );
+    transformer1->setLamina( lamina );
+    transformer1->setBobbin( bobbin );
+    transformer1->setWireIN( wireIN );
+    transformer1->setWireOUT( wireOUT );
+    std::string reportTEXT, reportHTML;
+    if( transformer1->calculate() ){
+        reportTEXT = transformer1->toString();
+        reportHTML = transformer1->toHTML();
+    }
+    else {
+        reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
+        reportTEXT += "           Tipo de lâmina: " + lamina->getType()  + "\n";
+        reportTEXT += "         Tipo de carretel: " + bobbin->getType()  + "\n";
+        reportTEXT += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
+        reportTEXT += "Tipo de fio do secundário: " + wireOUT->getType();
+
+        reportHTML  = "<table align=\"center\">\n";
+        reportHTML += "\t<tr><td align=\"center\" colspan=\"2\">Não houve sucesso no cálculo do transformador</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de lâmina:</td><td>" + lamina->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de carretel:</td><td>" + bobbin->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "</table>";
+    }
+
+    FILE* fp;
+    fp = fopen( "example_1.txt", "w" );
+    fputs( reportTEXT.c_str(), fp );
+    fclose( fp );
+
+    fp = fopen( "example_1.html", "w" );
+    fputs( reportHTML.c_str(), fp );
+    fclose( fp );
+
+    // ###################################################
+    // ###################################################
+    Transformer* transformer2 = new Transformer( this->database );
+    transformer2->setPowerOUT( 1000.0 );
+    transformer2->setVoltageOUT( 24.0 );
+    transformer2->setVoltageIN( 220.0 );
+    transformer2->setFrequency( 50 );
+    transformer2->setMagneticInduction( 11300.0 );
+    transformer2->setCurrentDensity( 2.5 );
+    transformer2->setPatternTransformer( 0 );
+    transformer2->setLamina( lamina );
+    transformer2->setBobbin( bobbin );
+    transformer2->setWireIN( wireIN );
+    transformer2->setWireOUT( wireOUT );
+    if( transformer2->calculate() ){
+        reportTEXT = transformer2->toString();
+        reportHTML = transformer2->toHTML();
+    }
+    else{
+        reportTEXT  = "Não houve sucesso no cálculo do transformador, onde\n";
+        reportTEXT += "           Tipo de lâmina: " + lamina->getType()  + "\n";
+        reportTEXT += "         Tipo de carretel: " + bobbin->getType()  + "\n";
+        reportTEXT += "  Tipo de fio do primário: " + wireIN->getType()  + "\n";
+        reportTEXT += "Tipo de fio do secundário: " + wireOUT->getType();
+
+        reportHTML  = "<table align=\"center\">\n";
+        reportHTML += "\t<tr><td align=\"center\" colspan=\"2\">Não houve sucesso no cálculo do transformador</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de lâmina:</td><td>" + lamina->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de carretel:</td><td>" + bobbin->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do primário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "\t<tr><td align=\"right\">Tipo de fio do secundário:</td><td>" + wireIN->getType() + "</td></tr>\n";
+        reportHTML += "</table>";
+    }
+
+    fp = fopen( "example_2.txt", "w" );
+    fputs( reportTEXT.c_str(), fp );
+    fclose( fp );
+
+    fp = fopen( "example_2.html", "w" );
+    fputs( reportHTML.c_str(), fp );
+    fclose( fp );
+
+    // refazer o exemplo dois do martignoni acima, abaixo com os dados lamina especial
+    */

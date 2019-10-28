@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
+    <width>840</width>
     <height>524</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>790</width>
+     <width>840</width>
      <height>21</height>
     </rect>
    </property>
@@ -33,8 +33,6 @@
     </property>
     <addaction name="action_newProject"/>
     <addaction name="action_openProject"/>
-    <addaction name="action_saveProject"/>
-    <addaction name="action_closeProject"/>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menuPreferences">
@@ -72,8 +70,6 @@
    </attribute>
    <addaction name="action_newProject"/>
    <addaction name="action_openProject"/>
-   <addaction name="action_saveProject"/>
-   <addaction name="action_closeProject"/>
    <addaction name="separator"/>
    <addaction name="action_wires"/>
    <addaction name="action_laminas"/>
