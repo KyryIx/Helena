@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>861</width>
-    <height>680</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
      <x>10</x>
      <y>10</y>
      <width>591</width>
-     <height>261</height>
+     <height>381</height>
     </rect>
    </property>
    <property name="title">
@@ -496,12 +496,35 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QGroupBox" name="groupBox_observation">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>571</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Observações</string>
+    </property>
+    <widget class="QTextEdit" name="textEdit_observation">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>551</width>
+       <height>81</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_Input">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>280</y>
+     <y>390</y>
      <width>291</width>
      <height>391</height>
     </rect>
@@ -1251,7 +1274,7 @@
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>280</y>
+     <y>400</y>
      <width>291</width>
      <height>391</height>
     </rect>
@@ -1975,8 +1998,8 @@
   <widget class="QPushButton" name="pushButton_update">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>530</y>
+     <x>610</x>
+     <y>560</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2002,7 +2025,7 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>620</y>
+     <y>600</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2014,8 +2037,8 @@
   <widget class="QPushButton" name="pushButton_validate">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>590</y>
+     <x>610</x>
+     <y>600</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2028,7 +2051,7 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>650</y>
+     <y>766</y>
      <width>110</width>
      <height>23</height>
     </rect>

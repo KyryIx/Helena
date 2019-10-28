@@ -545,6 +545,29 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox_observation">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>259</y>
+        <width>591</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Observações</string>
+      </property>
+      <widget class="QTextEdit" name="textEdit_observation">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>571</width>
+         <height>111</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_input">
      <attribute name="title">
