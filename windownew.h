@@ -36,6 +36,7 @@ private:
 
     void clearFields();
     void setTransformer();
+    void updateTransformer();
     void writeInput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
     void writeInput2( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );
     void writeOutput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned type, const char* awg, double diameter, double area, const char* material, unsigned int turns );

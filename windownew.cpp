@@ -1,6 +1,10 @@
 #include "windownew.h"
 #include "ui_windownew.h"
 
+#include "wires.h"
+#include "laminas.h"
+#include "bobbins.h"
+
 #define precision 2
 
 WindowNew::WindowNew(QWidget *parent, DataBase* database) :
@@ -23,6 +27,7 @@ void WindowNew::setDatabase( DataBase *database ){
 
 void WindowNew::clearFields(){
     ui->comboBox_patternWinding->setCurrentIndex( 0 );
+    ui->checkBox_centerTap->setChecked( false );
     ui->lineEdit_frequency->setText( QString::number( 60.0, 'f', precision ) );
     ui->lineEdit_magneticInduction->setText( QString::number( 11300, 'f', precision ) );
     ui->lineEdit_currentDensity->setText( QString::number( 3.0, 'f', precision ) );
@@ -114,6 +119,7 @@ void WindowNew::setTransformer(){
     double voltageOUT_1             = ui->lineEdit_voltageOutput_1->text().toDouble();
     double voltageOUT_2             = ui->lineEdit_voltageOutput_2->text().toDouble();
     unsigned int patternTransformer = static_cast<unsigned int>( ui->comboBox_patternWinding->currentIndex() );
+    this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
     double accommodation            = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
     std::string typeWireIN_1        = ui->comboBox_wireTypeInput_1->currentText().toStdString();
     std::string typeWireIN_2        = ui->comboBox_wireTypeInput_2->currentText().toStdString();
@@ -166,6 +172,59 @@ void WindowNew::setTransformer(){
     this->transformer->setWireOUT1( wireOUT_1 );
     this->transformer->setWireOUT2( wireOUT_2 );
     this->transformer->setObservation( observation );
+}
+
+void WindowNew::updateTransformer(){
+    this->transformer->setPatternTransformer( static_cast<unsigned int>( ui->comboBox_patternWinding->currentIndex() ) );
+    this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
+    this->transformer->setFrequency( ui->lineEdit_frequency->text().toDouble() );
+    this->transformer->setMagneticInduction( ui->lineEdit_magneticInduction->text().toDouble() );
+    this->transformer->setCurrentDensity( ui->lineEdit_currentDensity->text().toDouble() );
+    this->transformer->setAverageCurrentDensity( ui->lineEdit_densityAverageCurrent->text().toDouble() );
+    this->transformer->setApplyCompensationTransformer( ui->checkBox_compensation_power->isChecked() );
+    this->transformer->setCompensationLossTransformer( ui->lineEdit_compensation_power->text().toDouble() );
+    this->transformer->setWindowAreaPerSectionCu( ui->lineEdit_windowAreaPerSectionTurns->text().toDouble() );
+    this->transformer->setWeightCopper( ui->lineEdit_weightTurns->text().toDouble() );
+    this->transformer->setWeigthIron( ui->lineEdit_ironWeight->text().toDouble() );
+    this->transformer->setCopperLoss( ui->lineEdit_TurnsLoss->text().toDouble() );
+    this->transformer->setIronLoss( ui->lineEdit_ironLoss->text().toDouble() );
+    this->transformer->setTurnsAverageLength( ui->lineEdit_averageTurnLength->text().toDouble() );
+    this->transformer->setTotalLoss( ui->lineEdit_totalLoss->text().toDouble() );
+    this->transformer->setCoilArea( ui->lineEdit_turnsArea->text().toDouble() );
+    this->transformer->setEfficiency( ui->lineEdit_efficiency->text().toDouble() );
+    this->transformer->setObservation( ui->textEdit_observation->toPlainText().toStdString() );
+
+    Wires* wires = new Wires( database );
+
+    this->transformer->setPowerIN( ui->lineEdit_powerInput->text().toDouble() );
+    this->transformer->setVoltageIN1( ui->lineEdit_voltageInput_1->text().toDouble() );
+    this->transformer->setCurrentIN1( ui->lineEdit_currentInput_1->text().toDouble() );
+    this->transformer->setCurrentDensityIN1( ui->lineEdit_densityCurrentInput_1->text().toDouble() );
+    this->transformer->setWireIN1( wires->getWire( ui->lineEdit_wireIDInput_1->text().toUInt() ) );
+    this->transformer->setWireTurnsIN1( ui->lineEdit_turnsIN_1->text().toUInt() );
+    this->transformer->setVoltageIN2( ui->lineEdit_voltageInput_2->text().toDouble() );
+    this->transformer->setCurrentIN2( ui->lineEdit_currentInput_2->text().toDouble() );
+    this->transformer->setCurrentDensityIN2( ui->lineEdit_densityCurrentInput_2->text().toDouble() );
+    this->transformer->setWireIN2( wires->getWire( ui->lineEdit_wireIDInput_2->text().toUInt() ) );
+    this->transformer->setWireTurnsIN2( ui->lineEdit_turnsIN_2->text().toUInt() );
+
+    this->transformer->setPowerOUT( ui->lineEdit_powerOutput->text().toDouble() );
+    this->transformer->setVoltageOUT1( ui->lineEdit_voltageOutput_1->text().toDouble() );
+    this->transformer->setCurrentOUT1( ui->lineEdit_currentOutput_1->text().toDouble() );
+    this->transformer->setCurrentDensityOUT1( ui->lineEdit_densityCurrentOutput_1->text().toDouble() );
+    this->transformer->setWireOUT1( wires->getWire( ui->lineEdit_wireIDOutput_1->text().toUInt() ) );
+    this->transformer->setWireTurnsOUT1( ui->lineEdit_turnsOUT_1->text().toUInt() );
+    this->transformer->setVoltageOUT2( ui->lineEdit_voltageOutput_2->text().toDouble() );
+    this->transformer->setCurrentOUT2( ui->lineEdit_currentOutput_2->text().toDouble() );
+    this->transformer->setCurrentDensityOUT2( ui->lineEdit_densityCurrentOutput_2->text().toDouble() );
+    this->transformer->setWireOUT2( wires->getWire( ui->lineEdit_wireIDOutput_2->text().toUInt() ) );
+    this->transformer->setWireTurnsOUT2( ui->lineEdit_turnsOUT_2->text().toUInt() );
+
+    Laminas* laminas = new Laminas( database );
+    Bobbins* bobbins = new Bobbins( database );
+
+    this->transformer->setLamina( laminas->getLamina( ui->lineEdit_laminaID->text().toUInt() ) );
+    this->transformer->setBobbin( bobbins->getBobbin( ui->lineEdit_bobbinID->text().toUInt() ) );
 }
 
 void WindowNew::writeInput1( double voltage, double current, double densityCurrent, unsigned int id, unsigned int type, const char* awg, double diameter, double area, const char* material, unsigned int turns ){
@@ -251,22 +310,28 @@ void  WindowNew::on_comboBox_patternWinding_currentIndexChanged(int index){
         case 0:
             enableInput2( false );
             enableOutput2( false );
+            ui->checkBox_centerTap->setEnabled( true );
             break;
         case 1:
             enableInput2( false );
             enableOutput2( true );
             ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
+            ui->checkBox_centerTap->setEnabled( false );
+            ui->checkBox_centerTap->setChecked( false );
             break;
         case 2:
             enableInput2( true );
             enableOutput2( false );
             ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
+            ui->checkBox_centerTap->setEnabled( true );
             break;
         case 3:
             enableInput2( true );
             enableOutput2( true );
             ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
             ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
+            ui->checkBox_centerTap->setEnabled( false );
+            ui->checkBox_centerTap->setChecked( false );
             break;
     }
 }
@@ -303,7 +368,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
         ui->lineEdit_turnsArea->setText( QString::number( transformer->getCoilArea(), 'f', precision ) );
         ui->lineEdit_efficiency->setText( QString::number( transformer->getEfficiency() * 100.0, 'f', precision ) );
 
-        // input/output informations //
+        // input/output informations ONE //
         ui->lineEdit_powerInput->setText( std::to_string( transformer->getPowerIN() ).c_str() );
 
         this->writeInput1(
@@ -332,6 +397,8 @@ void WindowNew::on_pushButton_calculate_clicked(){
                     transformer->getWireTurnsOUT1()
         );
 
+        // input/output informations TWO //
+
         this->writeInput2( 0.0, 0.0, 0.0, 0, 0, "-", 0.0, 0.0, "-", 0 );
         this->writeOutput2( 0.0, 0.0, 0.0, 0, 0, "-", 0.0, 0.0, "-", 0 );
         this->enableInput2( false );
@@ -353,7 +420,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
             this->enableInput2( true );
         }
 
-        if( this->transformer->getPatternTransformer() % 2 == 1 ){
+        if( (this->transformer->getPatternTransformer() % 2 == 1) || (this->transformer->getApplyCenterTap()) ){
             this->writeOutput2(
                         transformer->getVoltageOUT2(),
                         transformer->getCurrentOUT2(),
@@ -452,11 +519,7 @@ void WindowNew::on_pushButton_clear_clicked(){
 
 void WindowNew::on_pushButton_save_clicked(){
     QMessageBox msgBox;
-
-    if( this->transformer->getState() == false ){
-        this->setTransformer();
-    }
-
+    this->updateTransformer();
     if( this->database->executeSQL( transformer->toSQL() ) == 0 ){
         msgBox.setText( "Projeto salvo com sucesso." );
         msgBox.setIcon( QMessageBox::Information );
@@ -471,26 +534,11 @@ void WindowNew::on_pushButton_save_clicked(){
 }
 
 void WindowNew::on_pushButton_close_clicked(){
-    this->close();
-    //if( this->getStateSave() == false ){
-    /*
-    if( false ){
-        QMessageBox msgBox;
-        msgBox.setText( "Deseja sair sem salvar o projeto" );
-        msgBox.setIcon( QMessageBox::Warning );
-        msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::No );
-        int result = msgBox.exec();
-        switch( result ){
-            case QMessageBox::Ok:
-                this->close();
-                break;
-            case QMessageBox::No:
-            default:
-                break;
-        }
-    }
-    else{
+    QMessageBox msgBox;
+    msgBox.setText( "Deseja sair do formulário de criação de projeto?" );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::No );
+    if( msgBox.exec() == QMessageBox::Ok ){
         this->close();
     }
-    */
 }

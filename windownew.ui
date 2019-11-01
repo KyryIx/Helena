@@ -568,6 +568,19 @@
        </property>
       </widget>
      </widget>
+     <widget class="QCheckBox" name="checkBox_centerTap">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>23</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Center Tap</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_input">
      <attribute name="title">
