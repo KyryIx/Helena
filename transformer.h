@@ -38,6 +38,7 @@ class Transformer{
                                          // 1 - 2 primaries and 1 secondary
                                          // 2 - 1 primary and 2 secondaries
                                          // 3 - 2 primaries and 2 secondaries
+        bool applyCenterTap;
         bool applyCompensationTransformer;  // true to apply and false, otherwise
         double compensationLossTransformer; // 0 <= C.L.T. <= 100%;
         double windowAreaPerSectionCu;      // 3.0
@@ -99,6 +100,7 @@ class Transformer{
             this->efficiency                  = 0.0;
 
             this->patternTransformer          = 0;
+            this->applyCenterTap              = false;
             this->applyCompensationTransformer= true;
             this->compensationLossTransformer = 0.0;
             this->windowAreaPerSectionCu      = 3.0;
@@ -341,6 +343,14 @@ class Transformer{
                 return "2 primaries and 2 secondaries";
             else
                 return "indefined type";
+        }
+
+        void setApplyCenterTap( bool state ){
+            this->applyCenterTap = state;
+        }
+
+        bool getApplyCenterTap() const{
+            return this->applyCenterTap;
         }
 
         void setApplyCompensationTransformer( bool state ){
@@ -784,6 +794,10 @@ class Transformer{
                 this->setState( false );
                 unsigned int index  = 0;
 
+                if( this->getApplyCenterTap() ){
+                    this->setVoltageOUT1( 2 * this->getVoltageOUT1() );
+                }
+
                 this->setPowerIN( this->getPowerINAuto() );
                 this->setCurrentOUT1( this->getCurrentOUT1Auto() );
                 this->setCurrentIN1( this->getCurrentIN1Auto() );
@@ -908,6 +922,20 @@ class Transformer{
                     this->setTotalLoss( this->getTotalLossAuto() );
                     this->setEfficiency( this->getEfficiencyAuto() );
 
+                    if( (this->getPatternTransformer() % 2 == 0) && this->getApplyCenterTap() ){
+                        this->setVoltageOUT1( this->getVoltageOUT1() / 2.0 );
+                        //this->setCurrentOUT1( this->getCurrentOUT1Auto() );
+                        //this->setCurrentDensityOUT1( this->getCurrentDensityOUT1Auto() );
+                        //this->setWireOUT1( this->wires->getWire( index ) );
+                        this->setWireTurnsOUT1( this->getWireTurnsOUT1() / 2 );
+
+                        this->setVoltageOUT2( this->getVoltageOUT1() );
+                        this->setCurrentOUT2( this->getCurrentOUT1() );
+                        this->setCurrentDensityOUT2( this->getCurrentDensityOUT1() );
+                        this->setWireOUT2( this->getWireOUT1() );
+                        //this->setWireTurnsOUT2( this->getWireTurnsOUT1() );
+                    }
+
                     this->setState( true );
 
                     return 0;
@@ -924,7 +952,11 @@ class Transformer{
             txt = txt + "GENERAL INFORMATIONS";
             txt = txt + "--------------------\n";
 
-            txt = txt + "Transformer with:     " + this->getPatternTransformerName() + "\n";
+            txt = txt + "Transformer with:     " + this->getPatternTransformerName();
+            if( this->getApplyCenterTap() ){
+                txt = txt + " and center tap";
+            }
+            txt = txt + "\n";
 
             txt = txt + "Frequency:            " + std::to_string( this->getFrequency() )             + " Hz\n";
             txt = txt + "Magnetic Induction:   " + std::to_string( this->getMagneticInduction() )     + " G\n";
@@ -1033,6 +1065,9 @@ class Transformer{
             else
                 txt = txt + "indefined type";
 
+            if( this->getApplyCenterTap() )
+                txt = txt + " and center tap";
+
             txt = txt + "</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Magnetic Induction:</td><td><b>" + std::to_string( this->getMagneticInduction() ) + " G</b></td></tr>\n";
@@ -1131,7 +1166,7 @@ class Transformer{
             std::string sql = "INSERT INTO transformer";
             sql += "(frequency, magneticInduction, currentDensity, averageCurrentDensity, weigthIron, weightCopper, ";
             sql += "turnsAverageLength, coilArea, windowAreaPerSectionTurns, ironLoss, copperLoss, totalLoss, efficiency, ";
-            sql += "patternTransformer, compensationLossTransformer, ";
+            sql += "patternTransformer, centerTap, compensationLossTransformer, ";
             sql += "powerIN, voltageIN1, currentIN1, currentDensityIN1, ";
             sql += "wireIDIN1, wireTypeIN1, wireAWGIN1, wireTurnsIN1, wireDiameterIN1, wireTurnPerCmIN1, wireAreaIN1, ";
             sql += "wireResistanceIN1, wireWeightIN1, wireLengthIN1, wireFrequencyIN1, wireMaterialIN1, ";
@@ -1162,6 +1197,12 @@ class Transformer{
             sql += std::to_string( this->getEfficiency() ) + ", ";                  // efficiency
 
             sql += std::to_string( this->getPatternTransformer() ) + ", ";          // patternTransformer
+            if( this->getApplyCenterTap() ){
+                sql += "TRUE, ";
+            }
+            else{
+                sql += "FALSE, ";
+            }
             if( this->getApplyCompensationTransformer() ){
                 sql += std::to_string( this->getCompensationLossTransformer() ) + ", "; //compensationLossTransformer
             }
