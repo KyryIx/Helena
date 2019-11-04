@@ -14,7 +14,7 @@
    <string>Helena - Sobre o software</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QGroupBox" name="groupBoxLicense">
@@ -92,7 +92,7 @@ Home Page: http://www.everton.mat.br/helena</string>
   </widget>
  </widget>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,17 +1,17 @@
-#include "mainwindow.h"
+#include "windows/mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "windownew.h"
-#include "windowopen.h"
+#include "windows/windownew.h"
+#include "windows/windowopen.h"
 
-#include "windowpreference.h"
+#include "windows/windowpreference.h"
 
-#include "windowwire.h"
-#include "windowlamina.h"
-#include "windowbobbin.h"
+#include "windows/windowwire.h"
+#include "windows/windowlamina.h"
+#include "windows/windowbobbin.h"
 
-#include "windowhelp.h"
-#include "windowabout.h"
+#include "windows/windowhelp.h"
+#include "windows/windowabout.h"
 
 //#include "samples.h"
 

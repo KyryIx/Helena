@@ -1,4 +1,4 @@
-#include "windowbobbin.h"
+#include "windows/windowbobbin.h"
 #include "ui_windowbobbin.h"
 
 #include <QMessageBox>

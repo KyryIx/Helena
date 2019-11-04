@@ -1,8 +1,8 @@
 #ifndef LAMINAS_H
 #define LAMINAS_H
 
-#include "lamina.h"
-#include "database.h"
+#include "components/lamina.h"
+#include "components/database.h"
 
 class Laminas{
     private:

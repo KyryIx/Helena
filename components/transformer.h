@@ -1,14 +1,14 @@
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
-#include "wire.h"
-#include "lamina.h"
-#include "bobbin.h"
+#include "components/wire.h"
+#include "components/lamina.h"
+#include "components/bobbin.h"
 
-#include "database.h"
-#include "wires.h"
-#include "bobbins.h"
-#include "laminas.h"
+#include "components/database.h"
+#include "components/wires.h"
+#include "components/bobbins.h"
+#include "components/laminas.h"
 
 #define PI 3.141592653589793238
 
@@ -34,10 +34,10 @@ class Transformer{
         double totalLoss;                // W
         double efficiency;               // %
 
-        unsigned int patternTransformer; // 0 - 1 primary and 1 secondary
-                                         // 1 - 2 primaries and 1 secondary
-                                         // 2 - 1 primary and 2 secondaries
-                                         // 3 - 2 primaries and 2 secondaries
+        unsigned int patternTransformerNumber; // number: 0 -> name: 1 primary and 1 secondary
+        std::string patternTransformerName;    // number: 1 -> name: 2 primaries and 1 secondary
+                                               // number: 2 -> name: 1 primary and 2 secondaries
+                                               // number: 3 -> name: 2 primaries and 2 secondaries
         bool applyCenterTap;
         bool applyCompensationTransformer;  // true to apply and false, otherwise
         double compensationLossTransformer; // 0 <= C.L.T. <= 100%;
@@ -99,7 +99,8 @@ class Transformer{
             this->totalLoss                   = 0.0;
             this->efficiency                  = 0.0;
 
-            this->patternTransformer          = 0;
+            this->patternTransformerNumber    = 0;
+            this->patternTransformerName      = "";
             this->applyCenterTap              = false;
             this->applyCompensationTransformer= true;
             this->compensationLossTransformer = 0.0;
@@ -193,7 +194,7 @@ class Transformer{
         }
 
         double getAverageCurrentDensityAuto() const{
-            switch( this->getPatternTransformer() ){
+            switch( this->getPatternTransformerNumber() ){
                 case 0:
                     return (this->getCurrentDensityIN1() + this->getCurrentDensityOUT1()) / 2.0;
                 case 1:
@@ -252,7 +253,7 @@ class Transformer{
         }
 
         double getCoilAreaAuto() const{
-            switch( this->getPatternTransformer() ){
+            switch( this->getPatternTransformerNumber() ){
                 case 3:
                     return this->getWireTurnsIN1() * this->getWireIN1()->getArea() + this->getWireTurnsIN2() * this->getWireIN2()->getArea() + this->getWireTurnsOUT1() * this->getWireOUT1()->getArea() + this->getWireTurnsOUT2() * this->getWireOUT2()->getArea();
                 case 2:
@@ -324,25 +325,51 @@ class Transformer{
             }
         }
 
-        void setPatternTransformer( unsigned int patternTransformer ){
-            this->patternTransformer = patternTransformer;
+        void setPatternTransformerNumber( unsigned int patternTransformerNumber ){
+            this->patternTransformerNumber = patternTransformerNumber;
         }
 
-        unsigned int getPatternTransformer() const{
-            return this->patternTransformer;
+        unsigned int getPatternTransformerNumber() const{
+            return this->patternTransformerNumber;
+        }
+
+        void setPatternTransformerName( std::string patternTransformerName ){
+            this->patternTransformerName = patternTransformerName;
         }
 
         std::string getPatternTransformerName() const{
-            if( this->getPatternTransformer() == 0 )
-                return "1 primary and 1 secondary";
-            else if( this->getPatternTransformer() == 1 )
-                return "1 primary and 2 secondaries";
-            else if( this->getPatternTransformer() == 2 )
-                return "2 primaries and 1 secondary";
-            else if( this->getPatternTransformer() == 3 )
-                return "2 primaries and 2 secondaries";
-            else
-                return "indefined type";
+            return this->patternTransformerName;
+        }
+
+        std::string getPatternTransformerNameAuto() const{
+            std::string str;
+            if( this->getPatternTransformerNumber() % 2 == 0 ){
+                if( this->getPatternTransformerNumber() == 0 ){
+                    str = "1 primary and 1 secondary";
+                }
+                else{
+                    str = "2 primaries and 1 secondary";
+                }
+                if( this->getApplyCenterTap() ){
+                    str += " with center tap";
+                }
+            }
+            else{
+                if( this->getPatternTransformerNumber() == 1 ){
+                    str = "1 primary and 2 secondaries";
+                }
+                else if( this->getPatternTransformerNumber() == 3 ){
+                    str = "2 primaries and 2 secondaries";
+                }
+                else if( this->getPatternTransformerName().size() > 0 ){
+                    str = "defined by user: " + this->getPatternTransformerName();
+                }
+                else{
+                    str = "indefined type";
+                }
+            }
+
+            return str;
         }
 
         void setApplyCenterTap( bool state ){
@@ -710,7 +737,7 @@ class Transformer{
         double getMagneticSectionAuto() const{
             double SM = this->getPowerOUT() / this->getFrequency();
 
-            switch( this->getPatternTransformer() ){
+            switch( this->getPatternTransformerNumber() ){
                 case 0: // 1 primary and 1 secondary
                     SM *= 1.00;
                     break;
@@ -816,7 +843,7 @@ class Transformer{
                 }
                 this->setWireIN1( this->wires->getWire( index ) );
 
-                if( this->getPatternTransformer() > 1 ){
+                if( this->getPatternTransformerNumber() > 1 ){
                     this->setCurrentIN2( this->getCurrentIN2Auto() );
                     double S12 = this->getCurrentIN2() / this->getCurrentDensity();
                     index   = this->wires->findIndexByArea( S12, this->getWireIN2()->getType() );
@@ -826,7 +853,7 @@ class Transformer{
                     this->setWireIN2( this->wires->getWire( index ) );
                 }
 
-                if( this->getPatternTransformer() % 2 == 1 ){
+                if( this->getPatternTransformerNumber() % 2 == 1 ){
                     this->setCurrentOUT2( this->getCurrentOUT2Auto() );
                     double S22 = this->getCurrentOUT2() / this->getCurrentDensity();
                     index   = this->wires->findIndexByArea( S22, this->getWireOUT2()->getType() );
@@ -888,12 +915,12 @@ class Transformer{
                     this->setWireTurnsIN1( this->getWireTurnsIN1Auto() );
                     this->setWireTurnsOUT1( this->getWireTurnsOUT1Auto() );
 
-                    if( this->getPatternTransformer() > 1 ){
+                    if( this->getPatternTransformerNumber() > 1 ){
                         unsigned int N = this->getWireTurnsIN2Auto() - this->getWireTurnsIN1();
                         this->setWireTurnsIN2( N );
                     }
 
-                    if( this->getPatternTransformer() % 2 == 1 ){
+                    if( this->getPatternTransformerNumber() % 2 == 1 ){
                         this->setWireTurnsOUT2( this->getWireTurnsOUT2Auto() - this->getWireTurnsOUT1() );
                     }
 
@@ -906,10 +933,10 @@ class Transformer{
 
                     this->setCurrentDensityIN1( this->getCurrentDensityIN1Auto() );
                     this->setCurrentDensityOUT1( this->getCurrentDensityOUT1Auto() );
-                    if( this->getPatternTransformer() > 1 ){
+                    if( this->getPatternTransformerNumber() > 1 ){
                         this->setCurrentDensityIN2( this->getCurrentDensityIN2Auto() );
                     }
-                    if( this->getPatternTransformer() % 2 == 1 ){
+                    if( this->getPatternTransformerNumber() % 2 == 1 ){
                         this->setCurrentDensityOUT2( this->getCurrentDensityOUT2Auto() );
                     }
 
@@ -922,7 +949,7 @@ class Transformer{
                     this->setTotalLoss( this->getTotalLossAuto() );
                     this->setEfficiency( this->getEfficiencyAuto() );
 
-                    if( (this->getPatternTransformer() % 2 == 0) && this->getApplyCenterTap() ){
+                    if( (this->getPatternTransformerNumber() % 2 == 0) && this->getApplyCenterTap() ){
                         this->setVoltageOUT1( this->getVoltageOUT1() / 2.0 );
                         //this->setCurrentOUT1( this->getCurrentOUT1Auto() );
                         //this->setCurrentDensityOUT1( this->getCurrentDensityOUT1Auto() );
@@ -952,11 +979,9 @@ class Transformer{
             txt = txt + "GENERAL INFORMATIONS";
             txt = txt + "--------------------\n";
 
-            txt = txt + "Transformer with:     " + this->getPatternTransformerName();
-            if( this->getApplyCenterTap() ){
-                txt = txt + " and center tap";
-            }
-            txt = txt + "\n";
+            txt = txt + "Transformer with:     "
+                    + std::to_string( this->getPatternTransformerNumber() ) + " ("
+                    + this->getPatternTransformerNameAuto() + ")\n";
 
             txt = txt + "Frequency:            " + std::to_string( this->getFrequency() )             + " Hz\n";
             txt = txt + "Magnetic Induction:   " + std::to_string( this->getMagneticInduction() )     + " G\n";
@@ -985,7 +1010,7 @@ class Transformer{
             txt = txt + "--> WIRE 1\n";
             txt = txt + this->getWireIN1()->toString();
             txt = txt + "\n";
-            if( this->getPatternTransformer() > 1 ){
+            if( this->getPatternTransformerNumber() > 1 ){
                 txt = txt + "\n";
                 txt = txt + "Voltage 2:            " + std::to_string( this->getVoltageIN2() )        + " V\n";
                 txt = txt + "Current 2:            " + std::to_string( this->getCurrentIN2() )        + " A\n";
@@ -1012,7 +1037,7 @@ class Transformer{
             txt = txt + "--> WIRE 1\n";
             txt = txt + this->getWireOUT1()->toString();
             txt = txt + "\n";
-            if( this->getPatternTransformer() % 2 == 1 ){
+            if( this->getPatternTransformerNumber() % 2 == 1 ){
                 txt = txt + "\n";
                 txt = txt + "Voltage 2:            " + std::to_string( this->getVoltageOUT2() )        + " V\n";
                 txt = txt + "Power 2:              " + std::to_string( this->getPowerOUT() )           + " W\n";
@@ -1053,20 +1078,9 @@ class Transformer{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"transformer\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with:</td><td><b>";
-            if( this->getPatternTransformer() == 0 )
-                txt = txt + "1 primary and 1 secondary";
-            else if( this->getPatternTransformer() == 1 )
-                txt = txt + "1 primary and 2 secondaries";
-            else if( this->getPatternTransformer() == 2 )
-                txt = txt + "2 primaries and 1 secondary";
-            else if( this->getPatternTransformer() == 3 )
-                txt = txt + "2 primaries and 2 secondaries";
-            else
-                txt = txt + "indefined type";
-
-            if( this->getApplyCenterTap() )
-                txt = txt + " and center tap";
+            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with: "
+                    + std::to_string( this->getPatternTransformerNumber() ) + "("
+                    + this->getPatternTransformerNameAuto()  + ")</td><td><b>";
 
             txt = txt + "</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
@@ -1098,7 +1112,7 @@ class Transformer{
             txt = txt + "\n\t</td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
-            if( this->getPatternTransformer() > 1 ){
+            if( this->getPatternTransformerNumber() > 1 ){
                 txt = txt + "\t<tr><td align=\"right\">Voltage 2:</td><td><b>" + std::to_string( this->getVoltageIN2() ) + " V</b></td></tr>\n";
                 txt = txt + "\t<tr><td align=\"right\">Current 2:</td><td><b>" + std::to_string( this->getCurrentIN2() ) + " A</b></td></tr>\n";
                 txt = txt + "\t<tr><td align=\"right\">AWG wire 2:</td><td><b>" + this->getWireIN2()->getAWG() + "</b></td></tr>\n";
@@ -1126,7 +1140,7 @@ class Transformer{
             txt = txt + this->getWireOUT1()->toHTML();
             txt = txt + "\n\t</td></tr>\n";
 
-            if( this->getPatternTransformer() % 2 == 1 ){
+            if( this->getPatternTransformerNumber() % 2 == 1 ){
                 txt = txt + "\t<tr><td align=\"right\">Voltage 2:</td><td><b>" + std::to_string( this->getVoltageOUT2() ) + " V</b></td></tr>\n";
                 txt = txt + "\t<tr><td align=\"right\">Current 2:</td><td><b>" + std::to_string( this->getCurrentOUT2() ) + " A</b></td></tr>\n";
                 txt = txt + "\t<tr><td align=\"right\">AWG wire 2:</td><td><b>" + this->getWireOUT2()->getAWG() + "</b></td></tr>\n";
@@ -1196,7 +1210,8 @@ class Transformer{
             sql += std::to_string( this->getTotalLoss() ) + ", ";                   // totalLoss
             sql += std::to_string( this->getEfficiency() ) + ", ";                  // efficiency
 
-            sql += std::to_string( this->getPatternTransformer() ) + ", ";          // patternTransformer
+            sql += std::to_string( this->getPatternTransformerNumber() ) + ", '";   // patternTransformerNumber
+            sql += this->getPatternTransformerName() + "', ";                       // patternTransformerName
             if( this->getApplyCenterTap() ){
                 sql += "TRUE, ";
             }

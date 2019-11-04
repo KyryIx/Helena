@@ -1,4 +1,4 @@
-#include "windowpreference.h"
+#include "windows/windowpreference.h"
 #include "ui_windowpreference.h"
 
 #include <QMessageBox>

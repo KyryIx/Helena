@@ -1,8 +1,8 @@
 #ifndef BOBBINS_H
 #define BOBBINS_H
 
-#include "bobbin.h"
-#include "database.h"
+#include "components/bobbin.h"
+#include "components/database.h"
 
 class Bobbins{
     private:

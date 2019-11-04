@@ -2,7 +2,7 @@
 #define WINDOWWIRE_H
 
 #include <QDialog>
-#include "database.h"
+#include "components/database.h"
 
 namespace Ui {
 class WindowWire;

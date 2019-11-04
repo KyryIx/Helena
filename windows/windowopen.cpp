@@ -1,4 +1,4 @@
-#include "windowopen.h"
+#include "windows/windowopen.h"
 #include "ui_windowopen.h"
 
 WindowOpen::WindowOpen(QWidget *parent, DataBase* database) :
@@ -20,7 +20,8 @@ void WindowOpen::setDatabase( DataBase *database ){
 }
 
 void WindowOpen::clearFields(){
-    ui->lineEdit_patternWinding->setText( "" );
+    ui->lineEdit_patternWindingNumber->setText( "" );
+    ui->lineEdit_patternWindingName->setText( "" );
     ui->lineEdit_frequency->setText( "" );
     ui->lineEdit_currentDensity->setText( "" );
     ui->checkBox_compensation_power->setChecked( false );
@@ -118,7 +119,8 @@ void WindowOpen::updateFields(){
     ui->lineEdit_efficiency->setText( this->database->returnValue( "efficiency" ).c_str() );
     ui->textEdit_observation->setText( this->database->returnValue( "observation" ).c_str() );
 
-    ui->lineEdit_patternWinding->setText( this->database->returnValue( "patternTransformer" ).c_str() );
+    ui->lineEdit_patternWindingNumber->setText( this->database->returnValue( "patternTransformerNumber" ).c_str() );
+    ui->lineEdit_patternWindingName->setText( this->database->returnValue( "patternTransformerName" ).c_str() );
     double valueD = atof( this->database->returnValue( "compensationLossTransformer" ).c_str() );
     if( valueD != 0.0 ){ ui->checkBox_compensation_power->setChecked( true ); }
     else{ ui->checkBox_compensation_power->setChecked( false ); }

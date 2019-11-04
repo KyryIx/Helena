@@ -14,7 +14,7 @@
    <string>Helena - Ajuda sobre o software</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QTextBrowser" name="textBrowser">
@@ -42,7 +42,7 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

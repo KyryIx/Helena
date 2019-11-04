@@ -14,7 +14,7 @@
    <string>Helena - Software de desenvolvimento de transformadores</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget"/>
@@ -80,7 +80,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_newProject">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconNew.ico</normaloff>:/iconNew.ico</iconset>
    </property>
    <property name="text">
@@ -89,7 +89,7 @@
   </action>
   <action name="action_openProject">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconDocumentOpen.ico</normaloff>:/iconDocumentOpen.ico</iconset>
    </property>
    <property name="text">
@@ -98,7 +98,7 @@
   </action>
   <action name="action_saveProject">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconSave.ico</normaloff>:/iconSave.ico</iconset>
    </property>
    <property name="text">
@@ -107,7 +107,7 @@
   </action>
   <action name="action_closeProject">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconClose.ico</normaloff>:/iconClose.ico</iconset>
    </property>
    <property name="text">
@@ -116,7 +116,7 @@
   </action>
   <action name="action_exit">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconExit.ico</normaloff>:/iconExit.ico</iconset>
    </property>
    <property name="text">
@@ -125,7 +125,7 @@
   </action>
   <action name="action_preferences">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconSetting.ico</normaloff>:/iconSetting.ico</iconset>
    </property>
    <property name="text">
@@ -134,7 +134,7 @@
   </action>
   <action name="action_wires">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconWire.ico</normaloff>:/iconWire.ico</iconset>
    </property>
    <property name="text">
@@ -143,7 +143,7 @@
   </action>
   <action name="action_laminas">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconLamina.ico</normaloff>:/iconLamina.ico</iconset>
    </property>
    <property name="text">
@@ -152,7 +152,7 @@
   </action>
   <action name="action_bobbins">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconBobbin.ico</normaloff>:/iconBobbin.ico</iconset>
    </property>
    <property name="text">
@@ -161,7 +161,7 @@
   </action>
   <action name="action_showHelp">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconHelp.ico</normaloff>:/iconHelp.ico</iconset>
    </property>
    <property name="text">
@@ -170,7 +170,7 @@
   </action>
   <action name="action_aboutHelena">
    <property name="icon">
-    <iconset resource="icons/main.qrc">
+    <iconset resource="../icons/main.qrc">
      <normaloff>:/iconAbout.ico</normaloff>:/iconAbout.ico</iconset>
    </property>
    <property name="text">
@@ -180,7 +180,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

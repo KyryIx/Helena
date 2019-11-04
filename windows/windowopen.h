@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 
-#include "database.h"
+#include "components/database.h"
 
 namespace Ui {
 class WindowOpen;
