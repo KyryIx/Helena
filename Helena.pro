@@ -26,46 +26,46 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-        windownew.cpp \
-        windowpreference.cpp \
-        windowwire.cpp \
-        windowlamina.cpp \
-        windowbobbin.cpp \
-        windowabout.cpp \
-        windowhelp.cpp \
-        windowopen.cpp
+        windows/mainwindow.cpp \
+        windows/windownew.cpp \
+        windows/windowpreference.cpp \
+        windows/windowwire.cpp \
+        windows/windowlamina.cpp \
+        windows/windowbobbin.cpp \
+        windows/windowabout.cpp \
+        windows/windowhelp.cpp \
+        windows/windowopen.cpp
 
 HEADERS += \
-        mainwindow.h \
-        windownew.h \
-        windowpreference.h \
-        windowwire.h \
-        windowbobbin.h \
-        windowlamina.h \
-        windowabout.h \
-        windowhelp.h \
-        database.h \
-        wire.h \
-        bobbin.h \
-        lamina.h \
-        wires.h \
-        bobbins.h \
-        laminas.h \
-        transformer.h \
-        samples.h \
-        windowopen.h
+        components/bobbin.h \
+        components/bobbins.h \
+        components/database.h \
+        components/lamina.h \
+        components/laminas.h \
+        components/wire.h \
+        components/wires.h \
+        components/transformer.h \
+        windows/mainwindow.h \
+        windows/windownew.h \
+        windows/windowpreference.h \
+        windows/windowwire.h \
+        windows/windowbobbin.h \
+        windows/windowlamina.h \
+        windows/windowabout.h \
+        windows/windowhelp.h \
+        windows/windowopen.h \
+        samples.h
 
 FORMS += \
-        mainwindow.ui \
-        windownew.ui \
-        windowpreference.ui \
-        windowwire.ui \
-        windowbobbin.ui \
-        windowlamina.ui \
-        windowabout.ui \
-        windowhelp.ui \
-        windowopen.ui
+        windows/mainwindow.ui \
+        windows/windownew.ui \
+        windows/windowpreference.ui \
+        windows/windowwire.ui \
+        windows/windowbobbin.ui \
+        windows/windowlamina.ui \
+        windows/windowabout.ui \
+        windows/windowhelp.ui \
+        windows/windowopen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

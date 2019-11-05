@@ -12,7 +12,8 @@
 -- totalLoss                   -- W
 -- efficiency                  -- %
 --
--- patternTransformer          -- 0, 1 or 2
+-- patternTransformerNumber    -- 0, 1 or 2
+-- patternTransformerName      --
 -- centerTap
 -- compensationLossTransformer -- >= 0
 --
@@ -123,7 +124,8 @@ CREATE TABLE IF NOT EXISTS transformer (
 	totalLoss                   FLOAT,        -- W
 	efficiency                  FLOAT,        -- %
 	
-	patternTransformer          INTEGER,      -- 0, 1 or 2
+	patternTransformerNumber    INTEGER,      -- 0, 1 or 2
+	patternTransformerName      VARCHAR(255)
 	centerTap                   BOOLEAN       -- TRUE to center tap and FALSE otherwise
 	compensationLossTransformer FLOAT,        -- >= 0
 	
@@ -218,7 +220,7 @@ CREATE TABLE IF NOT EXISTS transformer (
 	observation					TEXT
 );
 
-CREATE TABLE IF NOT EXISTS transformer( id INTEGER PRIMARY KEY AUTOINCREMENT, frequency FLOAT, magneticInduction FLOAT, currentDensity FLOAT, averageCurrentDensity FLOAT, weigthIron FLOAT, weightCopper FLOAT, turnsAverageLength FLOAT, coilArea FLOAT, windowAreaPerSectionTurns FLOAT, ironLoss FLOAT, copperLoss FLOAT, totalLoss FLOAT, efficiency FLOAT, patternTransformer INTEGER, centerTap BOOLEAN, compensationLossTransformer FLOAT, powerIN FLOAT, voltageIN1 FLOAT, currentIN1 FLOAT, currentDensityIN1 FLOAT, wireIDIN1 INTEGER, wireTypeIN1 VARCHAR(16), wireAWGIN1 VARCHAR(5), wireTurnsIN1 INTEGER, wireDiameterIN1 FLOAT, wireTurnPerCmIN1 FLOAT, wireAreaIN1 FLOAT, wireResistanceIN1 FLOAT, wireWeightIN1 FLOAT, wireLengthIN1 FLOAT, wireFrequencyIN1 FLOAT, wireMaterialIN1 VARCHAR(64), voltageIN2 FLOAT, currentIN2 FLOAT, currentDensityIN2 FLOAT, wireIDIN2 INTEGER, wireTypeIN2 VARCHAR(16), wireAWGIN2 VARCHAR(5), wireTurnsIN2 INTEGER, wireDiameterIN2 FLOAT, wireTurnPerCmIN2 FLOAT, wireAreaIN2 FLOAT, wireResistanceIN2 FLOAT, wireWeightIN2 FLOAT, wireLengthIN2 FLOAT, wireFrequencyIN2 FLOAT, wireMaterialIN2 VARCHAR(64), powerOUT FLOAT, voltageOUT1 FLOAT, currentOUT1 FLOAT, currentDensityOUT1 FLOAT, wireIDOUT1 INTEGER, wireTypeOUT1 VARCHAR(16), wireAWGOUT1 VARCHAR(5), wireTurnsOUT1 INTEGER, wireDiameterOUT1 FLOAT, wireTurnPerCmOUT1 FLOAT, wireAreaOUT1 FLOAT, wireResistanceOUT1 FLOAT, wireWeightOUT1 FLOAT, wireLengthOUT1 FLOAT, wireFrequencyOUT1 FLOAT, wireMaterialOUT1 VARCHAR(64), voltageOUT2 FLOAT, currentOUT2 FLOAT, currentDensityOUT2 FLOAT, wireIDOUT2 INTEGER, wireTypeOUT2 VARCHAR(16), wireAWGOUT2 VARCHAR(5), wireTurnsOUT2 INTEGER, wireDiameterOUT2 FLOAT, wireTurnPerCmOUT2 FLOAT, wireAreaOUT2 FLOAT, wireResistanceOUT2 FLOAT, wireWeightOUT2 FLOAT, wireLengthOUT2 FLOAT, wireFrequencyOUT2 FLOAT, wireMaterialOUT2 VARCHAR(64), laminaID INTEGER, laminaType VARCHAR(64), laminaWidth FLOAT, laminaWindowArea FLOAT, laminaWeight FLOAT, laminaCompensation FLOAT, bobbinID INTEGER, bobbinType VARCHAR(64), bobbinCode VARCHAR(64), bobbinProvider VARCHAR(255), bobbinWidth FLOAT, bobbinLength FLOAT, bobbinHeight FLOAT, bobbinArea FLOAT, observation TEXT );
+CREATE TABLE IF NOT EXISTS transformer( id INTEGER PRIMARY KEY AUTOINCREMENT, frequency FLOAT, magneticInduction FLOAT, currentDensity FLOAT, averageCurrentDensity FLOAT, weigthIron FLOAT, weightCopper FLOAT, turnsAverageLength FLOAT, coilArea FLOAT, windowAreaPerSectionTurns FLOAT, ironLoss FLOAT, copperLoss FLOAT, totalLoss FLOAT, efficiency FLOAT, patternTransformerNumber INTEGER, patternTransformerName VARCHAR(255), centerTap BOOLEAN, compensationLossTransformer FLOAT, powerIN FLOAT, voltageIN1 FLOAT, currentIN1 FLOAT, currentDensityIN1 FLOAT, wireIDIN1 INTEGER, wireTypeIN1 VARCHAR(16), wireAWGIN1 VARCHAR(5), wireTurnsIN1 INTEGER, wireDiameterIN1 FLOAT, wireTurnPerCmIN1 FLOAT, wireAreaIN1 FLOAT, wireResistanceIN1 FLOAT, wireWeightIN1 FLOAT, wireLengthIN1 FLOAT, wireFrequencyIN1 FLOAT, wireMaterialIN1 VARCHAR(64), voltageIN2 FLOAT, currentIN2 FLOAT, currentDensityIN2 FLOAT, wireIDIN2 INTEGER, wireTypeIN2 VARCHAR(16), wireAWGIN2 VARCHAR(5), wireTurnsIN2 INTEGER, wireDiameterIN2 FLOAT, wireTurnPerCmIN2 FLOAT, wireAreaIN2 FLOAT, wireResistanceIN2 FLOAT, wireWeightIN2 FLOAT, wireLengthIN2 FLOAT, wireFrequencyIN2 FLOAT, wireMaterialIN2 VARCHAR(64), powerOUT FLOAT, voltageOUT1 FLOAT, currentOUT1 FLOAT, currentDensityOUT1 FLOAT, wireIDOUT1 INTEGER, wireTypeOUT1 VARCHAR(16), wireAWGOUT1 VARCHAR(5), wireTurnsOUT1 INTEGER, wireDiameterOUT1 FLOAT, wireTurnPerCmOUT1 FLOAT, wireAreaOUT1 FLOAT, wireResistanceOUT1 FLOAT, wireWeightOUT1 FLOAT, wireLengthOUT1 FLOAT, wireFrequencyOUT1 FLOAT, wireMaterialOUT1 VARCHAR(64), voltageOUT2 FLOAT, currentOUT2 FLOAT, currentDensityOUT2 FLOAT, wireIDOUT2 INTEGER, wireTypeOUT2 VARCHAR(16), wireAWGOUT2 VARCHAR(5), wireTurnsOUT2 INTEGER, wireDiameterOUT2 FLOAT, wireTurnPerCmOUT2 FLOAT, wireAreaOUT2 FLOAT, wireResistanceOUT2 FLOAT, wireWeightOUT2 FLOAT, wireLengthOUT2 FLOAT, wireFrequencyOUT2 FLOAT, wireMaterialOUT2 VARCHAR(64), laminaID INTEGER, laminaType VARCHAR(64), laminaWidth FLOAT, laminaWindowArea FLOAT, laminaWeight FLOAT, laminaCompensation FLOAT, bobbinID INTEGER, bobbinType VARCHAR(64), bobbinCode VARCHAR(64), bobbinProvider VARCHAR(255), bobbinWidth FLOAT, bobbinLength FLOAT, bobbinHeight FLOAT, bobbinArea FLOAT, observation TEXT );
 
 INSERT INTO transformer (
 	frequency,
@@ -235,7 +237,8 @@ INSERT INTO transformer (
 	totalLoss,
 	efficiency,
 	
-	patternTransformer,
+	patternTransformerNumber,
+	patternTransformerName,
 	centerTap,
 	compensationLossTransformer,
 	
@@ -344,7 +347,8 @@ VALUES (
 	26.96,			-- totalLoss
 	91.76,			-- efficiency
 	
-	0,				-- patternTransformer,
+	0,				-- patternTransformerNumber,
+	'1 primary and 1 secondary with center tap',
 	TRUE,			-- center tap,
 	10.0,			-- compensationLossTransformer,
 	

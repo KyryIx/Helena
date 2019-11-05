@@ -1,4 +1,4 @@
-#include "windowabout.h"
+#include "windows/windowabout.h"
 #include "ui_windowabout.h"
 
 WindowAbout::WindowAbout(QWidget *parent) :

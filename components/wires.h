@@ -1,8 +1,8 @@
 #ifndef WIRES_H
 #define WIRES_H
 
-#include "wire.h"
-#include "database.h"
+#include "components/wire.h"
+#include "components/database.h"
 
 class Wires{
     private:

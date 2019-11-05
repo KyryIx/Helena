@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>861</width>
-    <height>797</height>
+    <height>829</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Helena - Abrir Projeto</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QGroupBox" name="groupBox_2">
@@ -23,18 +23,18 @@
      <x>10</x>
      <y>10</y>
      <width>591</width>
-     <height>381</height>
+     <height>411</height>
     </rect>
    </property>
    <property name="title">
     <string>INFORMAÇÕES GERAIS</string>
    </property>
-   <widget class="QLineEdit" name="lineEdit_patternWinding">
+   <widget class="QLineEdit" name="lineEdit_patternWindingName">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>230</x>
       <y>50</y>
-      <width>113</width>
+      <width>351</width>
       <height>20</height>
      </rect>
     </property>
@@ -43,7 +43,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>200</y>
+      <y>140</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -53,7 +53,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>20</y>
+      <y>80</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -106,8 +106,8 @@
    <widget class="QLabel" name="label_weightTurns">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>140</y>
+      <x>300</x>
+      <y>200</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -122,8 +122,8 @@
    <widget class="QLineEdit" name="lineEdit_weightTurns">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>140</y>
+      <x>470</x>
+      <y>200</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -148,8 +148,8 @@
    <widget class="QLineEdit" name="lineEdit_TurnsLoss">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>170</y>
+      <x>470</x>
+      <y>230</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -196,8 +196,8 @@
    <widget class="QLabel" name="label_TurnsLoss">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
+      <x>300</x>
+      <y>230</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -213,7 +213,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>140</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -228,8 +228,8 @@
    <widget class="QLineEdit" name="lineEdit_turnsArea">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>230</y>
+      <x>470</x>
+      <y>170</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -239,7 +239,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>20</y>
+      <y>80</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -254,8 +254,8 @@
    <widget class="QLabel" name="label_turnsArea">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>230</y>
+      <x>300</x>
+      <y>170</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -271,7 +271,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>80</y>
+      <y>140</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -281,7 +281,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>230</y>
+      <y>260</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -296,8 +296,8 @@
    <widget class="QLineEdit" name="lineEdit_ironWeight">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>140</y>
+      <x>180</x>
+      <y>200</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -306,8 +306,8 @@
    <widget class="QLineEdit" name="lineEdit_ironLoss">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>170</y>
+      <x>180</x>
+      <y>230</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -316,8 +316,8 @@
    <widget class="QLineEdit" name="lineEdit_totalLoss">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>200</y>
+      <x>180</x>
+      <y>260</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -327,7 +327,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>50</y>
+      <y>110</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -343,7 +343,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>230</y>
+      <y>260</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -353,7 +353,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>50</y>
+      <y>110</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -369,7 +369,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>80</y>
+      <y>140</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -387,8 +387,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>110</y>
+      <x>180</x>
+      <y>170</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -403,8 +403,8 @@
    <widget class="QLabel" name="label_ironLoss">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>170</y>
+      <x>10</x>
+      <y>230</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -419,8 +419,8 @@
    <widget class="QLabel" name="label_totalLoss">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>200</y>
+      <x>10</x>
+      <y>260</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -438,8 +438,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>110</y>
+      <x>10</x>
+      <y>170</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -454,8 +454,8 @@
    <widget class="QLabel" name="label_ironWeight">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>140</y>
+      <x>10</x>
+      <y>200</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -500,7 +500,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>260</y>
+      <y>290</y>
       <width>571</width>
       <height>111</height>
      </rect>
@@ -519,12 +519,22 @@
      </property>
     </widget>
    </widget>
+   <widget class="QLineEdit" name="lineEdit_patternWindingNumber">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>50</y>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_Input">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>390</y>
+     <y>430</y>
      <width>291</width>
      <height>391</height>
     </rect>
@@ -1274,7 +1284,7 @@
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>400</y>
+     <y>430</y>
      <width>291</width>
      <height>391</height>
     </rect>
@@ -2051,7 +2061,7 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>766</y>
+     <y>795</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2062,7 +2072,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

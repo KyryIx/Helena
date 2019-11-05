@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "database.h"
+#include "components/database.h"
 
 namespace Ui {
 class MainWindow;

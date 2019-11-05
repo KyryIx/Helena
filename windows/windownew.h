@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QMessageBox>
 
-#include "database.h"
-#include "transformer.h"
+#include "components/database.h"
+#include "components/transformer.h"
 
 namespace Ui {
 class WindowNew;
@@ -25,7 +25,7 @@ public slots:
     void on_pushButton_save_clicked();
     void on_pushButton_clear_clicked();
     void on_pushButton_close_clicked();
-    void on_comboBox_patternWinding_currentIndexChanged(int index);
+    void on_comboBox_patternWindingName_currentIndexChanged(int index);
     void on_lineEdit_voltageInput_1_textChanged( const QString &text );
     void on_lineEdit_voltageOutput_1_textChanged( const QString &text );
 

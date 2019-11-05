@@ -1,4 +1,4 @@
-#include "windowwire.h"
+#include "windows/windowwire.h"
 #include "ui_windowwire.h"
 
 #include <QMessageBox>

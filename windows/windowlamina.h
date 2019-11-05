@@ -2,7 +2,7 @@
 #define WINDOWLAMINA_H
 
 #include <QDialog>
-#include "database.h"
+#include "components/database.h"
 
 namespace Ui {
 class WindowLamina;

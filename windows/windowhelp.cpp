@@ -1,4 +1,4 @@
-#include "windowhelp.h"
+#include "windows/windowhelp.h"
 #include "ui_windowhelp.h"
 
 WindowHelp::WindowHelp(QWidget *parent) :

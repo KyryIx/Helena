@@ -1,4 +1,4 @@
-#include "windowlamina.h"
+#include "windows/windowlamina.h"
 #include "ui_windowlamina.h"
 
 #include <QMessageBox>

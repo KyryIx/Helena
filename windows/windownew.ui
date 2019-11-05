@@ -14,7 +14,7 @@
    <string>Helena - Novo Projeto</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QPushButton" name="pushButton_save">
@@ -493,17 +493,20 @@
        </rect>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_patternWinding">
+     <widget class="QComboBox" name="comboBox_patternWindingName">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>230</x>
         <y>20</y>
-        <width>201</width>
+        <width>181</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
       </property>
       <item>
        <property name="text">
@@ -523,6 +526,11 @@
       <item>
        <property name="text">
         <string>2 primários / 2 secundários</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>definido pelo usuário</string>
        </property>
       </item>
      </widget>
@@ -568,17 +576,17 @@
        </property>
       </widget>
      </widget>
-     <widget class="QCheckBox" name="checkBox_centerTap">
+     <widget class="QLineEdit" name="lineEdit_patternWindingNumber">
       <property name="geometry">
        <rect>
-        <x>480</x>
-        <y>23</y>
-        <width>111</width>
-        <height>17</height>
+        <x>180</x>
+        <y>20</y>
+        <width>41</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Center Tap</string>
+       <string>0</string>
       </property>
      </widget>
     </widget>
@@ -2106,7 +2114,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

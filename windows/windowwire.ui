@@ -26,7 +26,7 @@
    <string>Helena - Fios</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons/main.qrc">
+   <iconset resource="../icons/main.qrc">
     <normaloff>:/iconPower.ico</normaloff>:/iconPower.ico</iconset>
   </property>
   <widget class="QLabel" name="label_id">
@@ -443,7 +443,7 @@
   <tabstop>pushButton_exit</tabstop>
  </tabstops>
  <resources>
-  <include location="icons/main.qrc"/>
+  <include location="../icons/main.qrc"/>
  </resources>
  <connections/>
 </ui>

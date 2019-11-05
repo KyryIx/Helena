@@ -1,9 +1,9 @@
-#include "windownew.h"
+#include "windows/windownew.h"
 #include "ui_windownew.h"
 
-#include "wires.h"
-#include "laminas.h"
-#include "bobbins.h"
+#include "components/wires.h"
+#include "components/laminas.h"
+#include "components/bobbins.h"
 
 #define precision 2
 
@@ -26,8 +26,9 @@ void WindowNew::setDatabase( DataBase *database ){
 }
 
 void WindowNew::clearFields(){
-    ui->comboBox_patternWinding->setCurrentIndex( 0 );
-    ui->checkBox_centerTap->setChecked( false );
+    ui->lineEdit_patternWindingNumber->setText( "0" );
+    ui->comboBox_patternWindingName->setCurrentIndex( 0 );
+    //ui->checkBox_centerTap->setChecked( false );
     ui->lineEdit_frequency->setText( QString::number( 60.0, 'f', precision ) );
     ui->lineEdit_magneticInduction->setText( QString::number( 11300, 'f', precision ) );
     ui->lineEdit_currentDensity->setText( QString::number( 3.0, 'f', precision ) );
@@ -118,8 +119,11 @@ void WindowNew::setTransformer(){
     double powerOUT                 = ui->lineEdit_powerOutput->text().toDouble();
     double voltageOUT_1             = ui->lineEdit_voltageOutput_1->text().toDouble();
     double voltageOUT_2             = ui->lineEdit_voltageOutput_2->text().toDouble();
-    unsigned int patternTransformer = static_cast<unsigned int>( ui->comboBox_patternWinding->currentIndex() );
-    this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
+    unsigned int patternTransformerNumber = ui->lineEdit_patternWindingNumber->text().toUInt();
+    std::string patternTransformerName    = ui->comboBox_patternWindingName->currentText().toStdString();
+////////////////// olhar aqui //////////////////
+    //this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
+    this->transformer->setApplyCenterTap( false );
     double accommodation            = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
     std::string typeWireIN_1        = ui->comboBox_wireTypeInput_1->currentText().toStdString();
     std::string typeWireIN_2        = ui->comboBox_wireTypeInput_2->currentText().toStdString();
@@ -162,7 +166,8 @@ void WindowNew::setTransformer(){
     this->transformer->setFrequency( frequency );
     this->transformer->setMagneticInduction( magneticInduction );
     this->transformer->setCurrentDensity( currentDensity );
-    this->transformer->setPatternTransformer( patternTransformer );
+    this->transformer->setPatternTransformerNumber( patternTransformerNumber );
+    this->transformer->setPatternTransformerName( patternTransformerName );
     this->transformer->setCompensationLossTransformer( compensationPower );
     this->transformer->setWindowAreaPerSectionCu( accommodation );
     this->transformer->setLamina( lamina );
@@ -175,8 +180,11 @@ void WindowNew::setTransformer(){
 }
 
 void WindowNew::updateTransformer(){
-    this->transformer->setPatternTransformer( static_cast<unsigned int>( ui->comboBox_patternWinding->currentIndex() ) );
-    this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
+    this->transformer->setPatternTransformerNumber( ui->lineEdit_patternWindingNumber->text().toUInt() );
+    this->transformer->setPatternTransformerName( ui->comboBox_patternWindingName->currentText().toStdString() );
+    ////////////////// olhar aqui //////////////////
+    //this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
+    this->transformer->setApplyCenterTap( false );
     this->transformer->setFrequency( ui->lineEdit_frequency->text().toDouble() );
     this->transformer->setMagneticInduction( ui->lineEdit_magneticInduction->text().toDouble() );
     this->transformer->setCurrentDensity( ui->lineEdit_currentDensity->text().toDouble() );
@@ -305,45 +313,51 @@ void WindowNew::enableOutput2( bool state ){
     ui->lineEdit_turnsOUT_2->setEnabled( state );
 }
 
-void  WindowNew::on_comboBox_patternWinding_currentIndexChanged(int index){
+void  WindowNew::on_comboBox_patternWindingName_currentIndexChanged(int index){
     switch( index ){
         case 0:
             enableInput2( false );
             enableOutput2( false );
-            ui->checkBox_centerTap->setEnabled( true );
+            //ui->checkBox_centerTap->setEnabled( true );
+            ui->lineEdit_patternWindingNumber->setText( "0" );
             break;
         case 1:
             enableInput2( false );
             enableOutput2( true );
             ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
-            ui->checkBox_centerTap->setEnabled( false );
-            ui->checkBox_centerTap->setChecked( false );
+            //ui->checkBox_centerTap->setEnabled( false );
+            //ui->checkBox_centerTap->setChecked( false );
+            ui->lineEdit_patternWindingNumber->setText( "1" );
             break;
         case 2:
             enableInput2( true );
             enableOutput2( false );
             ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
-            ui->checkBox_centerTap->setEnabled( true );
+            //ui->checkBox_centerTap->setEnabled( true );
+            ui->lineEdit_patternWindingNumber->setText( "2" );
             break;
         case 3:
             enableInput2( true );
             enableOutput2( true );
             ui->lineEdit_voltageInput_2->setText(  QString::number( 2 * ui->lineEdit_voltageInput_1->text().toDouble(), 'f', precision ) );
             ui->lineEdit_voltageOutput_2->setText(  QString::number( 2 * ui->lineEdit_voltageOutput_1->text().toDouble(), 'f', precision ) );
-            ui->checkBox_centerTap->setEnabled( false );
-            ui->checkBox_centerTap->setChecked( false );
+            //ui->checkBox_centerTap->setEnabled( false );
+            //ui->checkBox_centerTap->setChecked( false );
+            ui->lineEdit_patternWindingNumber->setText( "3" );
             break;
     }
 }
 
 void WindowNew::on_lineEdit_voltageInput_1_textChanged( const QString &text ){
-    if( ui->comboBox_patternWinding->currentIndex() > 1 ){
+    unsigned int pattern = ui->lineEdit_patternWindingNumber->text().toUInt();
+    if( (pattern == 2) || (pattern == 3) ){
         ui->lineEdit_voltageInput_2->setText( QString::number( 2 * text.toDouble(), 'f', precision ) );
     }
 }
 
 void WindowNew::on_lineEdit_voltageOutput_1_textChanged( const QString &text ){
-    if( ui->comboBox_patternWinding->currentIndex() % 2 == 1 ){
+    unsigned int pattern = ui->lineEdit_patternWindingNumber->text().toUInt();
+    if( (pattern == 1) || (pattern == 3) ){
         ui->lineEdit_voltageOutput_2->setText( QString::number( 2 * text.toDouble(), 'f', precision ) );
     }
 }
@@ -404,7 +418,8 @@ void WindowNew::on_pushButton_calculate_clicked(){
         this->enableInput2( false );
         this->enableOutput2( false );
 
-        if( this->transformer->getPatternTransformer() > 1 ){
+        unsigned int pattern = this->transformer->getPatternTransformerNumber();
+        if( (pattern == 2) || (pattern == 3) ){
             this->writeInput2(
                         transformer->getVoltageIN2(),
                         transformer->getCurrentIN2(),
@@ -420,7 +435,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
             this->enableInput2( true );
         }
 
-        if( (this->transformer->getPatternTransformer() % 2 == 1) || (this->transformer->getApplyCenterTap()) ){
+        if( (pattern == 1) || (pattern == 3) || (this->transformer->getApplyCenterTap()) ){
             this->writeOutput2(
                         transformer->getVoltageOUT2(),
                         transformer->getCurrentOUT2(),
@@ -486,7 +501,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
         text += "onde\n";
         text += "Tipo de lâmina: " + ui->comboBox_laminaType->currentText().toStdString() + "\n";
         text += "Tipo de carretel: " + ui->lineEdit_bobbinType->text().toStdString()  + "\n";
-        switch( transformer->getPatternTransformer() ) {
+        switch( transformer->getPatternTransformerNumber() ) {
             case 0:
                 text += "Tipo de fio do primário: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "\n";
                 text += "Tipo de fio do secundário: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString();
@@ -502,7 +517,9 @@ void WindowNew::on_pushButton_calculate_clicked(){
             case 3:
                 text += "Tipo de fio do primários: " + ui->comboBox_wireTypeInput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeInput_2->currentText().toStdString() + "\n";
                 text += "Tipo de fio do secundários: " + ui->comboBox_wireTypeOutput_1->currentText().toStdString() + "/" + ui->comboBox_wireTypeOutput_2->currentText().toStdString();
-            break;
+                break;
+            default:
+                text += "Tipo de fio do primários/secundários definido pelo usuario.";
         }
 
         msgBox.setIcon( QMessageBox::Warning );
