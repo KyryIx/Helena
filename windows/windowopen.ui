@@ -145,7 +145,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_TurnsLoss">
+   <widget class="QLineEdit" name="lineEdit_turnsLoss">
     <property name="geometry">
      <rect>
       <x>470</x>
@@ -2019,10 +2019,13 @@
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_saveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>560</y>
+     <x>730</x>
+     <y>660</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2034,8 +2037,8 @@
   <widget class="QPushButton" name="pushButton_delete">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>600</y>
+     <x>610</x>
+     <y>800</y>
      <width>110</width>
      <height>23</height>
     </rect>
@@ -2047,8 +2050,8 @@
   <widget class="QPushButton" name="pushButton_validate">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>600</y>
+     <x>740</x>
+     <y>560</y>
      <width>110</width>
      <height>23</height>
     </rect>

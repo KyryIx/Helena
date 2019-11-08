@@ -19,6 +19,88 @@ void WindowOpen::setDatabase( DataBase *database ){
     this->database = database;
 }
 
+void WindowOpen::valuesTemp(){
+    this->patternWindingNumber = 0;
+    this->patternWindingName = "";
+    this->frequency = 0.0;
+    this->currentDensity = 0.0;
+    this->compensation_power_state = true;
+    this->compensation_power_value = 0.0;
+    this->weightTurns = 0.0;
+    this->turnsLoss = 0.0;
+    this->averageTurnLength = 0.0;
+    this->turnsArea = 0.0;
+    this->magneticInduction = 0.0;
+    this->densityAverageCurrent = 0.0;
+    this->windowAreaPerSectionTurns = 0.0;
+    this->ironWeight = 0.0;
+    this->ironLoss = 0.0;
+    this->totalLoss = 0.0;
+    this->efficiency = 0.0;
+    this->observation = "";
+
+    this->powerInput = 0.0;
+    this->voltageInput_1 = 0.0;
+    this->voltageInput_2 = 0.0;
+    this->currentInput_1 = 0.0;
+    this->currentInput_2 = 0.0;
+    this->densityCurrentInput_1 = 0.0;
+    this->densityCurrentInput_2 = 0.0;
+    this->wireIDInput_1 = 0;
+    this->wireIDInput_2 = 0;
+    this->wireTypeInput_1 = "";
+    this->wireTypeInput_2 = "";
+    this->wireAWGInput_1 = "";
+    this->wireAWGInput_2 = "";
+    this->wireDiameterInput_1 = 0.0;
+    this->wireDiameterInput_2 = 0.0;
+    this->wireAreaInput_1 = 0.0;
+    this->wireAreaInput_2 = 0.0;
+    this->wireMaterialInput_1 = "";
+    this->wireMaterialInput_2 = "";
+    this->turnsIN_1 = 0;
+    this->turnsIN_2 = 0;
+
+    this->powerOutput = 0.0;
+    this->voltageOutput_1 = 0.0;
+    this->voltageOutput_2 = 0.0;
+    this->currentOutput_1 = 0.0;
+    this->currentOutput_2 = 0.0;
+    this->densityCurrentOutput_1 = 0.0;
+    this->densityCurrentOutput_2 = 0.0;
+    this->wireIDOutput_1 = 0;
+    this->wireIDOutput_2 = 0;
+    this->wireTypeOutput_1 = "";
+    this->wireTypeOutput_2 = "";
+    this->wireAWGOutput_1 = "";
+    this->wireAWGOutput_2 = "";
+    this->wireDiameterOutput_1 = 0.0;
+    this->wireDiameterOutput_2 = 0.0;
+    this->wireAreaOutput_1 = 0.0;
+    this->wireAreaOutput_2 = 0.0;
+    this->wireMaterialOutput_1 = "";
+    this->wireMaterialOutput_2 = "";
+    this->turnsOUT_1 = 0;
+    this->turnsOUT_2 = 0;
+
+    this->bobbinID = 0;
+    this->bobbinType = "";
+    this->bobbinCode = "";
+    this->bobbinProvider = "";
+    this->bobbinWidth = 0.0;
+    this->bobbinLength = 0.0;
+    this->bobbinHeight = 0.0;
+    this->bobbinArea = 0.0;
+
+    this->laminaID = 0;
+    this->laminaType = "";
+    this->laminaWidth = 0.0;
+    this->laminaArea = 0.0;
+    this->laminaWeight = 0.0;
+    this->laminaCompensation_state = true;
+    this->laminaCompensation_value = 0.0;
+}
+
 void WindowOpen::clearFields(){
     ui->lineEdit_patternWindingNumber->setText( "" );
     ui->lineEdit_patternWindingName->setText( "" );
@@ -27,7 +109,7 @@ void WindowOpen::clearFields(){
     ui->checkBox_compensation_power->setChecked( false );
     ui->lineEdit_compensation_power->setText( "" );
     ui->lineEdit_weightTurns->setText( "" );
-    ui->lineEdit_TurnsLoss->setText( "" );
+    ui->lineEdit_turnsLoss->setText( "" );
     ui->lineEdit_averageTurnLength->setText( "" );
     ui->lineEdit_turnsArea->setText( "" );
     ui->lineEdit_magneticInduction->setText( "" );
@@ -114,7 +196,7 @@ void WindowOpen::updateFields(){
     ui->lineEdit_turnsArea->setText( this->database->returnValue( "coilArea" ).c_str() );
     ui->lineEdit_windowAreaPerSectionTurns->setText( this->database->returnValue( "windowAreaPerSectionTurns" ).c_str() );
     ui->lineEdit_ironLoss->setText( this->database->returnValue( "ironLoss" ).c_str() );
-    ui->lineEdit_TurnsLoss->setText( this->database->returnValue( "copperLoss" ).c_str() );
+    ui->lineEdit_turnsLoss->setText( this->database->returnValue( "copperLoss" ).c_str() );
     ui->lineEdit_totalLoss->setText( this->database->returnValue( "totalLoss" ).c_str() );
     ui->lineEdit_efficiency->setText( this->database->returnValue( "efficiency" ).c_str() );
     ui->textEdit_observation->setText( this->database->returnValue( "observation" ).c_str() );
@@ -218,7 +300,7 @@ void WindowOpen::on_pushButton_next_clicked(){
     }
 }
 
-void WindowOpen::on_pushButton_edit_clicked(){
+void WindowOpen::on_pushButton_update_clicked(){
     //
 }
 

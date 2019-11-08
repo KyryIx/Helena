@@ -121,9 +121,8 @@ void WindowNew::setTransformer(){
     double voltageOUT_2             = ui->lineEdit_voltageOutput_2->text().toDouble();
     unsigned int patternTransformerNumber = ui->lineEdit_patternWindingNumber->text().toUInt();
     std::string patternTransformerName    = ui->comboBox_patternWindingName->currentText().toStdString();
-////////////////// olhar aqui //////////////////
     //this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
-    this->transformer->setApplyCenterTap( false );
+    //this->transformer->setApplyCenterTap( false );
     double accommodation            = ui->lineEdit_windowAreaPerSectionTurns->text().toDouble();
     std::string typeWireIN_1        = ui->comboBox_wireTypeInput_1->currentText().toStdString();
     std::string typeWireIN_2        = ui->comboBox_wireTypeInput_2->currentText().toStdString();
@@ -184,7 +183,7 @@ void WindowNew::updateTransformer(){
     this->transformer->setPatternTransformerName( ui->comboBox_patternWindingName->currentText().toStdString() );
     ////////////////// olhar aqui //////////////////
     //this->transformer->setApplyCenterTap( ui->checkBox_centerTap->isChecked() );
-    this->transformer->setApplyCenterTap( false );
+    //this->transformer->setApplyCenterTap( false );
     this->transformer->setFrequency( ui->lineEdit_frequency->text().toDouble() );
     this->transformer->setMagneticInduction( ui->lineEdit_magneticInduction->text().toDouble() );
     this->transformer->setCurrentDensity( ui->lineEdit_currentDensity->text().toDouble() );
@@ -313,6 +312,13 @@ void WindowNew::enableOutput2( bool state ){
     ui->lineEdit_turnsOUT_2->setEnabled( state );
 }
 
+void WindowNew::on_lineEdit_patternWindingNumber_textChanged( const QString &text ){
+    int patternNumber = text.toInt();
+    if( (patternNumber >= 0) && (patternNumber <= 5) ){
+        ui->comboBox_patternWindingName->setCurrentIndex( patternNumber );
+    }
+}
+
 void  WindowNew::on_comboBox_patternWindingName_currentIndexChanged(int index){
     switch( index ){
         case 0:
@@ -345,6 +351,9 @@ void  WindowNew::on_comboBox_patternWindingName_currentIndexChanged(int index){
             //ui->checkBox_centerTap->setChecked( false );
             ui->lineEdit_patternWindingNumber->setText( "3" );
             break;
+        default:
+            ui->lineEdit_patternWindingNumber->setText( "4" );
+            break;
     }
 }
 
@@ -365,7 +374,17 @@ void WindowNew::on_lineEdit_voltageOutput_1_textChanged( const QString &text ){
 void WindowNew::on_pushButton_calculate_clicked(){
     QMessageBox msgBox;
     std::string text;
-    msgBox.setIcon( QMessageBox::Warning );
+
+    unsigned int patternNumber = ui->lineEdit_patternWindingNumber->text().toUInt();
+    if( patternNumber > 3 ){
+        text  = "Tipo definido pelo usuario. ";
+        text += "O processo de cálculo automático não está definido para este tipo de projeto.";
+        msgBox.setIcon( QMessageBox::Warning );
+        msgBox.setText( text.c_str() );
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+        return;
+    }
 
     this->setTransformer();
     int option = transformer->calculate();
@@ -380,7 +399,7 @@ void WindowNew::on_pushButton_calculate_clicked(){
         ui->lineEdit_averageTurnLength->setText( QString::number( transformer->getTurnAverageLength() / 10.0, 'f', precision ) );
         ui->lineEdit_totalLoss->setText( QString::number( transformer->getTotalLoss(), 'f', precision ) );
         ui->lineEdit_turnsArea->setText( QString::number( transformer->getCoilArea(), 'f', precision ) );
-        ui->lineEdit_efficiency->setText( QString::number( transformer->getEfficiency() * 100.0, 'f', precision ) );
+        ui->lineEdit_efficiency->setText( QString::number( transformer->getEfficiency(), 'f', precision ) );
 
         // input/output informations ONE //
         ui->lineEdit_powerInput->setText( std::to_string( transformer->getPowerIN() ).c_str() );
@@ -531,7 +550,13 @@ void WindowNew::on_pushButton_calculate_clicked(){
 }
 
 void WindowNew::on_pushButton_clear_clicked(){
-    this->clearFields();
+    QMessageBox msgBox;
+    msgBox.setText( "Deseja limpar dados de projeto?" );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::No );
+    if( msgBox.exec() == QMessageBox::Ok ){
+        this->clearFields();
+    }
 }
 
 void WindowNew::on_pushButton_save_clicked(){
