@@ -241,7 +241,7 @@ class Transformer{
         }
 
         double getTurnAverageLengthAuto() const{
-            return (2 + 0.5 * PI) * this->getLamina()->getWidth() + 2 * this->getBobbin()->getLength();
+            return (2.0 + 0.5 * PI) * this->getLamina()->getWidth() + 2.0 * this->getBobbin()->getLength();
         }
 
         void setCoilArea( double coilArea ){
@@ -318,7 +318,7 @@ class Transformer{
 
         double getEfficiencyAuto() const{
             try{
-                return this->getPowerOUT() / (this->getPowerOUT() + this->getIronLoss() + this->getCopperLoss());
+                return 100.0 * this->getPowerOUT() / (this->getPowerOUT() + this->getIronLoss() + this->getCopperLoss());
             }
             catch( ... ){
                 return 0.0;
@@ -343,30 +343,28 @@ class Transformer{
 
         std::string getPatternTransformerNameAuto() const{
             std::string str;
-            if( this->getPatternTransformerNumber() % 2 == 0 ){
-                if( this->getPatternTransformerNumber() == 0 ){
-                    str = "1 primary and 1 secondary";
-                }
-                else{
-                    str = "2 primaries and 1 secondary";
-                }
-                if( this->getApplyCenterTap() ){
-                    str += " with center tap";
+            unsigned int patternNumber = this->getPatternTransformerNumber();
+            if( patternNumber <= 3 ){
+                switch( patternNumber ) {
+                    case 1:
+                        str = "1 primary and 1 secondary";
+                        break;
+                    case 2:
+                        str = "1 primary and 2 secondaries";
+                        break;
+                    case 3:
+                        str = "2 primaries and 1 secondary";
+                        break;
+                    case 4:
+                        str = "2 primaries and 2 secondaries";
                 }
             }
             else{
-                if( this->getPatternTransformerNumber() == 1 ){
-                    str = "1 primary and 2 secondaries";
-                }
-                else if( this->getPatternTransformerNumber() == 3 ){
-                    str = "2 primaries and 2 secondaries";
-                }
-                else if( this->getPatternTransformerName().size() > 0 ){
-                    str = "defined by user: " + this->getPatternTransformerName();
-                }
-                else{
-                    str = "indefined type";
-                }
+                str = "defined by user: " + this->getPatternTransformerName();
+            }
+
+            if( this->getApplyCenterTap() ){
+                str += " with center tap";
             }
 
             return str;
@@ -1180,7 +1178,7 @@ class Transformer{
             std::string sql = "INSERT INTO transformer";
             sql += "(frequency, magneticInduction, currentDensity, averageCurrentDensity, weigthIron, weightCopper, ";
             sql += "turnsAverageLength, coilArea, windowAreaPerSectionTurns, ironLoss, copperLoss, totalLoss, efficiency, ";
-            sql += "patternTransformer, centerTap, compensationLossTransformer, ";
+            sql += "patternTransformerNumber, patternTransformerName, centerTap, compensationLossTransformer, ";
             sql += "powerIN, voltageIN1, currentIN1, currentDensityIN1, ";
             sql += "wireIDIN1, wireTypeIN1, wireAWGIN1, wireTurnsIN1, wireDiameterIN1, wireTurnPerCmIN1, wireAreaIN1, ";
             sql += "wireResistanceIN1, wireWeightIN1, wireLengthIN1, wireFrequencyIN1, wireMaterialIN1, ";
@@ -1232,7 +1230,7 @@ class Transformer{
             sql += std::to_string( this->getWireIN1()->getId() ) + ", ";            // wireIDIN1
             sql += "'" + this->getWireIN1()->getType() + "', ";                     // wireTypeIN1
             sql += "'" + this->getWireIN1()->getAWG() + "', ";                      // wireAWGIN1
-            sql += std::to_string( this->getWireIN1()->getTurnsPerCm() ) + ", ";    // wireTurnsIN1
+            sql += std::to_string( this->getWireTurnsIN1() ) + ", ";                // wireTurnsIN1
             sql += std::to_string( this->getWireIN1()->getDiameter() ) + ", ";      // wireDiameterIN1
             sql += std::to_string( this->getWireIN1()->getTurnsPerCm() ) + ", ";    // wireTurnPerCmIN1
             sql += std::to_string( this->getWireIN1()->getArea() ) + ", ";          // wireAreaIN1
@@ -1248,7 +1246,7 @@ class Transformer{
             sql += std::to_string( this->getWireIN2()->getId() ) + ", ";            // wireIDIN2
             sql += "'" + this->getWireIN2()->getType() + "', ";                     // wireTypeIN2
             sql += "'" + this->getWireIN2()->getAWG() + "', ";                      // wireAWGIN2
-            sql += std::to_string( this->getWireIN2()->getTurnsPerCm() ) + ", ";    // wireTurnsIN2
+            sql += std::to_string( this->getWireTurnsIN2() ) + ", ";                // wireTurnsIN2
             sql += std::to_string( this->getWireIN2()->getDiameter() ) + ", ";      // wireDiameterIN2
             sql += std::to_string( this->getWireIN2()->getTurnsPerCm() ) + ", ";    // wireTurnPerCmIN2
             sql += std::to_string( this->getWireIN2()->getArea() ) + ", ";          // wireAreaIN2
@@ -1266,7 +1264,7 @@ class Transformer{
             sql += std::to_string( this->getWireOUT1()->getId() ) + ", ";           // wireIDOUT1
             sql += "'" + this->getWireOUT1()->getType() + "', ";                    // wireTypeOUT1
             sql += "'" + this->getWireOUT1()->getAWG() + "', ";                     // wireAWGOUT1
-            sql += std::to_string( this->getWireOUT1()->getTurnsPerCm() ) + ", ";   // wireTurnsOUT1
+            sql += std::to_string( this->getWireTurnsOUT1() ) + ", ";               // wireTurnsOUT1
             sql += std::to_string( this->getWireOUT1()->getDiameter() ) + ", ";     // wireDiameterOUT1
             sql += std::to_string( this->getWireOUT1()->getTurnsPerCm() ) + ", ";   // wireTurnPerCmOUT1
             sql += std::to_string( this->getWireOUT1()->getArea() ) + ", ";         // wireAreaOUT1
@@ -1282,7 +1280,7 @@ class Transformer{
             sql += std::to_string( this->getWireOUT2()->getId() ) + ", ";           // wireIDOUT2
             sql += "'" + this->getWireOUT2()->getType() + "', ";                    // wireTypeOUT2
             sql += "'" + this->getWireOUT2()->getAWG() + "', ";                     // wireAWGOUT2
-            sql += std::to_string( this->getWireOUT2()->getTurnsPerCm() ) + ", ";   // wireTurnsOUT2
+            sql += std::to_string( this->getWireTurnsOUT2() ) + ", ";               // wireTurnsOUT2
             sql += std::to_string( this->getWireOUT2()->getDiameter() ) + ", ";     // wireDiameterOUT2
             sql += std::to_string( this->getWireOUT2()->getTurnsPerCm() ) + ", ";   // wireTurnPerCmOUT2
             sql += std::to_string( this->getWireOUT2()->getArea() ) + ", ";         // wireAreaOUT2

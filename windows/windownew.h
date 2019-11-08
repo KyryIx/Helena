@@ -21,13 +21,15 @@ public:
     void setDatabase( DataBase *database );
 
 public slots:
+    void on_lineEdit_patternWindingNumber_textChanged( const QString &text );
+    void on_comboBox_patternWindingName_currentIndexChanged( int index );
+    void on_lineEdit_voltageInput_1_textChanged( const QString &text );
+    void on_lineEdit_voltageOutput_1_textChanged( const QString &text );
+
     void on_pushButton_calculate_clicked();
     void on_pushButton_save_clicked();
     void on_pushButton_clear_clicked();
     void on_pushButton_close_clicked();
-    void on_comboBox_patternWindingName_currentIndexChanged(int index);
-    void on_lineEdit_voltageInput_1_textChanged( const QString &text );
-    void on_lineEdit_voltageOutput_1_textChanged( const QString &text );
 
 private:
     Ui::WindowNew *ui;
