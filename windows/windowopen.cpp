@@ -288,6 +288,33 @@ void WindowOpen::init(){
     }
 }
 
+void WindowOpen::on_pushButton_search_clicked(){
+    unsigned int id = ui->lineEdit_id->text().toUInt();
+    std::string sql = "SELECT * FROM transformer WHERE id=" + std::to_string( id );
+
+    if( this->database->executeSQL( sql ) > -1 ){
+        if( this->database->nextRegister() ){
+            this->updateFields();
+        }
+        else{
+            QMessageBox msgBox;
+            std::string text = "Não existe um registro de projeto com ID = ";
+            text += std::to_string(id).c_str();
+            msgBox.setInformativeText( text.c_str() );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok );
+            msgBox.exec();
+        }
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setInformativeText( "Erro na consulta." );
+        msgBox.setIcon( QMessageBox::Warning );
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+    }
+}
+
 void WindowOpen::on_pushButton_previous_clicked(){
     if( this->database->previousRegister() ){
         this->updateFields();
@@ -301,7 +328,146 @@ void WindowOpen::on_pushButton_next_clicked(){
 }
 
 void WindowOpen::on_pushButton_update_clicked(){
-    //
+    QMessageBox msgBox;
+    msgBox.setInformativeText( "Deseja realmente atualizar o projeto aberto." );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+
+    if( msgBox.exec() == QMessageBox::Ok ){
+        unsigned int id = ui->lineEdit_id->text().toUInt();
+        std::string sql = "UPDATE transformer SET ";
+
+        sql += "frequency="                   + ui->lineEdit_frequency->text().toStdString()                 + ", ";
+        sql += "magneticInduction="           + ui->lineEdit_magneticInduction->text().toStdString()         + ", ";
+        sql += "currentDensity="              + ui->lineEdit_currentDensity->text().toStdString()            + ", ";
+        sql += "averageCurrentDensity="       + ui->lineEdit_densityAverageCurrent->text().toStdString()     + ", ";
+        sql += "weigthIron="                  + ui->lineEdit_ironWeight->text().toStdString()                + ", ";
+        sql += "weightCopper="                + ui->lineEdit_weightTurns->text().toStdString()               + ", ";
+        sql += "turnsAverageLength="          + ui->lineEdit_averageTurnLength->text().toStdString()         + ", ";
+        sql += "coilArea="                    + ui->lineEdit_turnsArea->text().toStdString()                 + ", ";
+        sql += "windowAreaPerSectionTurns="   + ui->lineEdit_windowAreaPerSectionTurns->text().toStdString() + ", ";
+        sql += "ironLoss="                    + ui->lineEdit_ironLoss->text().toStdString()                  + ", ";
+        sql += "copperLoss="                  + ui->lineEdit_turnsLoss->text().toStdString()                 + ", ";
+        sql += "totalLoss="                   + ui->lineEdit_totalLoss->text().toStdString()                 + ", ";
+        sql += "efficiency="                  + ui->lineEdit_efficiency->text().toStdString()                + ", ";
+
+        sql += "patternTransformerNumber="    + ui->lineEdit_patternWindingNumber->text().toStdString()      + ", ";
+        sql += "patternTransformerName='"     + ui->lineEdit_efficiency->text().toStdString()                + "', ";
+        sql += "centerTap=FALSE, ";
+        sql += "compensationLossTransformer=" + ui->lineEdit_compensation_power->text().toStdString()        + ", ";
+
+        sql += "powerIN="                     + ui->lineEdit_powerInput->text().toStdString()                + ", ";
+
+        sql += "voltageIN1="                  + ui->lineEdit_voltageInput_1->text().toStdString()            + ", ";
+        sql += "currentIN1="                  + ui->lineEdit_currentInput_1->text().toStdString()            + ", ";
+        sql += "currentDensityIN1="           + ui->lineEdit_densityCurrentInput_1->text().toStdString()     + ", ";
+
+        sql += "wireIDIN1="                   + ui->lineEdit_wireIDInput_1->text().toStdString()             + ", ";
+        sql += "wireTypeIN1='"                + ui->lineEdit_wireTypeInput_1->text().toStdString()           + "', ";
+        sql += "wireAWGIN1='"                 + ui->lineEdit_wireAWGInput_1->text().toStdString()            + "', ";
+        sql += "wireTurnsIN1="                + ui->lineEdit_turnsIN_1->text().toStdString()                 + ", ";
+        sql += "wireDiameterIN1="             + ui->lineEdit_wireDiameterInput_1->text().toStdString()       + ", ";
+        sql += "wireTurnPerCmIN1=0.0, ";
+        sql += "wireAreaIN1="                 + ui->lineEdit_wireAreaInput_1->text().toStdString()           + ", ";
+        sql += "wireResistanceIN1=0.0, ";
+        sql += "wireWeightIN1=0.0, ";
+        sql += "wireLengthIN1=0.0, ";
+        sql += "wireFrequencyIN1=0.0, ";
+        sql += "wireMaterialIN1='"            + ui->lineEdit_wireMaterialInput_1->text().toStdString()       + "', ";
+
+        sql += "voltageIN2="                  + ui->lineEdit_voltageInput_2->text().toStdString()            + ", ";
+        sql += "currentIN2="                  + ui->lineEdit_currentInput_2->text().toStdString()            + ", ";
+        sql += "currentDensityIN2="           + ui->lineEdit_densityCurrentInput_2->text().toStdString()     + ", ";
+
+        sql += "wireIDIN2="                   + ui->lineEdit_wireIDInput_2->text().toStdString()             + ", ";
+        sql += "wireTypeIN2='"                + ui->lineEdit_wireTypeInput_2->text().toStdString()           + "', ";
+        sql += "wireAWGIN2='"                 + ui->lineEdit_wireAWGInput_2->text().toStdString()            + "', ";
+        sql += "wireTurnsIN2="                + ui->lineEdit_turnsIN_2->text().toStdString()                 + ", ";
+        sql += "wireDiameterIN2="             + ui->lineEdit_wireDiameterInput_2->text().toStdString()       + ", ";
+        sql += "wireTurnPerCmIN2=0.0, ";
+        sql += "wireAreaIN2="                 + ui->lineEdit_wireAreaInput_2->text().toStdString()           + ", ";
+        sql += "wireResistanceIN2=0.0, ";
+        sql += "wireWeightIN2=0.0, ";
+        sql += "wireLengthIN2=0.0, ";
+        sql += "wireFrequencyIN2=0.0, ";
+        sql += "wireMaterialIN2='"            + ui->lineEdit_wireMaterialInput_2->text().toStdString()       + "', ";
+
+        sql += "powerOUT="                    + ui->lineEdit_powerOutput->text().toStdString()               + ", ";
+
+        sql += "voltageOUT1="                 + ui->lineEdit_voltageOutput_1->text().toStdString()           + ", ";
+        sql += "currentOUT1="                 + ui->lineEdit_currentOutput_1->text().toStdString()           + ", ";
+        sql += "currentDensityOUT1="          + ui->lineEdit_densityCurrentOutput_1->text().toStdString()    + ", ";
+
+        sql += "wireIDOUT1="                  + ui->lineEdit_wireIDOutput_1->text().toStdString()            + ", ";
+        sql += "wireTypeOUT1='"               + ui->lineEdit_wireTypeOutput_1->text().toStdString()          + "', ";
+        sql += "wireAWGOUT1='"                + ui->lineEdit_wireAWGOutput_1->text().toStdString()           + "', ";
+        sql += "wireTurnsOUT1="               + ui->lineEdit_turnsOUT_1->text().toStdString()                + ", ";
+        sql += "wireDiameterOUT1="            + ui->lineEdit_wireAreaInput_2->text().toStdString()           + ", ";
+        sql += "wireTurnPerCmOUT1=0.0, ";
+        sql += "wireAreaOUT1="                + ui->lineEdit_wireAreaOutput_1->text().toStdString()          + ", ";
+        sql += "wireResistanceOUT1=0.0, ";
+        sql += "wireWeightOUT1=0.0, ";
+        sql += "wireLengthOUT1=0.0, ";
+        sql += "wireFrequencyOUT1=0.0, ";
+        sql += "wireMaterialOUT1='"           + ui->lineEdit_wireMaterialOutput_1->text().toStdString()      + "', ";
+
+        sql += "voltageOUT2="                 + ui->lineEdit_voltageOutput_2->text().toStdString()           + ", ";
+        sql += "currentOUT2="                 + ui->lineEdit_currentOutput_2->text().toStdString()           + ", ";
+        sql += "currentDensityOUT2="          + ui->lineEdit_densityCurrentOutput_2->text().toStdString()    + ", ";
+
+        sql += "wireIDOUT2="                  + ui->lineEdit_wireIDOutput_2->text().toStdString()            + ", ";
+        sql += "wireTypeOUT2='"               + ui->lineEdit_wireTypeOutput_2->text().toStdString()          + "', ";
+        sql += "wireAWGOUT2='"                + ui->lineEdit_wireAWGOutput_2->text().toStdString()           + "', ";
+        sql += "wireTurnsOUT2="               + ui->lineEdit_turnsOUT_2->text().toStdString()                + ", ";
+        sql += "wireDiameterOUT2="            + ui->lineEdit_wireAreaInput_2->text().toStdString()           + ", ";
+        sql += "wireTurnPerCmOUT2=0.0, ";
+        sql += "wireAreaOUT2="                + ui->lineEdit_wireAreaOutput_2->text().toStdString()          + ", ";
+        sql += "wireResistanceOUT2=0.0, ";
+        sql += "wireWeightOUT2=0.0, ";
+        sql += "wireLengthOUT2=0.0, ";
+        sql += "wireFrequencyOUT2=0.0, ";
+        sql += "wireMaterialOUT2='"           + ui->lineEdit_wireMaterialOutput_2->text().toStdString()      + "', ";
+
+
+        sql += "laminaID="                    + ui->lineEdit_laminaID->text().toStdString()                  + ", ";
+        sql += "laminaType='"                 + ui->lineEdit_laminaType->text().toStdString()                + "', ";
+        sql += "laminaWidth="                 + ui->lineEdit_laminaWidth->text().toStdString()               + ", ";
+        sql += "laminaWindowArea="            + ui->lineEdit_laminaArea->text().toStdString()                + ", ";
+        sql += "laminaWeight="                + ui->lineEdit_laminaWeight->text().toStdString()              + ", ";
+        sql += "laminaCompensation="          + ui->lineEdit_laminaCompensation->text().toStdString()        + ", ";
+
+        sql += "bobbinID="                    + ui->lineEdit_bobbinID->text().toStdString()                  + ", ";
+        sql += "bobbinType='"                 + ui->lineEdit_bobbinType->text().toStdString()                + "', ";
+        sql += "bobbinCode='"                 + ui->lineEdit_bobbinCode->text().toStdString()                + "', ";
+        sql += "bobbinProvider='"             + ui->lineEdit_bobbinProvider->text().toStdString()            + "', ";
+        sql += "bobbinWidth="                 + ui->lineEdit_bobbinWidth->text().toStdString()               + ", ";
+        sql += "bobbinLength="                + ui->lineEdit_bobbinLength->text().toStdString()              + ", ";
+        sql += "bobbinHeight="                + ui->lineEdit_bobbinHeight->text().toStdString()              + ", ";
+        sql += "bobbinArea="                  + ui->lineEdit_bobbinArea->text().toStdString()                + ", ";
+
+        sql += "observation='"                + ui->textEdit_observation->toPlainText().toStdString()        + "' ";
+
+        sql += "WHERE id=" + std::to_string(id);
+
+        FILE* fp = fopen( "sql.sql", "w" );
+        fputs( sql.c_str(), fp );
+        fclose( fp );
+
+        if( this->database->executeSQL( sql ) > -1 ){
+            //this->on_pushButton_next_clicked();
+            msgBox.setInformativeText( "Atualizacao feita com sucesso." );
+            msgBox.setIcon( QMessageBox::Information );
+
+            this->init();
+        }
+        else{
+            msgBox.setInformativeText( "Erro na consulta." );
+            msgBox.setIcon( QMessageBox::Warning );
+        }
+
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+    }
 }
 
 void WindowOpen::on_pushButton_saveAs_clicked(){

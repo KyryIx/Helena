@@ -529,6 +529,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_search">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pesquisar</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_Input">
    <property name="geometry">
@@ -2024,14 +2037,14 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>730</x>
-     <y>660</y>
+     <x>740</x>
+     <y>600</y>
      <width>110</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Salvar</string>
+    <string>Salvar Como...</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_delete">

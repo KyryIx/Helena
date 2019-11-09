@@ -24,6 +24,7 @@ public:
     void init();
 
 public slots:
+    void on_pushButton_search_clicked();
     void on_pushButton_previous_clicked();
     void on_pushButton_next_clicked();
     void on_pushButton_update_clicked();
