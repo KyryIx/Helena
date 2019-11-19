@@ -17,7 +17,7 @@ class Bobbin{
 	public:
 		Bobbin(){
             this->id       = 0;
-            this->type     = "padrao";
+            this->type     = "";
             this->code     = "";
             this->provider = "";
             this->width    = 0.0;
@@ -33,7 +33,7 @@ class Bobbin{
             return this->id;
 		}
 
-		void setType( std::string type="padrao" ){
+        void setType( std::string type ){
             this->type = type;
 		}
 
@@ -41,7 +41,7 @@ class Bobbin{
             return this->type;
 		}
 
-        void setCode( std::string code="" ){
+        void setCode( std::string code ){
             this->code = code;
         }
 
@@ -49,7 +49,7 @@ class Bobbin{
             return this->code;
         }
 
-        void setProvider( std::string provider="" ){
+        void setProvider( std::string provider ){
             this->provider = provider;
         }
 
@@ -124,13 +124,13 @@ class Bobbin{
         std::string toSQL() const{
             std::string txt = "";
             txt = txt + "INSERT INTO bobbins (";
-            txt = txt + "code_bobbin, width_bobbin, width_error_bobbin, length_bobbin, length_error_bobbin, ";
-            txt = txt + "height_bobbin, height_error_bobbin, type_bobbin, temperature_bobbin, provider_bobbin";
+            txt = txt + "code_bobbin, width_bobbin, length_bobbin, ";
+            txt = txt + "height_bobbin, type_bobbin, provider_bobbin";
             txt = txt + ") VALUES( ";
             txt = "'" + this->getCode()                     + "', ";
-            txt = txt + std::to_string( this->getWidth() )  + ", 0.0, ";
-            txt = txt + std::to_string( this->getLength() ) + ", 0.2, ";
-            txt = txt + std::to_string( this->getHeight() ) + ", 0.0, ";
+            txt = txt + std::to_string( this->getWidth() )  + ", ";
+            txt = txt + std::to_string( this->getLength() ) + ", ";
+            txt = txt + std::to_string( this->getHeight() ) + ", ";
             txt = txt + "'" + this->getType()               + "', ";
             txt = txt + "'" + this->getProvider()           + "' )";
 

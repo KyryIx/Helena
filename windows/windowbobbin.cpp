@@ -27,7 +27,6 @@ void WindowBobbin::clearFields(){
     ui->lineEdit_width->clear();
     ui->lineEdit_length->clear();
     ui->lineEdit_height->clear();
-    ui->lineEdit_workTemperature->clear();
     ui->lineEdit_type->clear();
     ui->lineEdit_provider->clear();
 }
@@ -39,7 +38,6 @@ void WindowBobbin::updateFields(){
     ui->lineEdit_width->setText( this->database->returnValue( "width_bobbin" ).c_str() );
     ui->lineEdit_length->setText( this->database->returnValue( "length_bobbin" ).c_str() );
     ui->lineEdit_height->setText( this->database->returnValue( "height_bobbin" ).c_str() );
-    ui->lineEdit_workTemperature->setText( this->database->returnValue( "temperature_bobbin" ).c_str() );
     ui->lineEdit_type->setText( this->database->returnValue( "type_bobbin" ).c_str() );
     ui->lineEdit_provider->setText( this->database->returnValue( "provider_bobbin" ).c_str() );
 }

@@ -23,22 +23,23 @@ void WindowLamina::setDatabase( DataBase *database ){
 
 void WindowLamina::clearFields(){
     ui->lineEdit_id->clear();
-    ui->lineEdit__width->clear();
-    ui->lineEdit_area->clear();
-    ui->lineEdit_weight->clear();
     ui->lineEdit_type->clear();
-    ui->textEdit_observation->clear();
+    ui->lineEdit_provider->clear();
+    ui->lineEdit_width->clear();
+    ui->lineEdit_weight->clear();
+    ui->lineEdit_windowArea->clear();
+    ui->lineEdit_thicknessPercent->clear();
 }
 
 void WindowLamina::updateFields(){
     this->clearFields();
     ui->lineEdit_id->setText( this->database->returnValue( "id" ).c_str() );
-    ui->lineEdit__width->setText( this->database->returnValue( "width_lamina" ).c_str() );
-    ui->lineEdit_area->setText( this->database->returnValue( "area_lamina" ).c_str() );
-    ui->lineEdit_weight->setText( this->database->returnValue( "weight_lamina" ).c_str() );
     ui->lineEdit_type->setText( this->database->returnValue( "type_lamina" ).c_str() );
-    ui->lineEdit_thicknessPercent->setText( this->database->returnValue( "thicknessPercent_lamina" ).c_str() );
-    //ui->textEdit_observation->setText( this->database->returnValue( "observation_lamina" ).c_str() );
+    ui->lineEdit_provider->setText( this->database->returnValue( "provider_lamina" ).c_str() );
+    ui->lineEdit_width->setText( this->database->returnValue( "width_lamina" ).c_str() );
+    ui->lineEdit_weight->setText( this->database->returnValue( "weight_lamina" ).c_str() );
+    ui->lineEdit_windowArea->setText( this->database->returnValue( "window_area_lamina" ).c_str() );
+    ui->lineEdit_thicknessPercent->setText( this->database->returnValue( "thickness_percent_lamina" ).c_str() );
 }
 
 void WindowLamina::init(){

@@ -1,444 +1,467 @@
 -- frequency                   -- Hz
--- magneticInduction           -- G
--- currentDensity              -- A/mm2
--- averageCurrentDensity       -- A/mm2
--- weigthIron                  -- g
--- weightCopper                -- g
--- turnsAverageLength          -- cm
--- coilArea                    -- mm^2
--- windowAreaPerSectionTurns
--- ironLoss                    -- W
--- copperLoss                  -- W
--- totalLoss                   -- W
+-- magnetic_induction          -- G
+-- current_density             -- A/mm2
+-- average_current_density     -- A/mm2
+-- weight_iron                 -- g
+-- weight_copper               -- g
+-- average_turn_length         -- cm
+-- copper_area                 -- mm^2
+-- window_area_per_section_copper
+-- iron_loss                   -- W
+-- copper_loss                 -- W
+-- total_loss                  -- W
 -- efficiency                  -- %
 --
--- patternTransformerNumber    -- 0, 1 or 2
--- patternTransformerName      --
--- centerTap
--- compensationLossTransformer -- >= 0
+-- transformer_pattern_number  -- 0, 1 or 2
+-- transformer_pattern_name    --
+-- apply_center_tap
+-- apply_transformer_loss_compensation
+-- transformer_loss_compensation -- >= 0
 --
--- powerIN                     -- W
-
--- voltageIN1                  -- V
--- currentIN1                  -- A
--- currentDensityIN1           -- A/mm^2
+-- input_power                 -- W
 --
--- wireIDIN1
--- wireTypeIN1
--- wireAWGIN1
--- wireTurnsIN1                -- esp
--- wireDiameterIN1             -- mm
--- wireTurnPerCmIN1            -- esp/cm
--- wireAreaIN1                 -- mm^2
--- wireResistanceIN1           -- ohm/km
--- wireWeightIN1               -- kg/km
--- wireLengthIN1               -- m/kg
--- wireFrequencyIN1            -- kHz
--- wireMaterialIN1
+-- input_voltage_1             -- V
+-- input_current_1             -- A
+-- input_current_density_1     -- A/mm^2
 --
--- voltageIN2                  -- V
--- currentIN2                  -- A
--- currentDensityIN2           -- A/mm^2
+-- input_wire_id_1
+-- input_wire_type_1
+-- input_wire_awg_1
+-- input_wire_turns_1          -- esp
+-- input_wire_diameter_1       -- mm
+-- input_wire_turn_per_cm_1    -- esp/cm
+-- input_wire_area_1           -- mm^2
+-- input_wire_resistance_1     -- ohm/km
+-- input_wire_weight_1         -- kg/km
+-- input_wire_length_1         -- m/kg
+-- input_wire_frequency_1      -- kHz
+-- input_wire_material_1
+-- input_wire_provider_1
+--
+-- input_voltage_2             -- V
+-- input_current_2             -- A
+-- input_current_density_2     -- A/mm^2
 -- 
--- wireIDIN2
--- wireTypeIN2
--- wireAWGIN2
--- wireTurnsIN2                -- esp
--- wireDiameterIN2             -- mm
--- wireTurnPerCmIN2            -- esp/cm
--- wireAreaIN2                 -- mm^2
--- wireResistanceIN2           -- ohm/km
--- wireWeightIN2               -- kg/km
--- wireLengthIN2               -- m/kg
--- wireFrequencyIN2            -- kHz
--- wireMaterialIN2
+-- input_wire_id_2
+-- input_wire_type_2
+-- input_wire_awg_2
+-- input_wire_turns_2          -- esp
+-- input_wire_diameter_2       -- mm
+-- input_wire_turn_per_cm_2    -- esp/cm
+-- input_wire_area_2           -- mm^2
+-- input_wire_resistance_2     -- ohm/km
+-- input_wire_weight_2         -- kg/km
+-- input_wire_length_2         -- m/kg
+-- input_wire_frequency_2      -- kHz
+-- input_wire_material_2
+-- input_wire_provider_2
 --
--- powerOUT                    -- W
+-- output_power                -- W
 --
--- voltageOUT1                 -- V
--- currentOUT1                 -- A
--- currentDensityOUT1          -- A/mm^2
+-- output_voltage_1            -- V
+-- output_current_1            -- A
+-- output_current_density_1    -- A/mm^2
 -- 
--- wireIDOUT1
--- wireTypeOUT1
--- wireAWGOUT1
--- wireTurnsOUT1               -- esp
--- wireDiameterOUT1            -- mm
--- wireTurnPerCmOUT1           -- esp/cm
--- wireAreaOUT1                -- mm^2
--- wireResistanceOUT1          -- ohm/km
--- wireWeightOUT1              -- kg/km
--- wireLengthOUT1              -- m/kg
--- wireFrequencyOUT1           -- kHz
--- wireMaterialOUT1
+-- output_wire_id_1
+-- output_wire_type_1
+-- output_wire_awg_1
+-- output_wire_turns_1         -- esp
+-- output_wire_diameter_1      -- mm
+-- output_wire_turn_per_cm_1   -- esp/cm
+-- output_wire_area_1          -- mm^2
+-- output_wire_resistance_1    -- ohm/km
+-- output_wire_weight_1        -- kg/km
+-- output_wire_length_1        -- m/kg
+-- output_wire_frequency_1     -- kHz
+-- output_wire_material_1
+-- output_wire_provider_1
 --
--- voltageOUT2                 -- V
--- currentOUT2                 -- A
--- currentDensityOUT2          -- A/mm^2
+-- output_voltage_2            -- V
+-- output_current_2            -- A
+-- output_current_density_2    -- A/mm^2
 -- 
--- wireIDOUT2
--- wireTypeOUT2
--- wireAWGOUT2
--- wireTurnsOUT2               -- esp
--- wireDiameterOUT2            -- mm
--- wireTurnPerCmOUT2           -- esp/cm
--- wireAreaOUT2                -- mm^2
--- wireResistanceOUT2          -- ohm/km
--- wireWeightOUT2              -- kg/km
--- wireLengthOUT2              -- m/kg
--- wireFrequencyOUT2           -- kHz
--- wireMaterialOUT2
+-- output_wire_id_2
+-- output_wire_type_2
+-- output_wire_awg_2
+-- output_wire_turns_2         -- esp
+-- output_wire_diameter_2      -- mm
+-- output_wire_turn_per_cm_2   -- esp/cm
+-- output_wire_area_2          -- mm^2
+-- output_wire_resistance_2    -- ohm/km
+-- output_wire_weight_2        -- kg/km
+-- output_wire_length_2        -- m/kg
+-- output_wire_frequency_2     -- kHz
+-- output_wire_material_2
+-- OUTput_wire_provider_2
 --
--- laminaID
--- laminaType
--- laminaWidth                 -- mm
--- laminaWindowArea            -- mm^2
--- laminaWeight                -- kg/cm
--- laminaCompensation          -- >= 0
+-- lamina_id
+-- lamina_type
+-- lamina_provider
+-- lamina_width                -- mm
+-- lamina_window_area          -- mm^2
+-- lamina_weight               -- kg/cm
+-- lamina_compensation_state
+-- lamina_compensation_value   -- >= 0
 -- 
--- bobbinID
--- bobbinType
--- bobbinCode
--- bobbinProvider
--- bobbinWidth                 -- mm
--- bobbinLength                -- mm
--- bobbinHeight                -- mm
--- bobbinArea                  -- mm^2
--- bobbinVolume                -- mm^3
+-- bobbin_id
+-- bobbin_type
+-- bobbin_code
+-- bobbin_provider
+-- bobbin_width                -- mm
+-- bobbin_length               -- mm
+-- bobbin_height               -- mm
 --
 -- observation
 
 CREATE TABLE IF NOT EXISTS transformer (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	frequency                   FLOAT,        -- Hz
-	magneticInduction           FLOAT,        -- G
-	currentDensity              FLOAT,        -- A/mm2
-	averageCurrentDensity       FLOAT,        -- A/mm2
-	weigthIron                  FLOAT,        -- g
-	weightCopper                FLOAT,        -- g
-	turnsAverageLength          FLOAT,        -- cm
-	coilArea                    FLOAT,        -- mm^2
-	windowAreaPerSectionTurns	FLOAT,        -- >= 0
-	ironLoss                    FLOAT,        -- W
-	copperLoss                  FLOAT,        -- W
-	totalLoss                   FLOAT,        -- W
+	magnetic_induction          FLOAT,        -- G
+	current_density             FLOAT,        -- A/mm2
+	average_current_density     FLOAT,        -- A/mm2
+	weight_iron                 FLOAT,        -- g
+	weight_copper               FLOAT,        -- g
+	average_turn_length         FLOAT,        -- cm
+	copper_area                 FLOAT,        -- mm^2
+	window_area_per_section_copper FLOAT,     -- >= 0
+	iron_loss                   FLOAT,        -- W
+	copper_loss                 FLOAT,        -- W
+	total_loss                  FLOAT,        -- W
 	efficiency                  FLOAT,        -- %
 	
-	patternTransformerNumber    INTEGER,      -- 0, 1 or 2
-	patternTransformerName      VARCHAR(255)
-	centerTap                   BOOLEAN       -- TRUE to center tap and FALSE otherwise
-	compensationLossTransformer FLOAT,        -- >= 0
+	transformer_pattern_number  INTEGER,      -- 0, 1 or 2
+	transformer_pattern_name    VARCHAR(255),
+	apply_center_tap            BOOLEAN,      -- TRUE to center tap and FALSE otherwise
+	apply_transformer_loss_compensation BOOLEAN,
+	transformer_loss_compensation FLOAT,      -- >= 0
 	
-	powerIN                     FLOAT,        -- W
+	input_power                 FLOAT,        -- W
 	
-	voltageIN1                  FLOAT,        -- V
-	currentIN1                  FLOAT,        -- A
-	currentDensityIN1           FLOAT,        -- A/mm^2
+	input_voltage_1             FLOAT,        -- V
+	input_current_1             FLOAT,        -- A
+	input_current_density_1     FLOAT,        -- A/mm^2
 	
-	wireIDIN1                   INTEGER,
-	wireTypeIN1                 VARCHAR(16),
-	wireAWGIN1                  VARCHAR(5),
-	wireTurnsIN1                INTEGER,      -- esp
-	wireDiameterIN1             FLOAT,        -- mm
-	wireTurnPerCmIN1            FLOAT,        -- esp/cm
-	wireAreaIN1                 FLOAT,        -- mm^2
-	wireResistanceIN1           FLOAT,        -- ohm/km
-	wireWeightIN1               FLOAT,        -- kg/km
-	wireLengthIN1               FLOAT,        -- m/kg
-	wireFrequencyIN1            FLOAT,        -- kHz
-	wireMaterialIN1             VARCHAR(64),
+	input_wire_id_1             INTEGER,
+	input_wire_type_1           VARCHAR(16),
+	input_wire_awg_1            VARCHAR(5),
+	input_wire_turns_1          INTEGER,      -- esp
+	input_wire_diameter_1       FLOAT,        -- mm
+	input_wire_turn_per_cm_1    FLOAT,        -- esp/cm
+	input_wire_area_1           FLOAT,        -- mm^2
+	input_wire_resistance_1     FLOAT,        -- ohm/km
+	input_wire_weight_1         FLOAT,        -- kg/km
+	input_wire_length_1         FLOAT,        -- m/kg
+	input_wire_frequency_1      FLOAT,        -- kHz
+	input_wire_material_1       VARCHAR(64),
+	input_wire_provider_1		VARCHAR(255),
 	
-	voltageIN2                  FLOAT,        -- V
-	currentIN2                  FLOAT,        -- A
-	currentDensityIN2           FLOAT,        -- A/mm^2
+	input_voltage_2             FLOAT,        -- V
+	input_current_2             FLOAT,        -- A
+	input_current_density_2     FLOAT,        -- A/mm^2
 	
-	wireIDIN2                   INTEGER,
-	wireTypeIN2                 VARCHAR(16),
-	wireAWGIN2                  VARCHAR(5),
-	wireTurnsIN2                INTEGER,      -- esp
-	wireDiameterIN2             FLOAT,        -- mm
-	wireTurnPerCmIN2            FLOAT,        -- esp/cm
-	wireAreaIN2                 FLOAT,        -- mm^2
-	wireResistanceIN2           FLOAT,        -- ohm/km
-	wireWeightIN2               FLOAT,        -- kg/km
-	wireLengthIN2               FLOAT,        -- m/kg
-	wireFrequencyIN2            FLOAT,        -- kHz
-	wireMaterialIN2             VARCHAR(64),
+	input_wire_id_2             INTEGER,
+	input_wire_type_2           VARCHAR(16),
+	input_wire_awg_2            VARCHAR(5),
+	input_wire_turns_2          INTEGER,      -- esp
+	input_wire_diameter_2       FLOAT,        -- mm
+	input_wire_turn_per_cm_2    FLOAT,        -- esp/cm
+	input_wire_area_2           FLOAT,        -- mm^2
+	input_wire_resistance_2     FLOAT,        -- ohm/km
+	input_wire_weight_2         FLOAT,        -- kg/km
+	input_wire_length_2         FLOAT,        -- m/kg
+	input_wire_frequency_2      FLOAT,        -- kHz
+	input_wire_material_2       VARCHAR(64),
+	input_wire_provider_2		VARCHAR(255),
 	
-	powerOUT                    FLOAT,        -- W
+	output_power                FLOAT,        -- W
 	
-	voltageOUT1                 FLOAT,        -- V
-	currentOUT1                 FLOAT,        -- A
-	currentDensityOUT1          FLOAT,        -- A/mm^2
+	output_voltage_1            FLOAT,        -- V
+	output_current_1            FLOAT,        -- A
+	output_current_density_1    FLOAT,        -- A/mm^2
 	
-	wireIDOUT1                  INTEGER,
-	wireTypeOUT1                VARCHAR(16),
-	wireAWGOUT1                 VARCHAR(5),
-	wireTurnsOUT1               INTEGER,      -- esp
-	wireDiameterOUT1            FLOAT,        -- mm
-	wireTurnPerCmOUT1           FLOAT,        -- esp/cm
-	wireAreaOUT1                FLOAT,        -- mm^2
-	wireResistanceOUT1          FLOAT,        -- ohm/km
-	wireWeightOUT1              FLOAT,        -- kg/km
-	wireLengthOUT1              FLOAT,        -- m/kg
-	wireFrequencyOUT1           FLOAT,        -- kHz
-	wireMaterialOUT1            VARCHAR(64),
+	output_wire_id_1            INTEGER,
+	output_wire_type_1          VARCHAR(16),
+	output_wire_awg_1           VARCHAR(5),
+	output_wire_turns_1         INTEGER,      -- esp
+	output_wire_diameter_1      FLOAT,        -- mm
+	output_wire_turn_per_cm_1   FLOAT,        -- esp/cm
+	output_wire_area_1          FLOAT,        -- mm^2
+	output_wire_resistance_1    FLOAT,        -- ohm/km
+	output_wire_weight_1        FLOAT,        -- kg/km
+	output_wire_length_1        FLOAT,        -- m/kg
+	output_wire_frequency_1     FLOAT,        -- kHz
+	output_wire_material_1      VARCHAR(64),
+	output_wire_provider_1		VARCHAR(255),
 	
-	voltageOUT2                 FLOAT,        -- V
-	currentOUT2                 FLOAT,        -- A
-	currentDensityOUT2          FLOAT,        -- A/mm^2
+	output_voltage_2            FLOAT,        -- V
+	output_current_2            FLOAT,        -- A
+	output_current_density_2    FLOAT,        -- A/mm^2
 	
-	wireIDOUT2                  INTEGER,
-	wireTypeOUT2                VARCHAR(16),
-	wireAWGOUT2                 VARCHAR(5),
-	wireTurnsOUT2               INTEGER,      -- esp
-	wireDiameterOUT2            FLOAT,        -- mm
-	wireTurnPerCmOUT2           FLOAT,        -- esp/cm
-	wireAreaOUT2                FLOAT,        -- mm^2
-	wireResistanceOUT2          FLOAT,        -- ohm/km
-	wireWeightOUT2              FLOAT,        -- kg/km
-	wireLengthOUT2              FLOAT,        -- m/kg
-	wireFrequencyOUT2           FLOAT,        -- kHz
-	wireMaterialOUT2            VARCHAR(64),
+	output_wire_id_2            INTEGER,
+	output_wire_type_2          VARCHAR(16),
+	output_wire_awg_2           VARCHAR(5),
+	output_wire_turns_2         INTEGER,      -- esp
+	output_wire_diameter_2      FLOAT,        -- mm
+	output_wire_turn_per_cm_2   FLOAT,        -- esp/cm
+	output_wire_area_2          FLOAT,        -- mm^2
+	output_wire_resistance_2    FLOAT,        -- ohm/km
+	output_wire_weight_2        FLOAT,        -- kg/km
+	output_wire_length_2        FLOAT,        -- m/kg
+	output_wire_frequency_2     FLOAT,        -- kHz
+	output_wire_material_2      VARCHAR(64),
+	output_wire_provider_2		VARCHAR(255),
 	
-	laminaID                    INTEGER,
-	laminaType                  VARCHAR(64),
-	laminaWidth                 FLOAT,        -- mm
-	laminaWindowArea            FLOAT,        -- mm^2
-	laminaWeight                FLOAT,        -- kg/cm
-	laminaCompensation          FLOAT,        -- >= 0
+	lamina_id                   INTEGER,
+	lamina_type                 VARCHAR(64),
+	lamina_provider				VARCHAR(255),
+	lamina_width                FLOAT,        -- mm
+	lamina_window_area          FLOAT,        -- mm^2
+	lamina_weight               FLOAT,        -- kg/cm
+	lamina_compensation_state   BOOLEAN,
+	lamina_compensation_value   FLOAT,        -- >= 0
 	
-	bobbinID                    INTEGER,
-	bobbinType                  VARCHAR(64),
-	bobbinCode                  VARCHAR(64),
-	bobbinProvider              VARCHAR(255),
-	bobbinWidth                 FLOAT,        -- mm
-	bobbinLength                FLOAT,        -- mm
-	bobbinHeight                FLOAT,        -- mm
-	bobbinArea                  FLOAT,        -- mm^2
+	bobbin_id                   INTEGER,
+	bobbin_type                 VARCHAR(64),
+	bobbin_code                 VARCHAR(64),
+	bobbin_provider             VARCHAR(255),
+	bobbin_width                FLOAT,        -- mm
+	bobbin_length               FLOAT,        -- mm
+	bobbin_height               FLOAT,        -- mm
 	
 	observation					TEXT
 );
 
-CREATE TABLE IF NOT EXISTS transformer( id INTEGER PRIMARY KEY AUTOINCREMENT, frequency FLOAT, magneticInduction FLOAT, currentDensity FLOAT, averageCurrentDensity FLOAT, weigthIron FLOAT, weightCopper FLOAT, turnsAverageLength FLOAT, coilArea FLOAT, windowAreaPerSectionTurns FLOAT, ironLoss FLOAT, copperLoss FLOAT, totalLoss FLOAT, efficiency FLOAT, patternTransformerNumber INTEGER, patternTransformerName VARCHAR(255), centerTap BOOLEAN, compensationLossTransformer FLOAT, powerIN FLOAT, voltageIN1 FLOAT, currentIN1 FLOAT, currentDensityIN1 FLOAT, wireIDIN1 INTEGER, wireTypeIN1 VARCHAR(16), wireAWGIN1 VARCHAR(5), wireTurnsIN1 INTEGER, wireDiameterIN1 FLOAT, wireTurnPerCmIN1 FLOAT, wireAreaIN1 FLOAT, wireResistanceIN1 FLOAT, wireWeightIN1 FLOAT, wireLengthIN1 FLOAT, wireFrequencyIN1 FLOAT, wireMaterialIN1 VARCHAR(64), voltageIN2 FLOAT, currentIN2 FLOAT, currentDensityIN2 FLOAT, wireIDIN2 INTEGER, wireTypeIN2 VARCHAR(16), wireAWGIN2 VARCHAR(5), wireTurnsIN2 INTEGER, wireDiameterIN2 FLOAT, wireTurnPerCmIN2 FLOAT, wireAreaIN2 FLOAT, wireResistanceIN2 FLOAT, wireWeightIN2 FLOAT, wireLengthIN2 FLOAT, wireFrequencyIN2 FLOAT, wireMaterialIN2 VARCHAR(64), powerOUT FLOAT, voltageOUT1 FLOAT, currentOUT1 FLOAT, currentDensityOUT1 FLOAT, wireIDOUT1 INTEGER, wireTypeOUT1 VARCHAR(16), wireAWGOUT1 VARCHAR(5), wireTurnsOUT1 INTEGER, wireDiameterOUT1 FLOAT, wireTurnPerCmOUT1 FLOAT, wireAreaOUT1 FLOAT, wireResistanceOUT1 FLOAT, wireWeightOUT1 FLOAT, wireLengthOUT1 FLOAT, wireFrequencyOUT1 FLOAT, wireMaterialOUT1 VARCHAR(64), voltageOUT2 FLOAT, currentOUT2 FLOAT, currentDensityOUT2 FLOAT, wireIDOUT2 INTEGER, wireTypeOUT2 VARCHAR(16), wireAWGOUT2 VARCHAR(5), wireTurnsOUT2 INTEGER, wireDiameterOUT2 FLOAT, wireTurnPerCmOUT2 FLOAT, wireAreaOUT2 FLOAT, wireResistanceOUT2 FLOAT, wireWeightOUT2 FLOAT, wireLengthOUT2 FLOAT, wireFrequencyOUT2 FLOAT, wireMaterialOUT2 VARCHAR(64), laminaID INTEGER, laminaType VARCHAR(64), laminaWidth FLOAT, laminaWindowArea FLOAT, laminaWeight FLOAT, laminaCompensation FLOAT, bobbinID INTEGER, bobbinType VARCHAR(64), bobbinCode VARCHAR(64), bobbinProvider VARCHAR(255), bobbinWidth FLOAT, bobbinLength FLOAT, bobbinHeight FLOAT, bobbinArea FLOAT, observation TEXT );
+CREATE TABLE IF NOT EXISTS transformer ( id INTEGER PRIMARY KEY AUTOINCREMENT, frequency FLOAT, magnetic_induction FLOAT, current_density FLOAT, average_current_density FLOAT, weight_iron FLOAT, weight_copper FLOAT, average_turn_length FLOAT, copper_area FLOAT, window_area_per_section_copper FLOAT, iron_loss FLOAT, copper_loss FLOAT, total_loss FLOAT, efficiency FLOAT, transformer_pattern_number INTEGER, transformer_pattern_name VARCHAR(255), apply_center_tap BOOLEAN, apply_transformer_loss_compensation BOOLEAN, transformer_loss_compensation FLOAT, input_power FLOAT, input_voltage_1 FLOAT, input_current_1 FLOAT, input_current_density_1 FLOAT, input_wire_id_1 INTEGER, input_wire_type_1 VARCHAR(16), input_wire_awg_1 VARCHAR(5), input_wire_turns_1 INTEGER, input_wire_diameter_1 FLOAT, input_wire_turn_per_cm_1 FLOAT, input_wire_area_1 FLOAT, input_wire_resistance_1 FLOAT, input_wire_weight_1 FLOAT, input_wire_length_1 FLOAT, input_wire_frequency_1 FLOAT, input_wire_material_1 VARCHAR(64), input_wire_provider_1 VARCHAR(255), input_voltage_2 FLOAT, input_current_2 FLOAT, input_current_density_2 FLOAT, input_wire_id_2 INTEGER, input_wire_type_2 VARCHAR(16), input_wire_awg_2 VARCHAR(5), input_wire_turns_2 INTEGER, input_wire_diameter_2 FLOAT, input_wire_turn_per_cm_2 FLOAT, input_wire_area_2 FLOAT, input_wire_resistance_2 FLOAT, input_wire_weight_2 FLOAT, input_wire_length_2 FLOAT, input_wire_frequency_2 FLOAT, input_wire_material_2 VARCHAR(64), input_wire_provider_2 VARCHAR(255), output_power FLOAT, output_voltage_1 FLOAT, output_current_1 FLOAT, output_current_density_1 FLOAT, output_wire_id_1 INTEGER, output_wire_type_1 VARCHAR(16), output_wire_awg_1 VARCHAR(5), output_wire_turns_1 INTEGER, output_wire_diameter_1 FLOAT, output_wire_turn_per_cm_1 FLOAT, output_wire_area_1 FLOAT, output_wire_resistance_1 FLOAT, output_wire_weight_1 FLOAT, output_wire_length_1 FLOAT, output_wire_frequency_1 FLOAT, output_wire_material_1 VARCHAR(64), output_wire_provider_1 VARCHAR(255), output_voltage_2 FLOAT, output_current_2 FLOAT, output_current_density_2 FLOAT, output_wire_id_2 INTEGER, output_wire_type_2 VARCHAR(16), output_wire_awg_2 VARCHAR(5), output_wire_turns_2 INTEGER, output_wire_diameter_2 FLOAT, output_wire_turn_per_cm_2 FLOAT, output_wire_area_2 FLOAT, output_wire_resistance_2 FLOAT, output_wire_weight_2 FLOAT, output_wire_length_2 FLOAT, output_wire_frequency_2 FLOAT, output_wire_material_2 VARCHAR(64), output_wire_provider_2 VARCHAR(255), lamina_id INTEGER, lamina_type VARCHAR(64), lamina_provider VARCHAR(255), lamina_width FLOAT, lamina_window_area FLOAT, lamina_weight FLOAT, lamina_compensation_state BOOLEAN, lamina_compensation_value FLOAT, bobbin_id INTEGER, bobbin_type VARCHAR(64), bobbin_code VARCHAR(64), bobbin_provider VARCHAR(255), bobbin_width FLOAT, bobbin_length FLOAT, bobbin_height FLOAT, observation TEXT );
 
 INSERT INTO transformer (
 	frequency,
-	magneticInduction,
-	currentDensity,
-	averageCurrentDensity,
-	weigthIron,
-	weightCopper,
-	turnsAverageLength,
-	coilArea,
-	windowAreaPerSectionTurns,
-	ironLoss,
-	copperLoss,
-	totalLoss,
+	magnetic_induction,
+	current_density,
+	average_current_density,
+	weight_iron,
+	weight_copper,
+	average_turn_length,
+	copper_area,
+	window_area_per_section_copper,
+	iron_loss,
+	copper_loss,
+	total_loss,
 	efficiency,
 	
-	patternTransformerNumber,
-	patternTransformerName,
-	centerTap,
-	compensationLossTransformer,
+	transformer_pattern_number,
+	transformer_pattern_name,
+	apply_center_tap,
+	apply_transformer_loss_compensation,
+	transformer_loss_compensation,
 	
-	powerIN,
+	input_power,
 	
-	voltageIN1,
-	currentIN1,
-	currentDensityIN1,
+	input_voltage_1,
+	input_current_1,
+	input_current_density_1,
 	
-	wireIDIN1,
-	wireTypeIN1,
-	wireAWGIN1,
-	wireTurnsIN1,
-	wireDiameterIN1,
-	wireTurnPerCmIN1,
-	wireAreaIN1,
-	wireResistanceIN1,
-	wireWeightIN1,
-	wireLengthIN1,
-	wireFrequencyIN1,
-	wireMaterialIN1,
+	input_wire_id_1,
+	input_wire_type_1,
+	input_wire_awg_1,
+	input_wire_turns_1,
+	input_wire_diameter_1,
+	input_wire_turn_per_cm_1,
+	input_wire_area_1,
+	input_wire_resistance_1,
+	input_wire_weight_1,
+	input_wire_length_1,
+	input_wire_frequency_1,
+	input_wire_material_1,
+	input_wire_provider_1,
 	
-	voltageIN2,
-	currentIN2,
-	currentDensityIN2,
+	input_voltage_2,
+	input_current_2,
+	input_current_density_2,
 	
-	wireIDIN2,
-	wireTypeIN2,
-	wireAWGIN2,
-	wireTurnsIN2,
-	wireDiameterIN2,
-	wireTurnPerCmIN2,
-	wireAreaIN2,
-	wireResistanceIN2,
-	wireWeightIN2,
-	wireLengthIN2,
-	wireFrequencyIN2,
-	wireMaterialIN2,
+	input_wire_id_2,
+	input_wire_type_2,
+	input_wire_awg_2,
+	input_wire_turns_2,
+	input_wire_diameter_2,
+	input_wire_turn_per_cm_2,
+	input_wire_area_2,
+	input_wire_resistance_2,
+	input_wire_weight_2,
+	input_wire_length_2,
+	input_wire_frequency_2,
+	input_wire_material_2,
+	input_wire_provider_2,
 	
-	powerOUT,
+	output_power,
 	
-	voltageOUT1,
-	currentOUT1,
-	currentDensityOUT1,
+	output_voltage_1,
+	output_current_1,
+	output_current_density_1,
 	
-	wireIDOUT1,
-	wireTypeOUT1,
-	wireAWGOUT1,
-	wireTurnsOUT1,
-	wireDiameterOUT1,
-	wireTurnPerCmOUT1,
-	wireAreaOUT1,
-	wireResistanceOUT1,
-	wireWeightOUT1,
-	wireLengthOUT1,
-	wireFrequencyOUT1,
-	wireMaterialOUT1,
+	output_wire_id_1,
+	output_wire_type_1,
+	output_wire_awg_1,
+	output_wire_turns_1,
+	output_wire_diameter_1,
+	output_wire_turn_per_cm_1,
+	output_wire_area_1,
+	output_wire_resistance_1,
+	output_wire_weight_1,
+	output_wire_length_1,
+	output_wire_frequency_1,
+	output_wire_material_1,
+	output_wire_provider_1,
 	
-	voltageOUT2,
-	currentOUT2,
-	currentDensityOUT2,
+	output_voltage_2,
+	output_current_2,
+	output_current_density_2,
 	
-	wireIDOUT2,
-	wireTypeOUT2,
-	wireAWGOUT2,
-	wireTurnsOUT2,
-	wireDiameterOUT2,
-	wireTurnPerCmOUT2,
-	wireAreaOUT2,
-	wireResistanceOUT2,
-	wireWeightOUT2,
-	wireLengthOUT2,
-	wireFrequencyOUT2,
-	wireMaterialOUT2,
+	output_wire_id_2,
+	output_wire_type_2,
+	output_wire_awg_2,
+	output_wire_turns_2,
+	output_wire_diameter_2,
+	output_wire_turn_per_cm_2,
+	output_wire_area_2,
+	output_wire_resistance_2,
+	output_wire_weight_2,
+	output_wire_length_2,
+	output_wire_frequency_2,
+	output_wire_material_2,
+	output_wire_provider_2,
 	
-	laminaID,
-	laminaType,
-	laminaWidth,
-	laminaWindowArea,
-	laminaWeight,
-	laminaCompensation,
+	lamina_id,
+	lamina_type,
+	lamina_provider,
+	lamina_width,
+	lamina_window_area,
+	lamina_weight,
+	lamina_compensation_state,
+	lamina_Compensation_value,
 	
-	bobbinID,
-	bobbinType,
-	bobbinCode,
-	bobbinProvider,
-	bobbinWidth,
-	bobbinLength,
-	bobbinHeight,
-	bobbinArea,
+	bobbin_id,
+	bobbin_type,
+	bobbin_code,
+	bobbin_provider,
+	bobbin_width,
+	bobbin_length,
+	bobbin_height,
 	
-	observation
+	observation 
 )
 VALUES (
 	60.0,			-- frequency
-	11300.0,		-- magneticInduction
-	3.0,			-- currentDensity
-	2.64,			-- averageCurrentDensity
-	4.32,			-- weigthIron
-	1.09,			-- weightCopper
-	26.05,			-- turnsAverageLength
-	468.74,			-- coilArea
-	3.0,			-- windowAreaPerSectionTurns
-	8.56,			-- ironLoss
-	18.40,			-- copperLoss
-	26.96,			-- totalLoss
+	11300.0,		-- magnetic_induction
+	3.0,			-- current_density
+	2.64,			-- average_current_density
+	4.32,			-- weight_iron
+	1.09,			-- weight_copper
+	26.05,			-- average_turn_length
+	468.74,			-- copper_area
+	3.0,			-- window_area_per_section_copper
+	8.56,			-- iron_loss
+	18.40,			-- copper_loss
+	26.96,			-- total_loss
 	91.76,			-- efficiency
 	
-	0,				-- patternTransformerNumber,
-	'1 primary and 1 secondary with center tap',
-	TRUE,			-- center tap,
-	10.0,			-- compensationLossTransformer,
+	0,				-- transformer_pattern_number,
+	'1 primary and 1 secondary with center tap', -- transformer_pattern_name
+	TRUE,			-- apply_center_tap,
+	TRUE,			-- apply_transformer_loss_compensation,
+	10.0,			-- transformer_loss_compensation,
 	
-	330.0,			-- powerIN,
+	330.0,			-- input_power,
 	
-	120.0,			-- voltageIN1,
-	2.75,			-- currentIN1,
-	2.63,			-- currentDensityIN1,
+	120.0,			-- input_voltage_1,
+	2.75,			-- input_current_1,
+	2.63,			-- input_current_density_1,
 	
-	21,				-- wireIDIN1,
-	'redondo',		-- wireTypeIN1,
-	'17',			-- wireAWGIN1,
-	236,			-- wireTurnsIN1,
-	1.15,			-- wireDiameterIN1,
-	0.0,			-- wireTurnPerCmIN1,
-	1.04,			-- wireAreaIN1,
-	0.0,			-- wireResistanceIN1,
-	0.0,			-- wireWeightIN1,
-	0.0,			-- wireLengthIN1,
-	0.0,			-- wireFrequencyIN1,
-	'cobre',		-- wireMaterialIN1,
+	21,				-- input_wire_id_1,
+	'redondo',		-- input_wire_type_1,
+	'17',			-- input_wire_awg_1,
+	236,			-- input_wire_turns_1,
+	1.15,			-- input_wire_diameter_1,
+	0.0,			-- input_wire_turn_per_cm_1,
+	1.04,			-- input_wire_area_1,
+	0.0,			-- input_wire_resistance_1,
+	0.0,			-- input_wire_weight_1,
+	0.0,			-- input_wire_length_1,
+	0.0,			-- input_wire_frequency_1,
+	'cobre',		-- input_wire_material_1,
+	'-',			-- input_wire_provider_1,
 	
-	0.0,			-- voltageIN2,
-	0.0,			-- currentIN2,
-	0.0,			-- currentDensityIN2,
+	0.0,			-- input_voltage_2,
+	0.0,			-- input_current_2,
+	0.0,			-- input_current_density_2,
 	
-	0,				-- wireIDIN2,
-	'redondo',		-- wireTypeIN2,
-	'',				-- wireAWGIN2,
-	0,				-- wireTurnsIN2,
-	0.0,			-- wireDiameterIN2,
-	0.0,			-- wireTurnPerCmIN2,
-	0.0,			-- wireAreaIN2,
-	0.0,			-- wireResistanceIN2,
-	0.0,			-- wireWeightIN2,
-	0.0,			-- wireLengthIN2,
-	0.0,			-- wireFrequencyIN2,
-	'',				-- wireMaterialIN2,
+	0,				-- input_wire_id_2,
+	'redondo',		-- input_wire_type_2,
+	'',				-- input_wire_awg_2,
+	0,				-- input_wire_turns_2,
+	0.0,			-- input_wire_diameter_2,
+	0.0,			-- input_wire_turn_per_cm_2,
+	0.0,			-- input_wire_area_2,
+	0.0,			-- input_wire_resistance_2,
+	0.0,			-- input_wire_weight_2,
+	0.0,			-- input_wire_length_2,
+	0.0,			-- input_wire_frequency_2,
+	'',				-- input_wire_material_2,
+	'-',			-- input_wire_provider_2,
+
+	30.0,			-- output_power,
 	
-	30.0,			-- powerOUT,
+	220.0,			-- output_voltage_1,
+	1.36,			-- output_current_1,
+	2.63,			-- output_current_density_1,
 	
-	220.0,			-- voltageOUT1,
-	1.36,			-- currentOUT1,
-	2.63,			-- currentDensityOUT1,
+	24,				-- output_wire_id_1,
+	'redondo',		-- output_wire_type_1,
+	'20',			-- output_wire_awg_1,
+	432,			-- output_wire_turns_1,
+	0.81,			-- output_wire_diameter_1,
+	0.0,			-- output_wire_turn_per_cm_1,
+	0.52,			-- output_wire_area_1,
+	0.0,			-- output_wire_resistance_1,
+	0.0,			-- output_wire_weight_1,
+	0.0,			-- output_wire_length_1,
+	0.0,			-- output_wire_frequency_1,
+	'cobre',		-- output_wire_material_1,
+	'-',			-- output_wire_provider_1,
 	
-	24,				-- wireIDOUT1,
-	'redondo',		-- wireTypeOUT1,
-	'20',			-- wireAWGOUT1,
-	432,			-- wireTurnsOUT1,
-	0.81,			-- wireDiameterOUT1,
-	0.0,			-- wireTurnPerCmOUT1,
-	0.52,			-- wireAreaOUT1,
-	0.0,			-- wireResistanceOUT1,
-	0.0,			-- wireWeightOUT1,
-	0.0,			-- wireLengthOUT1,
-	0.0,			-- wireFrequencyOUT1,
-	'cobre',		-- wireMaterialOUT1,
+	0.0,			-- output_voltage_2,
+	0.0,			-- output_current_2,
+	0.0,			-- output_current_density_2,
 	
-	0.0,			-- voltageOUT2,
-	0.0,			-- currentOUT2,
-	0.0,			-- currentDensityOUT2,
+	0,				-- output_wire_id_2,
+	'redondo',		-- output_wire_type_2,
+	'',				-- output_wire_awg_2,
+	0,				-- output_wire_turns_2,
+	0.0,			-- output_wire_diameter_2,
+	0.0,			-- output_wire_turn_per_cm_2,
+	0.0,			-- output_wire_area_2,
+	0.0,			-- output_wire_resistance_2,
+	0.0,			-- output_wire_weight_2,
+	0.0,			-- output_wire_length_2,
+	0.0,			-- output_wire_frequency_2,
+	'cobre',		-- output_wire_material_2,
+	'-',			-- output_wire_provider_2,
 	
-	0,				-- wireIDOUT2,
-	'redondo',		-- wireTypeOUT2,
-	'',				-- wireAWGOUT2,
-	0,				-- wireTurnsOUT2,
-	0.0,			-- wireDiameterOUT2,
-	0.0,			-- wireTurnPerCmOUT2,
-	0.0,			-- wireAreaOUT2,
-	0.0,			-- wireResistanceOUT2,
-	0.0,			-- wireWeightOUT2,
-	0.0,			-- wireLengthOUT2,
-	0.0,			-- wireFrequencyOUT2,
-	'cobre',		-- wireMaterialOUT2,
+	7,				-- lamina_id,
+	'padrao',		-- lamina_type,
+	'-',			-- lamina_provider
+	50.0,			-- lamina_width,
+	1880.0,			-- lamina_window_area,
+	1.05,			-- lamina_weight,
+	TRUE,			-- lamina_compensation_state,
+	10.0,			-- lamina_Compensation_value,
 	
-	7,				-- laminaID,
-	'padrao',		-- laminaType,
-	50.0,			-- laminaWidth,
-	1880.0,			-- laminaWindowArea,
-	1.05,			-- laminaWeight,
-	10.0,			-- laminaCompensation,
-	
-	66,				-- bobbinID,
-	'STSR',			-- bobbinType,
-	'DR 03',		-- bobbinCode,
-	'Dragão Plásticos',	-- bobbinProvider,
-	50.0,				--bobbinWidth,
-	41.0,				-- bobbinLength,
-	75.0,				-- bobbinHeight,
-	2050.0				-- bobbinArea,
+	66,				-- bobbin_id,
+	'STSR',			-- bobbin_type,
+	'DR 03',		-- bobbin_code,
+	'Dragão Plásticos',	-- bobbin_provider,
+	50.0,				--bobbin_width,
+	41.0,				-- bobbin_length,
+	75.0,				-- bobbin_height,
 	
 	'Transformador em desenvolvimento' -- observation
-)
+);

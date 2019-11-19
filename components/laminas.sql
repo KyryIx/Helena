@@ -5,23 +5,22 @@
 --            type_lamina: tipo da lamina
 
 CREATE TABLE IF NOT EXISTS laminas (
-	id                      INTEGER      PRIMARY KEY AUTOINCREMENT,
-	width_lamina            DOUBLE,
-	area_lamina             DOUBLE,
-	weight_lamina           DOUBLE,
-	thicknessPercent_lamina DOUBLE,
-	type_lamina             VARCHAR (64) 
+	id                       INTEGER PRIMARY KEY AUTOINCREMENT,
+	width_lamina             DOUBLE,
+	window_area_lamina       DOUBLE,
+	weight_lamina            DOUBLE,
+	thickness_percent_lamina DOUBLE,
+	type_lamina              VARCHAR (64),
+	provider_lamina          VARCHAR(255)
 );
 
-INSERT INTO laminas (width_lamina, area_lamina, weight_lamina, thicknessPercent_lamina, type_lamina) VALUES
-(15,  168, 0.095, 10,    'padrao' ), -- 1
-(20,  300, 0.170, 10,    'padrao' ), -- 2
-(25,  468, 0.273, 10,    'padrao' ), -- 3
-(30,  675, 0.380, 10,    'padrao' ), -- 4
-(35,  900, 0.516, 10,    'padrao' ), -- 5
-(40, 1200, 0.674, 10,    'padrao' ), -- 6
-(50, 1880, 1.053, 10,    'padrao' ), -- 7
-(40, 2400, 1.000, 10, 'compridas' ), -- 1
-(50, 3750, 1.580, 10, 'compridas' ); -- 2
-
-SELECT * FROM laminas WHERE (width_lamina > 42) AND (type_lamina LIKE 'especial') LIMIT 1;
+INSERT INTO laminas (width_lamina, window_area_lamina, weight_lamina, thickness_percent_lamina, type_lamina, provider_lamina) VALUES
+(15,  168, 0.095, 10,    'padrao', 'Acesita' ), -- 1
+(20,  300, 0.170, 10,    'padrao', 'Acesita' ), -- 2
+(25,  468, 0.273, 10,    'padrao', 'Acesita' ), -- 3
+(30,  675, 0.380, 10,    'padrao', 'Acesita' ), -- 4
+(35,  900, 0.516, 10,    'padrao', 'Acesita' ), -- 5
+(40, 1200, 0.674, 10,    'padrao', 'Acesita' ), -- 6
+(50, 1880, 1.053, 10,    'padrao', 'Acesita' ), -- 7
+(40, 2400, 1.000, 10, 'compridas', 'Acesita' ), -- 1
+(50, 3750, 1.580, 10, 'compridas', 'Acesita' ); -- 2
