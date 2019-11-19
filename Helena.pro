@@ -33,8 +33,8 @@ SOURCES += \
         windows/windowbobbin.cpp \
         windows/windowabout.cpp \
         windows/windowhelp.cpp \
-    windows/windownewproject.cpp \
-    windows/windowopenproject.cpp
+        windows/windownewproject.cpp \
+        windows/windowopenproject.cpp
 
 HEADERS += \
         components/bobbin.h \
@@ -52,9 +52,9 @@ HEADERS += \
         windows/windowlamina.h \
         windows/windowabout.h \
         windows/windowhelp.h \
-        samples.h \
-    windows/windowopenproject.h \
-    windows/windownewproject.h
+        windows/windowopenproject.h \
+        windows/windownewproject.h \
+        samples.h
 
 FORMS += \
         windows/mainwindow.ui \
@@ -64,8 +64,8 @@ FORMS += \
         windows/windowlamina.ui \
         windows/windowabout.ui \
         windows/windowhelp.ui \
-    windows/windowopenproject.ui \
-    windows/windownewproject.ui
+        windows/windowopenproject.ui \
+        windows/windownewproject.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
