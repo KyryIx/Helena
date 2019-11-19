@@ -6,6 +6,7 @@
 #include "components/bobbins.h"
 
 #define precision 2
+#define table "transformers"
 
 WindowNewProject::WindowNewProject(QWidget *parent, DataBase* database) :
     QDialog(parent),
@@ -14,6 +15,7 @@ WindowNewProject::WindowNewProject(QWidget *parent, DataBase* database) :
     ui->setupUi(this);
     this->setDatabase( database );
     this->transformer = new Transformer( database );
+    this->transformer->setDatabaseName( table );
 }
 
 WindowNewProject::~WindowNewProject()

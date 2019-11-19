@@ -1,6 +1,8 @@
 #include "windows/windowopenproject.h"
 #include "ui_windowopenproject.h"
 
+#define table "transformers"
+
 WindowOpenProject::WindowOpenProject(QWidget *parent, DataBase* database) :
     QDialog(parent),
     ui(new Ui::WindowOpenProject)
@@ -323,7 +325,10 @@ void WindowOpenProject::on_pushButton_next_clicked(){
 
 void WindowOpenProject::init(){
     this->clearFields();
-    if( this->database->executeSQL( "SELECT * FROM transformer ORDER BY id ASC" ) > -1 ){
+    std::string sql = "SELECT * FROM ";
+    sql += table;
+    sql += " ORDER BY id ASC";
+    if( this->database->executeSQL( sql ) > -1 ){
         this->on_pushButton_next_clicked();
     }
     else{
@@ -342,7 +347,9 @@ void WindowOpenProject::on_pushButton_update_clicked(){
     msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
     if( msgBox.exec() == QMessageBox::Ok ){
         if( this->transformer->getID() == ui->lineEdit_id->text().toUInt() ){
-            std::string sql = "UPDATE transformer SET ";
+            std::string sql = "UPDATE ";
+            sql += table;
+            sql += " SET ";
 
             const double precision = 1e-5;
 
@@ -704,7 +711,10 @@ void WindowOpenProject::on_pushButton_saveAs_clicked(){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
     if( msgBox.exec() == QMessageBox::Ok ){
-        std::string sql = "INSERT INTO transformer (";
+        /*
+        std::string sql = "INSERT INTO ";
+        sql += table;
+        sql += " (";
         sql += "frequency,";
         sql += "magnetic_induction,";
         sql += "current_density,";
@@ -856,7 +866,7 @@ void WindowOpenProject::on_pushButton_saveAs_clicked(){
         sql += ui->lineEdit_voltageOutput_1->text().toStdString() + ",";
         sql += ui->lineEdit_voltageOutput_2->text().toStdString() + ",";
         sql += ui->lineEdit_currentOutput_1->text().toStdString() + ",";
-        sql += ui->lineEdit_currentOutput_1->text().toStdString() + ",";
+        sql += ui->lineEdit_currentOutput_2->text().toStdString() + ",";
         sql += ui->lineEdit_densityCurrentOutput_1->text().toStdString() + ",";
         sql += ui->lineEdit_densityCurrentOutput_2->text().toStdString() + ",";
 
@@ -882,7 +892,7 @@ void WindowOpenProject::on_pushButton_saveAs_clicked(){
         // output wire provider 1 and 2 //
 
         sql += ui->lineEdit_laminaID->text().toStdString() + ",";
-        sql += ui->lineEdit_laminaType->text().toStdString() + "',";
+        sql += "'" + ui->lineEdit_laminaType->text().toStdString() + "',";
         // lamina provider //
         sql += ui->lineEdit_laminaWidth->text().toStdString() + ",";
         sql += ui->lineEdit_laminaWindowArea->text().toStdString() + ",";
@@ -905,12 +915,153 @@ void WindowOpenProject::on_pushButton_saveAs_clicked(){
         FILE* fp3 = fopen( "example.sql", "w" );
         //fputs( transformer->toString().c_str(), fp1 );
         //fputs( transformer->toHTML().c_str(), fp2 );
-        fputs( transformer->toSQL().c_str(), fp3 );
+        fputs( sql.c_str(), fp3 );
         //fclose( fp1 );
         //fclose( fp2 );
         fclose( fp3 );
 
         if( this->database->executeSQL( sql ) > -1 ){
+            this->on_pushButton_next_clicked();
+            msgBox.setInformativeText( "Salvamento feito com sucesso." );
+            msgBox.setIcon( QMessageBox::Information );
+            this->init();
+        }
+        else{
+            msgBox.setInformativeText( "Erro no salvamento." );
+            msgBox.setIcon( QMessageBox::Warning );
+        }
+
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+        */
+        Transformer* transformer = new Transformer(this->database);
+        transformer->setFrequency( ui->lineEdit_frequency->text().toDouble() );
+        transformer->setMagneticInduction( ui->lineEdit_magneticInduction->text().toDouble() );
+        transformer->setCurrentDensity( ui->lineEdit_currentDensity->text().toDouble() );
+        transformer->setAverageCurrentDensity( ui->lineEdit_densityAverageCurrent->text().toDouble() );
+        transformer->setWeightIron( ui->lineEdit_ironWeight->text().toDouble() );
+        transformer->setWeightCopper( ui->lineEdit_weightTurns->text().toDouble() );
+        transformer->setAverageTurnLength( ui->lineEdit_averageTurnLength->text().toDouble() );
+        transformer->setCopperArea( ui->lineEdit_turnsArea->text().toDouble() );
+        transformer->setWindowAreaPerSectionCopper( ui->lineEdit_windowAreaPerSectionTurns->text().toDouble() );
+        transformer->setIronLoss( ui->lineEdit_ironLoss->text().toDouble() );
+        transformer->setCopperLoss( ui->lineEdit_turnsLoss->text().toDouble() );
+        transformer->setTotalLoss( ui->lineEdit_totalLoss->text().toDouble() );
+        transformer->setEfficiency( ui->lineEdit_efficiency->text().toDouble() );
+
+        transformer->setTransformerPatternNumber( ui->lineEdit_patternWindingNumber->text().toUInt() );
+        transformer->setTransformerPatternName( ui->lineEdit_patternWindingName->text().toStdString() );
+        // apply center tap //
+        transformer->setApplyTransformerLossCompensation( ui->checkBox_compensation_power->isChecked() );
+        transformer->setTransformerLossCompensation( ui->lineEdit_compensation_power->text().toDouble() );
+
+        transformer->setInputPower( ui->lineEdit_powerInput->text().toDouble() );
+        transformer->setInputVoltage1( ui->lineEdit_voltageInput_1->text().toDouble() );
+        transformer->setInputVoltage2( ui->lineEdit_voltageInput_2->text().toDouble() );
+        transformer->setInputCurrent1( ui->lineEdit_currentInput_1->text().toDouble() );
+        transformer->setInputCurrent2( ui->lineEdit_currentInput_2->text().toDouble() );
+        transformer->setInputCurrentDensity1( ui->lineEdit_densityCurrentInput_1->text().toDouble() );
+        transformer->setInputCurrentDensity2( ui->lineEdit_densityCurrentInput_2->text().toDouble() );
+
+        Wire* inputWire1 = new Wire();
+        Wire* inputWire2 = new Wire();
+
+        inputWire1->setId( ui->lineEdit_wireIDInput_1->text().toUInt() );
+        inputWire2->setId( ui->lineEdit_wireIDInput_2->text().toUInt() );
+        inputWire1->setType( ui->lineEdit_wireTypeInput_1->text().toStdString() );
+        inputWire2->setType( ui->lineEdit_wireTypeInput_2->text().toStdString() );
+        inputWire1->setAWG( ui->lineEdit_wireAWGInput_1->text().toStdString() );
+        inputWire2->setAWG( ui->lineEdit_wireAWGInput_2->text().toStdString() );
+        inputWire1->setDiameter( ui->lineEdit_wireDiameterInput_1->text().toDouble() );
+        inputWire2->setDiameter( ui->lineEdit_wireDiameterInput_2->text().toDouble() );
+        // input wire turn per cm 1 and 2 //
+        inputWire1->setArea( ui->lineEdit_wireAreaInput_1->text().toDouble() );
+        inputWire2->setArea( ui->lineEdit_wireAreaInput_2->text().toDouble() );
+        // input wire resistance 1 and 2 //
+        // input wire weight 1 and 2 //
+        // input wire length 1 and 2 //
+        // input wire frequency 1 and 2 //
+        inputWire1->setMaterial( ui->lineEdit_wireMaterialInput_1->text().toStdString() );
+        inputWire2->setMaterial( ui->lineEdit_wireMaterialInput_2->text().toStdString() );
+        inputWire1->setProvider( ui->lineEdit_wireProviderInput_1->text().toStdString() );
+        inputWire2->setProvider( ui->lineEdit_wireProviderInput_2->text().toStdString() );
+        transformer->setInputWireTurns1( ui->lineEdit_turnsIN_1->text().toUInt() );
+        transformer->setInputWireTurns1( ui->lineEdit_turnsIN_2->text().toUInt() );
+        transformer->setInputWire1( inputWire1 );
+        transformer->setInputWire2( inputWire2 );
+
+        transformer->setOutputPower( ui->lineEdit_powerOutput->text().toDouble() );
+        transformer->setOutputVoltage1( ui->lineEdit_voltageOutput_1->text().toDouble() );
+        transformer->setOutputVoltage2( ui->lineEdit_voltageOutput_2->text().toDouble() );
+        transformer->setOutputCurrent1( ui->lineEdit_currentOutput_1->text().toDouble() );
+        transformer->setOutputCurrent2( ui->lineEdit_currentOutput_2->text().toDouble() );
+        transformer->setOutputCurrentDensity1( ui->lineEdit_densityCurrentOutput_1->text().toDouble() );
+        transformer->setOutputCurrentDensity2( ui->lineEdit_densityCurrentOutput_2->text().toDouble() );
+
+        Wire* outputWire1 = new Wire();
+        Wire* outputWire2 = new Wire();
+
+        outputWire1->setId( ui->lineEdit_wireIDOutput_1->text().toUInt() );
+        outputWire2->setId( ui->lineEdit_wireIDOutput_2->text().toUInt() );
+        outputWire1->setType( ui->lineEdit_wireTypeOutput_1->text().toStdString() );
+        outputWire2->setType( ui->lineEdit_wireTypeOutput_2->text().toStdString() );
+        outputWire1->setAWG( ui->lineEdit_wireAWGOutput_1->text().toStdString() );
+        outputWire2->setAWG( ui->lineEdit_wireAWGOutput_2->text().toStdString() );
+        outputWire1->setDiameter( ui->lineEdit_wireDiameterOutput_1->text().toDouble() );
+        outputWire2->setDiameter( ui->lineEdit_wireDiameterOutput_2->text().toDouble() );
+        // output wire turn per cm 1 and 2 //
+        outputWire1->setArea( ui->lineEdit_wireAreaOutput_1->text().toDouble() );
+        outputWire2->setArea( ui->lineEdit_wireAreaOutput_2->text().toDouble() );
+        // output wire resistance 1 and 2 //
+        // output wire weight 1 and 2 //
+        // output wire length 1 and 2 //
+        // output wire frequency 1 and 2 //
+        outputWire1->setMaterial( ui->lineEdit_wireMaterialOutput_1->text().toStdString() );
+        outputWire2->setMaterial( ui->lineEdit_wireMaterialOutput_2->text().toStdString() );
+        outputWire1->setProvider( ui->lineEdit_wireProviderOutput_1->text().toStdString() );
+        outputWire2->setProvider( ui->lineEdit_wireProviderOutput_2->text().toStdString() );
+        transformer->setOutputWireTurns1( ui->lineEdit_turnsOUT_1->text().toUInt() );
+        transformer->setOutputWireTurns2( ui->lineEdit_turnsOUT_2->text().toUInt() );
+
+        Lamina* lamina = new Lamina();
+
+        lamina->setId( ui->lineEdit_laminaID->text().toUInt() );
+        lamina->setType( ui->lineEdit_laminaType->text().toStdString() );
+        lamina->setProvider(ui->lineEdit_laminaProvider->text().toStdString() );
+        lamina->setWidth( ui->lineEdit_laminaWidth->text().toDouble() );
+        lamina->setWindowArea( ui->lineEdit_laminaWindowArea->text().toDouble() );
+        lamina->setWeight( ui->lineEdit_laminaWeight->text().toDouble() );
+        lamina->setThicknessPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
+        switch( ui->comboBox_useMode->currentIndex() ) {
+            case MethodLaminaCompensation::NotApplied:
+                transformer->setMethodLaminaLossCompensation( MethodLaminaCompensation::NotApplied );
+                break;
+
+            case MethodLaminaCompensation::FieldCompensation:
+                transformer->setMethodLaminaLossCompensation( MethodLaminaCompensation::FieldCompensation );
+                break;
+
+            case MethodLaminaCompensation::LaminaCompensation:
+                transformer->setMethodLaminaLossCompensation( MethodLaminaCompensation::LaminaCompensation );
+                break;
+        }
+        transformer->setLaminaLossCompensation( ui->lineEdit_laminaCompensation->text().toDouble() );
+        transformer->setLamina( lamina );
+
+        Bobbin* bobbin = new Bobbin();
+
+        bobbin->setId( ui->lineEdit_bobbinID->text().toUInt() );
+        bobbin->setType( ui->lineEdit_bobbinType->text().toStdString() );
+        bobbin->setCode( ui->lineEdit_bobbinCode->text().toStdString() );
+        bobbin->setProvider( ui->lineEdit_bobbinProvider->text().toStdString() );
+        bobbin->setWidth( ui->lineEdit_bobbinWidth->text().toDouble() );
+        bobbin->setLength( ui->lineEdit_bobbinLength->text().toDouble() );
+        bobbin->setHeight( ui->lineEdit_bobbinHeight->text().toDouble() );
+        transformer->setBobbin( bobbin );
+
+        transformer->setObservation( ui->textEdit_observation->toPlainText().toStdString() );
+
+        if( this->database->executeSQL( transformer->toSQL() ) > -1 ){
             this->on_pushButton_next_clicked();
             msgBox.setInformativeText( "Salvamento feito com sucesso." );
             msgBox.setIcon( QMessageBox::Information );
@@ -938,7 +1089,9 @@ void WindowOpenProject::on_pushButton_delete_clicked(){
     if( msgBox.exec() == QMessageBox::Ok ){
         int id = ui->lineEdit_id->text().toInt();
         if( id > 0 ){
-            std::string sql = "DELETE FROM transformer WHERE id=" + std::to_string(id);
+            std::string sql = "DELETE FROM ";
+            sql += table;
+            sql += " WHERE id=" + std::to_string(id);
             if( this->database->executeSQL( sql ) > -1 ){
                 this->on_pushButton_next_clicked();
                 msgBox.setInformativeText( "Exclusão feita com sucesso." );
