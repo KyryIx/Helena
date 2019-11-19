@@ -8,15 +8,17 @@ class Lamina{
 	private:
 		unsigned int id;
 		std::string type;
+        std::string provider;
         double width;
-		double windowArea;
+        double windowArea;
 		double weight;
         double thicknessPercent;
 	
 	public:
 		Lamina(){
             this->id               = 0;
-            this->type             = "padrao";
+            this->type             = "";
+            this->provider         = "";
             this->width            = 0.0;
             this->windowArea       = 0.0;
             this->weight           = 0.0;
@@ -31,13 +33,21 @@ class Lamina{
             return this->id;
 		}
 
-        void setType( std::string type="padrao" ){
+        void setType( std::string type ){
             this->type = type;
 		}
 
         std::string getType() const{
             return this->type;
 		}
+
+        void setProvider( std::string provider ){
+            this->provider = provider;
+        }
+
+        std::string getProvider() const{
+            return this->provider;
+        }
 
         void setWidth( double width ){
             this->width = width;
@@ -73,12 +83,13 @@ class Lamina{
 
         std::string toString() const{
 			std::string txt = "";
-            txt = txt + "Lamina ID:                " + std::to_string( this->getId() )         + "\n";
-            txt = txt + "Lamina Type:              " + this->getType()                         + "\n";
-            txt = txt + "Lamina Width :            " + std::to_string( this->getWidth() )      + " mm\n";
-            txt = txt + "Lamina Window Area:       " + std::to_string( this->getWindowArea() ) + " mm*mm\n";
-            txt = txt + "Lamina Weight:            " + std::to_string( this->getWeight() )     + " kg/cm\n";
-            txt = txt + "Lamina Thickness Percent: " + std::to_string( this->getThicknessPercent() )     + " %";
+            txt = txt + "Lamina ID:                " + std::to_string( this->getId() )               + "\n";
+            txt = txt + "Lamina Type:              " + this->getType()                               + "\n";
+            txt = txt + "Lamina Width :            " + std::to_string( this->getWidth() )            + " mm\n";
+            txt = txt + "Lamina Window Area:       " + std::to_string( this->getWindowArea() )       + " mm*mm\n";
+            txt = txt + "Lamina Weight:            " + std::to_string( this->getWeight() )           + " kg/cm\n";
+            txt = txt + "Lamina Thickness Percent: " + std::to_string( this->getThicknessPercent() ) + " %\n";
+            txt = txt + "Lamina Provider:          " + this->getProvider();
 
 			return txt;
 		}
@@ -92,6 +103,7 @@ class Lamina{
             txt = txt + "\t<tr><td align=\"right\">Lamina Window Area:</td><td><b>"       + std::to_string( this->getWindowArea() )       + " mm<sup>2</sup></b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Lamina Weight:</td><td><b>"            + std::to_string( this->getWeight() )           + " kg/cm</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Lamina Thickness Percent:</td><td><b>" + std::to_string( this->getThicknessPercent() ) + " %</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Lamina Provider:</td><td><b>"          + this->getProvider()                           + "</b></td></tr>\n";
             txt = txt + "</table>";
 
             return txt;
@@ -99,14 +111,11 @@ class Lamina{
 
         std::string toSQL() const{
             std::string txt = "";
-            txt = txt + "INSERT INTO laminas (";
-            txt = txt + "width_lamina, area_lamina, weight_lamina, thicknessPercent_lamina, type_lamina";
-            txt = txt + ") VALUES( ";
-            txt = txt + std::to_string( this->getWidth() )            + ", ";
-            txt = txt + std::to_string( this->getWindowArea() )       + ", ";
-            txt = txt + std::to_string( this->getWeight() )           + ", ";
-            txt = txt + std::to_string( this->getThicknessPercent() ) + ", ";
-            txt = txt + "'" + this->getType()                         + "' )";
+            txt = txt + "INSERT INTO laminas (width_lamina, area_lamina, weight_lamina, thicknessPercent_lamina, type_lamina, provider_lamina) ";
+            txt = txt + "VALUES( ";
+            txt = txt + std::to_string( this->getWidth() )  + ", "   + std::to_string( this->getWindowArea() ) + ", ";
+            txt = txt + std::to_string( this->getWeight() ) + ", "   + std::to_string( this->getThicknessPercent() ) + ", ";
+            txt = txt + "'" + this->getType()               + "', '" + this->getProvider() + "' )";
 
             return txt;
         }

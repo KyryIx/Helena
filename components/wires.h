@@ -198,7 +198,7 @@ class Wires{
 			return currentMax;
 		}
 
-        unsigned int findIndexByDiameter( double diameter, std::string type="redondo" ) const{
+        unsigned int findIndexByDiameter( double diameter, std::string type ) const{
 			unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (diameter_wire>=6) ORDER BY diameter_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "diameter_wire", diameter, 'g', "ASC" ) ) > -1 ){
@@ -209,7 +209,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByTurnsPerCm( double turnPerCm, std::string type="redondo" ) const{
+        unsigned int findIndexByTurnsPerCm( double turnPerCm, std::string type ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (turnsPerCm_wire<=60) ORDER BY turnsPerCm_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "turnsPerCm_wire", turnPerCm, 'l', "DESC" ) ) > -1 ){
@@ -220,7 +220,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByArea( double area, std::string type="redondo" ) const{
+        unsigned int findIndexByArea( double area, std::string type ) const{
 			unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (area_wire>=0.92) ORDER BY area_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "area_wire", area, 'g', "ASC" ) ) > -1 ){
@@ -231,7 +231,7 @@ class Wires{
 			return index;
         }
 
-        unsigned int findIndexByResistance( double resistance, std::string type="redondo" ) const{
+        unsigned int findIndexByResistance( double resistance, std::string type ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (resistance_wire<=60) ORDER BY resistance_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "resistance_wire", resistance, 'l', "DESC" ) ) > -1 ){
@@ -242,7 +242,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByWeight( double weight, std::string type="redondo" ) const{
+        unsigned int findIndexByWeight( double weight, std::string type ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (weight_wire<=60) ORDER BY weight_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "weight_wire", weight, 'l', "DESC" ) ) > -1 ){
@@ -253,7 +253,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByLength( double length, std::string type="redondo" ) const{
+        unsigned int findIndexByLength( double length, std::string type ) const{
 			unsigned int index = 0;
 			// SELECT id FROM wires WHERE (type_wire='redondo') AND (length_wire<=60) ORDER BY length_wire DESC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "length_wire", length, 'l', "DESC" ) ) > -1 ){
@@ -264,7 +264,7 @@ class Wires{
 			return index;
 		}
 
-        unsigned int findIndexByFrequency( double frequency, std::string type="redondo" ) const{
+        unsigned int findIndexByFrequency( double frequency, std::string type ) const{
             unsigned int index = 0;
             // SELECT id FROM wires WHERE (type_wire='redondo') AND (frequency_wire>=60) ORDER BY frequency_wire ASC LIMIT 1 //
             if( this->database->executeSQL( this->queryByTypeAndField( type, "frequency_wire", frequency, 'g', "ASC" ) ) > -1 ){
@@ -320,6 +320,8 @@ class Wires{
                     wire->setId( index );
                     wire->setType( this->database->returnValue( "type_wire" )  );
                     wire->setAWG( this->database->returnValue( "awg_wire" ) );
+                    wire->setMaterial( this->database->returnValue( "material_wire" ) );
+                    wire->setProvider( this->database->returnValue( "provider_wire" ) );
                     wire->setDiameter( atof( this->database->returnValue( "diameter_wire" ).c_str() ) );
                     wire->setTurnsPerCm( atof( this->database->returnValue( "turnsPerCm_wire" ).c_str() ) );
                     wire->setArea( atof( this->database->returnValue( "area_wire" ).c_str() ) );
