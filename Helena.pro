@@ -27,14 +27,14 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         windows/mainwindow.cpp \
-        windows/windownew.cpp \
         windows/windowpreference.cpp \
         windows/windowwire.cpp \
         windows/windowlamina.cpp \
         windows/windowbobbin.cpp \
         windows/windowabout.cpp \
         windows/windowhelp.cpp \
-        windows/windowopen.cpp
+    windows/windownewproject.cpp \
+    windows/windowopenproject.cpp
 
 HEADERS += \
         components/bobbin.h \
@@ -46,26 +46,26 @@ HEADERS += \
         components/wires.h \
         components/transformer.h \
         windows/mainwindow.h \
-        windows/windownew.h \
         windows/windowpreference.h \
         windows/windowwire.h \
         windows/windowbobbin.h \
         windows/windowlamina.h \
         windows/windowabout.h \
         windows/windowhelp.h \
-        windows/windowopen.h \
-        samples.h
+        samples.h \
+    windows/windowopenproject.h \
+    windows/windownewproject.h
 
 FORMS += \
         windows/mainwindow.ui \
-        windows/windownew.ui \
         windows/windowpreference.ui \
         windows/windowwire.ui \
         windows/windowbobbin.ui \
         windows/windowlamina.ui \
         windows/windowabout.ui \
         windows/windowhelp.ui \
-        windows/windowopen.ui
+    windows/windowopenproject.ui \
+    windows/windownewproject.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
