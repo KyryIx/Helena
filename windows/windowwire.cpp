@@ -24,6 +24,8 @@ void WindowWire::setDatabase( DataBase *database ){
 void WindowWire::clearFields(){
     ui->lineEdit_id->clear();
     ui->lineEdit_type->clear();
+    ui->lineEdit_material->clear();
+    ui->lineEdit_provider->clear();
     ui->lineEdit_awg->clear();
     ui->lineEdit_diameter->clear();
     ui->lineEdit_turnsPerCm->clear();
@@ -63,6 +65,8 @@ void WindowWire::updateFields(){
     this->clearFields();
     ui->lineEdit_id->setText( this->database->returnValue( "id" ).c_str() );
     ui->lineEdit_type->setText( this->database->returnValue( "type_wire" ).c_str() );
+    ui->lineEdit_material->setText( this->database->returnValue( "material_wire" ).c_str() );
+    ui->lineEdit_provider->setText( this->database->returnValue( "provider_wire" ).c_str() );
     ui->lineEdit_awg->setText( this->database->returnValue( "awg_wire" ).c_str() );
     ui->lineEdit_diameter->setText( this->database->returnValue( "diameter_wire" ).c_str() );
     ui->lineEdit_turnsPerCm->setText( this->database->returnValue( "turnsPerCm_wire" ).c_str() );
@@ -71,7 +75,6 @@ void WindowWire::updateFields(){
     ui->lineEdit_weight->setText( this->database->returnValue( "weight_wire" ).c_str() );
     ui->lineEdit_length->setText( this->database->returnValue( "length_wire" ).c_str() );
     ui->lineEdit_frequency->setText( this->database->returnValue( "frequency_wire" ).c_str() );
-    ui->lineEdit_material->setText( this->database->returnValue( "material_wire" ).c_str() );
     std::vector< std::vector<double> > currentMax = this->string2Vector( this->database->returnValue( "currentMaxPerDensity_wire" ), ',' );
     for( unsigned int i=0; i<currentMax.size(); i++ ){
         ui->tableWidget_currentMax->insertRow( static_cast<int>(i) );

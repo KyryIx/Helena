@@ -1,8 +1,8 @@
 #include "windows/mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "windows/windownew.h"
-#include "windows/windowopen.h"
+#include "windows/windownewproject.h"
+#include "windows/windowopenproject.h"
 
 #include "windows/windowpreference.h"
 
@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_action_newProject_triggered(){
-    WindowNew* dialog = new WindowNew(this, this->database);
+    WindowNewProject* dialog = new WindowNewProject(this, this->database);
     dialog->show();
     dialog->raise();
     dialog->exec();
@@ -44,7 +44,7 @@ void MainWindow::on_action_newProject_triggered(){
 }
 
 void MainWindow::on_action_openProject_triggered(){
-    WindowOpen* dialog = new WindowOpen(this, this->database);
+    WindowOpenProject* dialog = new WindowOpenProject(this, this->database);
     dialog->show();
     dialog->raise();
     dialog->exec();

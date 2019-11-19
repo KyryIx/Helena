@@ -1,30 +1,33 @@
-#ifndef WINDOWOPEN_H
-#define WINDOWOPEN_H
+#ifndef WINDOWOPENPROJECT_H
+#define WINDOWOPENPROJECT_H
 
 #include <QDialog>
 #include <QMessageBox>
 
 #include "components/database.h"
+#include "components/transformer.h"
 
 namespace Ui {
-class WindowOpen;
+class WindowOpenProject;
 }
 
-class WindowOpen : public QDialog
+class WindowOpenProject : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit WindowOpen(QWidget *parent = nullptr,  DataBase* database=nullptr);
-    ~WindowOpen();
+    explicit WindowOpenProject(QWidget *parent = nullptr,  DataBase* database=nullptr);
+    ~WindowOpenProject();
     void setDatabase( DataBase *database );
+    void setTransformer();
+    void updateFieldsWithResultQuery();
+
     void clearFields();
-    void updateFields();
-    void valuesTemp();
+
+
     void init();
 
 public slots:
-    void on_pushButton_search_clicked();
     void on_pushButton_previous_clicked();
     void on_pushButton_next_clicked();
     void on_pushButton_update_clicked();
@@ -34,9 +37,12 @@ public slots:
     void on_pushButton_close_clicked();
 
 private:
-    Ui::WindowOpen *ui;
+    Ui::WindowOpenProject *ui;
     DataBase* database;
+    Transformer* transformer;
 
+    /*
+    unsigned int id;
     unsigned int patternWindingNumber;
     std::string patternWindingName;
     double frequency;
@@ -116,6 +122,7 @@ private:
     double laminaWeight;
     bool laminaCompensation_state;
     double laminaCompensation_value;
+    */
 };
 
-#endif // WINDOWOPEN_H
+#endif // WINDOWOPENPROJECT_H

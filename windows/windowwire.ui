@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>531</width>
-    <height>401</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>531</width>
-    <height>401</height>
+    <height>390</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>531</width>
-    <height>401</height>
+    <height>390</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -32,9 +32,9 @@
   <widget class="QLabel" name="label_id">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>10</y>
-     <width>161</width>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -48,8 +48,8 @@
   <widget class="QLineEdit" name="lineEdit_length">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>130</y>
+     <x>170</x>
+     <y>160</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -58,7 +58,7 @@
   <widget class="QLineEdit" name="lineEdit_id">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>170</x>
      <y>10</y>
      <width>111</width>
      <height>20</height>
@@ -71,9 +71,9 @@
   <widget class="QLineEdit" name="lineEdit_type">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>380</x>
      <y>10</y>
-     <width>111</width>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
@@ -81,9 +81,9 @@
   <widget class="QLineEdit" name="lineEdit_area">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>70</y>
-     <width>111</width>
+     <x>380</x>
+     <y>100</y>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
@@ -91,8 +91,8 @@
   <widget class="QLabel" name="label_weight">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>100</y>
+     <x>290</x>
+     <y>130</y>
      <width>85</width>
      <height>16</height>
     </rect>
@@ -107,9 +107,9 @@
   <widget class="QLineEdit" name="lineEdit_weight">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>100</y>
-     <width>111</width>
+     <x>380</x>
+     <y>130</y>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
@@ -117,9 +117,9 @@
   <widget class="QLabel" name="label_length">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>161</width>
+     <x>0</x>
+     <y>160</y>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -133,9 +133,9 @@
   <widget class="QLabel" name="label_turnPerCm">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>161</width>
+     <x>0</x>
+     <y>100</y>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -152,9 +152,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>370</y>
-     <width>82</width>
+     <x>260</x>
+     <y>360</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -166,8 +166,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>370</y>
-     <width>82</width>
+     <y>360</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -178,9 +178,9 @@
   <widget class="QLineEdit" name="lineEdit_frequency">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>130</y>
-     <width>111</width>
+     <x>380</x>
+     <y>160</y>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
@@ -188,8 +188,8 @@
   <widget class="QLabel" name="label_area">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>70</y>
+     <x>290</x>
+     <y>100</y>
      <width>85</width>
      <height>16</height>
     </rect>
@@ -204,7 +204,7 @@
   <widget class="QLabel" name="label_diameter">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>290</x>
      <y>40</y>
      <width>85</width>
      <height>16</height>
@@ -220,9 +220,9 @@
   <widget class="QLabel" name="label_awg">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>40</y>
-     <width>161</width>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -236,7 +236,7 @@
   <widget class="QLineEdit" name="lineEdit_awg">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>170</x>
      <y>40</y>
      <width>111</width>
      <height>20</height>
@@ -249,9 +249,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>370</y>
-     <width>82</width>
+     <x>180</x>
+     <y>360</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -262,7 +262,7 @@
   <widget class="QLabel" name="label_type">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>290</x>
      <y>10</y>
      <width>85</width>
      <height>16</height>
@@ -278,9 +278,9 @@
   <widget class="QPushButton" name="pushButton_after">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>370</y>
-     <width>82</width>
+     <x>90</x>
+     <y>360</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -291,9 +291,9 @@
   <widget class="QPushButton" name="pushButton_exit">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>370</y>
-     <width>82</width>
+     <x>450</x>
+     <y>360</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
@@ -304,8 +304,8 @@
   <widget class="QLineEdit" name="lineEdit_resistance">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>100</y>
+     <x>170</x>
+     <y>130</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -314,9 +314,9 @@
   <widget class="QLabel" name="label_resistance">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>100</y>
-     <width>161</width>
+     <x>0</x>
+     <y>130</y>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -330,9 +330,9 @@
   <widget class="QLineEdit" name="lineEdit_diameter">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>380</x>
      <y>40</y>
-     <width>111</width>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>
@@ -353,8 +353,8 @@
   <widget class="QLabel" name="label_frequency">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>130</y>
+     <x>290</x>
+     <y>160</y>
      <width>85</width>
      <height>16</height>
     </rect>
@@ -369,8 +369,8 @@
   <widget class="QLineEdit" name="lineEdit_turnsPerCm">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>70</y>
+     <x>170</x>
+     <y>100</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -379,9 +379,9 @@
   <widget class="QLabel" name="label_material">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>160</y>
-     <width>161</width>
+     <x>0</x>
+     <y>70</y>
+     <width>165</width>
      <height>16</height>
     </rect>
    </property>
@@ -395,9 +395,9 @@
   <widget class="QLineEdit" name="lineEdit_material">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>160</y>
-     <width>341</width>
+     <x>170</x>
+     <y>70</y>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
@@ -421,6 +421,48 @@
      <string>corrente máxima (A)</string>
     </property>
    </column>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_provider">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>70</y>
+     <width>140</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_provider">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>70</y>
+     <width>85</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Fornecedor:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_delete">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>360</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Excluir</string>
+   </property>
   </widget>
  </widget>
  <tabstops>
