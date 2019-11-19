@@ -17,8 +17,7 @@ public:
     ~WindowPreference();
 
 public slots:
-    void on_pushButton_save_clicked();
-    void on_pushButton_cancel_clicked();
+    void on_pushButton_ok_clicked();
 
 private:
     Ui::WindowPreference *ui;

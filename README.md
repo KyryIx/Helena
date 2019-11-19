@@ -47,3 +47,5 @@ The project need the values:
 * #### Bobbins Window
 
   [![Bobbins Window](./screenshot/bobbins_small.png "Bobbins Window")](./screenshot/bobbins.png "Bobbins Window")
+[comment]: <> (https://www.markdownguide.org/basic-syntax/)
+[comment]: <> (https://github.com/mattcone/markdown-guide)

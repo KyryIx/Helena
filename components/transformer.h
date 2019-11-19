@@ -26,6 +26,7 @@ class Transformer{
 
 	private:
         DataBase* database;
+        std::string databaseName;
         Wires* wires;
         Laminas* laminas;
         Bobbins* bobbins;
@@ -94,6 +95,7 @@ class Transformer{
 	public:
         Transformer( DataBase* database ){
             this->database                    = database;
+            this->databaseName                = "transformers";
             this->wires                       = new Wires( database );
             this->laminas                     = new Laminas( database );
             this->bobbins                     = new Bobbins( database );
@@ -156,6 +158,14 @@ class Transformer{
 
         void setDatabase( DataBase* database ){
             this->database = database;
+        }
+
+        void setDatabaseName( std::string name ){
+            this->databaseName = name;
+        }
+
+        std::string getDatabaseName() const{
+            return this->databaseName;
         }
 
         void setID( unsigned int id ){
@@ -1000,6 +1010,174 @@ class Transformer{
             }
         }
 
+        int validate( double precision ){
+            // 1 - relacao de entrada //
+            try{
+                // to do center tap //
+
+                if( fabs(this->getInputPower() - (this->getInputVoltage1() * this->getInputCurrent1())) > precision ){
+                    return 111;
+                }
+
+                if( fabs(this->getInputPower() - (this->getInputVoltage2() * this->getInputCurrent2())) > precision ){
+                    return 111;
+                }
+
+                if( fabs(this->getInputWire1()->getArea()*this->getCurrentDensity() - this->getInputCurrent1()) > precision ){
+                    return 111;
+                }
+
+                if( fabs(this->getInputWire2()->getArea()*this->getCurrentDensity() - this->getInputCurrent2()) > precision ){
+                    return 111;
+                }
+
+                if( fabs(this->getInputPower() - (this->getOutputVoltage1() * this->getOutputCurrent1())) > precision ){
+                    return 222;
+                }
+
+                if( fabs(this->getOutputPower() - (this->getOutputVoltage2() * this->getOutputCurrent2())) > precision ){
+                    return 222;
+                }
+
+                if( fabs(this->getOutputWire1()->getArea()*this->getCurrentDensity() - this->getOutputCurrent1()) > precision ){
+                    return 222;
+                }
+
+                if( fabs(this->getOutputWire2()->getArea()*this->getCurrentDensity() - this->getOutputCurrent2()) > precision ){
+                    return 222;
+                }
+
+
+                /*
+                 continuar correcao
+
+                 https://help.github.com/en/github/administering-a-repository/creating-releases
+
+                double SM             = this->getMagneticSectionAuto();
+                this->setMagneticSection( SM );
+
+                double SG             = this->getGeometricSectionAuto();
+                this->setGeometricSection( SG );
+
+                double widthLaminaMin = sqrt( SG ) * 10.0; // convert to mm //
+
+                int i                 = 0;
+                int limit             = 1000;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////// rever como melhorar o processo de repetição ///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                while( true ){
+                    i = i + 1;
+
+                    if( i > limit ){
+                        return ResultCalculus::UnderflowTry;
+                    }
+
+                    index = this->laminas->findIndexByWidth( widthLaminaMin, this->getLamina()->getType() );
+                    if( index == 0 ){
+                        return ResultCalculus::NotFoundLamina;
+                    }
+
+                    this->setLamina( this->laminas->getLamina( index ) );
+
+                    widthLaminaMin = this->getLamina()->getWidth();
+
+                    index = this->bobbins->findIndexByWidthAndArea( widthLaminaMin, (SG * 100.0), this->getBobbin()->getType() );
+                    if( index == 0 ){
+                        return ResultCalculus::NotFoundBobbin;
+                    }
+
+                    this->setBobbin( this->bobbins->getBobbin( index ) );
+
+                    SG = (widthLaminaMin * this->getBobbin()->getLength()) / 100.0; // convert to cm^2 //
+
+                    SM = SG;
+
+                    switch( this->getMethodLaminaLossCompensation() ) {
+                        case MethodLaminaCompensation::NotApplied:
+                            SM = SG;
+                            break;
+                        case MethodLaminaCompensation::FieldCompensation:
+                            SM = SG / (1 + this->getLaminaLossCompensation()/100.0);
+                            break;
+                        case MethodLaminaCompensation::LaminaCompensation:
+                            SM = SG / (1 + this->getLamina()->getThicknessPercent()/100.0);
+                            break;
+                    }
+
+                    this->setGeometricSection( SG );
+                    this->setMagneticSection( SM );
+
+                    // turns = ceil( (this->getVoltageX() * 1e8) / (SM * 4.44 * this->getMagneticInduction() * this->getFrequency() ) ) //
+                    this->setInputWireTurns1( this->getInputWireTurns1Auto() );
+                    this->setOutputWireTurns1( this->getOutputWireTurns1Auto() );
+
+                    if( this->getTransformerPatternNumber() > 1 ){
+                        unsigned int N = this->getInputWireTurns2Auto() - this->getInputWireTurns1();
+                        this->setInputWireTurns2( N );
+                    }
+
+                    if( this->getTransformerPatternNumber() % 2 == 1 ){
+                        this->setOutputWireTurns2( this->getOutputWireTurns2Auto() - this->getOutputWireTurns1() );
+                    }
+
+                    this->setCopperArea( this->getCopperAreaAuto() );
+
+                    if( (this->getLamina()->getWindowArea() / this->getCopperArea()) < this->getWindowAreaPerSectionCopper() ){
+                        widthLaminaMin = widthLaminaMin + 0.1;
+                        continue;
+                    }
+
+                    this->setInputCurrentDensity1( this->getInputCurrentDensity1Auto() );
+                    this->setOutputCurrentDensity1( this->getOutputCurrentDensity1Auto() );
+                    if( this->getTransformerPatternNumber() > 1 ){
+                        this->setInputCurrentDensity2( this->getInputCurrentDensity2Auto() );
+                    }
+                    if( this->getTransformerPatternNumber() % 2 == 1 ){
+                        this->setOutputCurrentDensity2( this->getOutputCurrentDensity2Auto() );
+                    }
+
+                    this->setAverageCurrentDensity( this->getAverageCurrentDensityAuto() );
+                    this->setAverageTurnLength( this->getTurnAverageLengthAuto() );
+                    this->setWeightCopper( this->getWeightCopperAuto() );
+                    this->setCopperLoss( this->getCopperLossAuto() );
+                    this->setWeightIron( this->getWeightIronAuto() );
+                    this->setIronLoss( this->getIronLossAuto() );
+                    this->setTotalLoss( this->getTotalLossAuto() );
+                    this->setEfficiency( this->getEfficiencyAuto() );
+
+                    if( (this->getTransformerPatternNumber() % 2 == 0) && this->getApplyCenterTap() ){
+                        this->setOutputVoltage1( this->getOutputVoltage1() / 2.0 );
+                        //this->setCurrentOUT1( this->getCurrentOUT1Auto() );
+                        //this->setCurrentDensityOUT1( this->getCurrentDensityOUT1Auto() );
+                        //this->setWireOUT1( this->wires->getWire( index ) );
+                        this->setOutputWireTurns1( this->getOutputWireTurns1() / 2 );
+
+                        this->setOutputVoltage2( this->getOutputVoltage1() );
+                        this->setOutputCurrent2( this->getOutputCurrent1() );
+                        this->setOutputCurrentDensity2( this->getOutputCurrentDensity1() );
+                        this->setOutputWire2( this->getOutputWire1() );
+                        //this->setWireTurnsOUT2( this->getWireTurnsOUT1() );
+                    }
+
+                    if( this->getMethodLaminaLossCompensation() == MethodLaminaCompensation::LaminaCompensation ) {
+                        this->setLaminaLossCompensation( this->getLamina()->getThicknessPercent() );
+                    }
+
+                    return ResultCalculus::CorrectResult;
+
+                    return 0;
+                }
+                */
+            }
+            catch( ... ){
+                return ResultCalculus::ErrorAritmetic;
+            }
+
+            return 0;
+        }
+
         std::string toString() const{
             std::string txt = "";
             txt = txt + "--------------------";
@@ -1204,7 +1382,8 @@ class Transformer{
         }
 
         std::string toSQL() const{
-            std::string sql = "INSERT INTO transformer";
+            std::string sql = "INSERT INTO ";
+            sql += this->getDatabaseName();
             sql += "(frequency, magnetic_induction, current_density, average_current_density, weight_iron, weight_copper, ";
             sql += "average_turn_length, copper_area, window_area_per_section_copper, iron_loss, copper_loss, total_loss, efficiency, ";
             sql += "transformer_pattern_number, transformer_pattern_name, apply_center_tap, apply_transformer_loss_compensation, transformer_loss_compensation, ";
