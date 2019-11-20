@@ -21,26 +21,6 @@ void WindowWire::setDatabase( DataBase *database ){
     this->database = database;
 }
 
-void WindowWire::clearFields(){
-    ui->lineEdit_id->clear();
-    ui->lineEdit_type->clear();
-    ui->lineEdit_material->clear();
-    ui->lineEdit_provider->clear();
-    ui->lineEdit_awg->clear();
-    ui->lineEdit_diameter->clear();
-    ui->lineEdit_turnsPerCm->clear();
-    ui->lineEdit_area->clear();
-    ui->lineEdit_resistance->clear();
-    ui->lineEdit_weight->clear();
-    ui->lineEdit_length->clear();
-    ui->lineEdit_frequency->clear();
-    ui->tableWidget_currentMax->setColumnWidth( 0, int(ui->tableWidget_currentMax->width() * 0.45) );
-    ui->tableWidget_currentMax->setColumnWidth( 1, int(ui->tableWidget_currentMax->width() * 0.45) );
-    while( ui->tableWidget_currentMax->rowCount() > 0 ){
-        ui->tableWidget_currentMax->removeRow(0);
-    }
-}
-
 std::vector< std::vector<double> > WindowWire::string2Vector( std::string text, char separator ){
     std::vector< std::vector<double> > values;
     std::size_t found1, found2;
@@ -59,6 +39,26 @@ std::vector< std::vector<double> > WindowWire::string2Vector( std::string text, 
     value.push_back( atof( text.substr( found1 ).c_str() ) );
     values.push_back( value );
     return values;
+}
+
+void WindowWire::clearFields(){
+    ui->lineEdit_id->clear();
+    ui->lineEdit_type->clear();
+    ui->lineEdit_material->clear();
+    ui->lineEdit_provider->clear();
+    ui->lineEdit_awg->clear();
+    ui->lineEdit_diameter->clear();
+    ui->lineEdit_turnsPerCm->clear();
+    ui->lineEdit_area->clear();
+    ui->lineEdit_resistance->clear();
+    ui->lineEdit_weight->clear();
+    ui->lineEdit_length->clear();
+    ui->lineEdit_frequency->clear();
+    ui->tableWidget_currentMax->setColumnWidth( 0, int(ui->tableWidget_currentMax->width() * 0.45) );
+    ui->tableWidget_currentMax->setColumnWidth( 1, int(ui->tableWidget_currentMax->width() * 0.45) );
+    while( ui->tableWidget_currentMax->rowCount() > 0 ){
+        ui->tableWidget_currentMax->removeRow(0);
+    }
 }
 
 void WindowWire::updateFields(){
@@ -85,6 +85,33 @@ void WindowWire::updateFields(){
     }
 }
 
+void WindowWire::updateWire(){
+    wire->setId( ui->lineEdit_id->text().toUInt() );
+    wire->setType( ui->lineEdit_type->text().toStdString() );
+    wire->setAWG( ui->lineEdit_awg->text().toStdString() );
+    wire->setDiameter( ui->lineEdit_diameter->text().toDouble() );
+    wire->setTurnsPerCm( ui->lineEdit_turnsPerCm->text().toDouble() );
+    wire->setArea( ui->lineEdit_area->text().toDouble() );
+    wire->setResistance( ui->lineEdit_resistance->text().toDouble() );
+    wire->setWeight( ui->lineEdit_weight->text().toDouble() );
+    wire->setLength( ui->lineEdit_length->text().toDouble() );
+    wire->setFrequency( ui->lineEdit_frequency->text().toDouble() );
+    wire->setMaterial( ui->lineEdit_material->text().toStdString() );
+    wire->setProvider( ui->lineEdit_provider->text().toStdString() );
+    int x = ui->tableWidget_currentMax->columnCount();
+    int y = ui->tableWidget_currentMax->rowCount();
+    std::vector< std::vector< double > > rows;
+    for( int j=0; j<y; j++ ){
+        std::vector< double > colums;
+        for( int i=0; i<x; i++ ){
+            colums.push_back( ui->tableWidget_currentMax->item( j, i )->text().toDouble() );
+        }
+        rows.push_back( colums );
+    }
+    wire->setCurrentMax( rows );
+}
+
+
 void WindowWire::init(){
     this->clearFields();
     if( this->database->executeSQL( "SELECT * FROM wires ORDER BY id ASC" ) > -1 ){
@@ -102,12 +129,40 @@ void WindowWire::init(){
 void WindowWire::on_pushButton_before_clicked(){
     if( this->database->previousRegister() ){
         this->updateFields();
+        this->updateWire();
     }
 }
 
 void WindowWire::on_pushButton_after_clicked(){
     if( this->database->nextRegister() ){
         this->updateFields();
+        this->updateWire();
+    }
+}
+
+void WindowWire::on_pushButton_update_clicked(){
+    QMessageBox msgBox;
+    msgBox.setInformativeText( "Deseja realmente atualizar o fio aberto." );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+    if( msgBox.exec() == QMessageBox::Ok ){
+        //Wire* wire = new Wire();
+
+        /*
+
+
+
+        if( this->transformer->getID() == ui->lineEdit_id->text().toUInt() ){
+            std::string sql = "UPDATE ";
+            sql += table;
+            sql += " SET ";
+
+            const double precision = 1e-5;
+
+            if( fabs( this->transformer->getFrequency() - ui->lineEdit_frequency->text().toDouble() ) >= precision ){
+                sql += "frequency=" + ui->lineEdit_frequency->text().toStdString() + ", ";
+            }
+            */
     }
 }
 
