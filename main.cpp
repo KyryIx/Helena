@@ -8,6 +8,12 @@ int main(int argc, char *argv[])
     w.show();
 
     /*
+     *
+     Fazer um método que compara dois fios, para que possa ser usado no update.
+     *
+     */
+
+    /*
     NAO OK - transformer.h (verificar dados na folha de calculo)
     NAO OK - wires.h (verificar o metodo findIndexByCurrentMax)
     */
