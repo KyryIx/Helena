@@ -243,9 +243,9 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_edit">
+  <widget class="QPushButton" name="pushButton_update">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -256,7 +256,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Editar</string>
+    <string>Atualizar</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_type">
@@ -480,7 +480,7 @@
   <tabstop>tableWidget_currentMax</tabstop>
   <tabstop>pushButton_before</tabstop>
   <tabstop>pushButton_after</tabstop>
-  <tabstop>pushButton_edit</tabstop>
+  <tabstop>pushButton_update</tabstop>
   <tabstop>pushButton_insert</tabstop>
   <tabstop>pushButton_exit</tabstop>
  </tabstops>
