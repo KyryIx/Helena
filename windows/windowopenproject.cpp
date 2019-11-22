@@ -117,7 +117,7 @@ void WindowOpenProject::updateFieldsWithResultQuery(){
 }
 
 void WindowOpenProject::setTransformer(){
-    this->transformer->setID( ui->lineEdit_id->text().toUInt() );
+    this->transformer->setId( ui->lineEdit_id->text().toUInt() );
     this->transformer->setTransformerPatternNumber( ui->lineEdit_patternWindingNumber->text().toUInt() );
     this->transformer->setTransformerPatternName( ui->lineEdit_patternWindingName->text().toStdString() );
     this->transformer->setFrequency( ui->lineEdit_frequency->text().toDouble() );
@@ -346,10 +346,11 @@ void WindowOpenProject::on_pushButton_update_clicked(){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
     if( msgBox.exec() == QMessageBox::Ok ){
-        if( this->transformer->getID() == ui->lineEdit_id->text().toUInt() ){
+        if( this->transformer->getId() == ui->lineEdit_id->text().toUInt() ){
             std::string sql = "UPDATE ";
             sql += table;
             sql += " SET ";
+            unsigned char size = static_cast<unsigned char>( sql.size() );
 
             const double precision = 1e-5;
 
@@ -675,9 +676,9 @@ void WindowOpenProject::on_pushButton_update_clicked(){
                 sql += "observation='" + ui->textEdit_observation->toPlainText().toStdString() + "', ";
             }
 
-            if( sql.size() > 25 ){
+            if( sql.size() > size ){
                 sql = sql.substr( 0, sql.size()-2 );
-                sql += " WHERE id=" + std::to_string( this->transformer->getID() );
+                sql += " WHERE id=" + std::to_string( this->transformer->getId() );
 
                 if( this->database->executeSQL( sql ) > -1 ){
                     this->on_pushButton_next_clicked();

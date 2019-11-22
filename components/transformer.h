@@ -168,11 +168,11 @@ class Transformer{
             return this->databaseName;
         }
 
-        void setID( unsigned int id ){
+        void setId( unsigned int id ){
             this->id = id;
         }
 
-        unsigned int getID() const{
+        unsigned int getId() const{
             return this->id;
         }
 
