@@ -115,11 +115,11 @@ void WindowBobbin::on_pushButton_update_clicked(){
             sql += "height_bobbin=" + ui->lineEdit_height->text().toStdString() + ", ";
         }
 
-        if( this->bobbin->getType() == ui->lineEdit_type->text().toStdString() ){
+        if( this->bobbin->getType() != ui->lineEdit_type->text().toStdString() ){
             sql += "type_bobbin='" + ui->lineEdit_type->text().toStdString() + "', ";
         }
 
-        if( this->bobbin->getProvider() == ui->lineEdit_provider->text().toStdString() ){
+        if( this->bobbin->getProvider() != ui->lineEdit_provider->text().toStdString() ){
             sql += "provider_bobbin='" + ui->lineEdit_provider->text().toStdString() + "', ";
         }
 

@@ -30,6 +30,7 @@ public:
 public slots:
     void on_pushButton_previous_clicked();
     void on_pushButton_next_clicked();
+    void on_pushButton_makeReport_clicked();
     void on_pushButton_update_clicked();
     void on_pushButton_saveAs_clicked();
     void on_pushButton_validate_clicked();

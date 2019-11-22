@@ -91,48 +91,48 @@ class Bobbin{
 
         std::string toString() const{
 			std::string txt = "";
-            txt = txt + "Bobbin ID:       " + std::to_string( this->getId() )     + "\n";
-            txt = txt + "Bobbin Type:     " + this->getType()                     + "\n";
-            txt = txt + "Bobbin Code:     " + this->getCode()                     + "\n";
-            txt = txt + "Bobbin Provider: " + this->getProvider()                 + "\n";
-            txt = txt + "Bobbin Width:    " + std::to_string( this->getWidth() )  + " mm\n";
-            txt = txt + "Bobbin Length:   " + std::to_string( this->getLength() ) + " mm\n";
-            txt = txt + "Bobbin Height:   " + std::to_string( this->getHeight() ) + " mm\n";
-            txt = txt + "Bobbin Area:     " + std::to_string( this->getArea() )   + " mm*mm\n";
-            txt = txt + "Bobbin Volume:   " + std::to_string( this->getVolume() ) + " mm*mm*mm";
+            txt += "Bobbin ID:       " + std::to_string( this->getId() )     + "\n";
+            txt += "Bobbin Type:     " + this->getType()                     + "\n";
+            txt += "Bobbin Code:     " + this->getCode()                     + "\n";
+            txt += "Bobbin Provider: " + this->getProvider()                 + "\n";
+            txt += "Bobbin Width:    " + std::to_string( this->getWidth() )  + " mm\n";
+            txt += "Bobbin Length:   " + std::to_string( this->getLength() ) + " mm\n";
+            txt += "Bobbin Height:   " + std::to_string( this->getHeight() ) + " mm\n";
+            txt += "Bobbin Area:     " + std::to_string( this->getArea() )   + " mm*mm\n";
+            txt += "Bobbin Volume:   " + std::to_string( this->getVolume() ) + " mm*mm*mm";
 
 			return txt;
 		}
 
         std::string toHTML() const{
             std::string txt = "";
-            txt = txt + "<table align=\"center\" class=\"bobbin\" width=\"100%\">\n";
-            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Bobbin ID:</td><td><b>" + std::to_string( this->getId() )     + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Type:</td><td><b>"             + this->getType()                     + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Code:</td><td><b>"             + this->getCode()                     + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Provider:</td><td><b>"         + this->getProvider()                 + "</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Width:</td><td><b>"            + std::to_string( this->getWidth() )  + " mm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Length:</td><td><b>"           + std::to_string( this->getLength() ) + " mm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Height:</td><td><b>"           + std::to_string( this->getHeight() ) + " mm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Area:</td><td><b>"             + std::to_string( this->getArea() )   + " mm<sup>2</sup></b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Bobbin Volume:</td><td><b>"           + std::to_string( this->getVolume() ) + " mm<sup>3</sup></b></td></tr>\n";
-            txt = txt + "</table>";
+            txt += "<table align=\"center\" class=\"bobbin\" width=\"100%\">\n";
+            txt += "\t<tr><td align=\"right\" width=\"50%\">Bobbin ID:</td><td><b>" + std::to_string( this->getId() )     + "</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Type:</td><td><b>"             + this->getType()                     + "</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Code:</td><td><b>"             + this->getCode()                     + "</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Provider:</td><td><b>"         + this->getProvider()                 + "</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Width:</td><td><b>"            + std::to_string( this->getWidth() )  + " mm</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Length:</td><td><b>"           + std::to_string( this->getLength() ) + " mm</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Height:</td><td><b>"           + std::to_string( this->getHeight() ) + " mm</b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Area:</td><td><b>"             + std::to_string( this->getArea() )   + " mm<sup>2</sup></b></td></tr>\n";
+            txt += "\t<tr><td align=\"right\">Bobbin Volume:</td><td><b>"           + std::to_string( this->getVolume() ) + " mm<sup>3</sup></b></td></tr>\n";
+            txt += "</table>";
 
             return txt;
         }
 
         std::string toSQL() const{
             std::string txt = "";
-            txt = txt + "INSERT INTO bobbins (";
-            txt = txt + "code_bobbin, width_bobbin, length_bobbin, ";
-            txt = txt + "height_bobbin, type_bobbin, provider_bobbin";
-            txt = txt + ") VALUES( ";
-            txt = "'" + this->getCode()                     + "', ";
-            txt = txt + std::to_string( this->getWidth() )  + ", ";
-            txt = txt + std::to_string( this->getLength() ) + ", ";
-            txt = txt + std::to_string( this->getHeight() ) + ", ";
-            txt = txt + "'" + this->getType()               + "', ";
-            txt = txt + "'" + this->getProvider()           + "' )";
+            txt += "INSERT INTO bobbins (";
+            txt += "code_bobbin, width_bobbin, length_bobbin, ";
+            txt += "height_bobbin, type_bobbin, provider_bobbin";
+            txt += ") VALUES( ";
+            txt += "'" + this->getCode()               + "', ";
+            txt += std::to_string( this->getWidth() )  + ", ";
+            txt += std::to_string( this->getLength() ) + ", ";
+            txt += std::to_string( this->getHeight() ) + ", ";
+            txt += "'" + this->getType()               + "', ";
+            txt += "'" + this->getProvider()           + "' )";
 
             return txt;
         }

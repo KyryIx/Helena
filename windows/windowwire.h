@@ -26,6 +26,7 @@ public slots:
     void on_pushButton_before_clicked();
     void on_pushButton_after_clicked();
     void on_pushButton_update_clicked();
+    void on_pushButton_insert_clicked();
     void on_pushButton_delete_clicked();
     void on_pushButton_exit_clicked();
 
@@ -34,6 +35,8 @@ private:
     DataBase* database;
     Wire* wire;
     std::vector< std::vector<double> > string2Vector( std::string text, char separator );
+    void setStateInsert( unsigned char state );
+    unsigned char stateInsert;
 };
 
 #endif // WINDOWWIRE_H
