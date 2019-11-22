@@ -253,9 +253,9 @@
     <string>Sair</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_edit">
+  <widget class="QPushButton" name="pushButton_update">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -266,7 +266,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Editar</string>
+    <string>Atualizar</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_insert">
@@ -285,9 +285,9 @@
     <string>Inserir</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_save">
+  <widget class="QPushButton" name="pushButton_delete">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>

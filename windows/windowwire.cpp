@@ -228,6 +228,33 @@ void WindowWire::on_pushButton_update_clicked(){
     }
 }
 
+void WindowWire::on_pushButton_delete_clicked(){
+    QMessageBox msgBox;
+    msgBox.setInformativeText( "Deseja realmente excluir o fio aberto?" );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+    if( msgBox.exec() == QMessageBox::Ok ){
+        int id = ui->lineEdit_id->text().toInt();
+        if( id > 0 ){
+            std::string sql = "DELETE FROM ";
+            sql += table;
+            sql += " WHERE id=" + std::to_string(id);
+            if( this->database->executeSQL( sql ) > -1 ){
+                this->on_pushButton_after_clicked();
+                msgBox.setInformativeText( "Exclusão feita com sucesso." );
+                msgBox.setIcon( QMessageBox::Information );
+                this->init();
+            }
+            else{
+                msgBox.setInformativeText( "Erro na consulta." );
+                msgBox.setIcon( QMessageBox::Warning );
+            }
+        }
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+    }
+}
+
 void WindowWire::on_pushButton_exit_clicked(){
     this->close();
 }

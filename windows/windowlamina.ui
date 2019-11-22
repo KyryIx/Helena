@@ -207,9 +207,9 @@
     <string>&lt;&lt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_edit">
+  <widget class="QPushButton" name="pushButton_update">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -220,7 +220,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Editar</string>
+    <string>Atualizar</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_exit">
@@ -290,7 +290,7 @@
   </widget>
   <widget class="QPushButton" name="pushButton_delete">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>

@@ -10,6 +10,18 @@
     <height>829</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>861</width>
+    <height>829</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>861</width>
+    <height>829</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Helena - Abrir Projeto</string>
   </property>
