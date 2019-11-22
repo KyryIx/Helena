@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     /*
      *
      Fazer um método que compara dois fios, para que possa ser usado no update.
+     rever a inclusão usada na janela de fios
 
      http://www.novacon.com.br/audiotabawg.htm
      *

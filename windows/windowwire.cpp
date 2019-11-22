@@ -13,6 +13,7 @@ WindowWire::WindowWire(QWidget *parent, DataBase* database) :
     this->setDatabase( database );
     this->wire = new Wire();
     this->init();
+    this->stateInsert = 0;
 }
 
 WindowWire::~WindowWire()
@@ -89,18 +90,18 @@ void WindowWire::updateFields(){
 }
 
 void WindowWire::updateWire(){
-    wire->setId( ui->lineEdit_id->text().toUInt() );
-    wire->setType( ui->lineEdit_type->text().toStdString() );
-    wire->setAWG( ui->lineEdit_awg->text().toStdString() );
-    wire->setDiameter( ui->lineEdit_diameter->text().toDouble() );
-    wire->setTurnsPerCm( ui->lineEdit_turnsPerCm->text().toDouble() );
-    wire->setArea( ui->lineEdit_area->text().toDouble() );
-    wire->setResistance( ui->lineEdit_resistance->text().toDouble() );
-    wire->setWeight( ui->lineEdit_weight->text().toDouble() );
-    wire->setLength( ui->lineEdit_length->text().toDouble() );
-    wire->setFrequency( ui->lineEdit_frequency->text().toDouble() );
-    wire->setMaterial( ui->lineEdit_material->text().toStdString() );
-    wire->setProvider( ui->lineEdit_provider->text().toStdString() );
+    this->wire->setId( ui->lineEdit_id->text().toUInt() );
+    this->wire->setType( ui->lineEdit_type->text().toStdString() );
+    this->wire->setAWG( ui->lineEdit_awg->text().toStdString() );
+    this->wire->setDiameter( ui->lineEdit_diameter->text().toDouble() );
+    this->wire->setTurnsPerCm( ui->lineEdit_turnsPerCm->text().toDouble() );
+    this->wire->setArea( ui->lineEdit_area->text().toDouble() );
+    this->wire->setResistance( ui->lineEdit_resistance->text().toDouble() );
+    this->wire->setWeight( ui->lineEdit_weight->text().toDouble() );
+    this->wire->setLength( ui->lineEdit_length->text().toDouble() );
+    this->wire->setFrequency( ui->lineEdit_frequency->text().toDouble() );
+    this->wire->setMaterial( ui->lineEdit_material->text().toStdString() );
+    this->wire->setProvider( ui->lineEdit_provider->text().toStdString() );
     int x = ui->tableWidget_currentMax->columnCount();
     int y = ui->tableWidget_currentMax->rowCount();
     std::vector< std::vector< double > > rows;
@@ -111,7 +112,7 @@ void WindowWire::updateWire(){
         }
         rows.push_back( colums );
     }
-    wire->setCurrentMax( rows );
+    this->wire->setCurrentMax( rows );
 }
 
 
@@ -226,6 +227,77 @@ void WindowWire::on_pushButton_update_clicked(){
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
     }
+    this->setStateInsert( 0 );
+}
+
+void WindowWire::setStateInsert( unsigned char state ){
+    switch( state ){
+        case 0:
+            ui->pushButton_insert->setText( "Inserir Novo" );
+            this->stateInsert = 0;
+            break;
+
+        case 1:
+            ui->pushButton_insert->setText( "Salvar" );
+            this->stateInsert = 1;
+            break;
+    }
+}
+
+void WindowWire::on_pushButton_insert_clicked(){
+    switch( this->stateInsert ){
+        case 0:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja campos em branco?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                this->clearFields();
+            }
+            this->setStateInsert( 1 );
+            break;
+        }
+
+        case 1:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja salvar mesmo?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                Wire* wire = new Wire();
+                wire->setId( ui->lineEdit_id->text().toUInt() );
+                wire->setType( ui->lineEdit_type->text().toStdString() );
+                wire->setAWG( ui->lineEdit_awg->text().toStdString() );
+                wire->setDiameter( ui->lineEdit_diameter->text().toDouble() );
+                wire->setTurnsPerCm( ui->lineEdit_turnsPerCm->text().toDouble() );
+                wire->setArea( ui->lineEdit_area->text().toDouble() );
+                wire->setResistance( ui->lineEdit_resistance->text().toDouble() );
+                wire->setWeight( ui->lineEdit_weight->text().toDouble() );
+                wire->setLength( ui->lineEdit_length->text().toDouble() );
+                wire->setFrequency( ui->lineEdit_frequency->text().toDouble() );
+                wire->setMaterial( ui->lineEdit_material->text().toStdString() );
+                wire->setProvider( ui->lineEdit_provider->text().toStdString() );
+                FILE* fp = fopen( "wire_save.sql", "w" );
+                fputs( wire->toSQL().c_str(), fp );
+                fclose( fp );
+                if( this->database->executeSQL( wire->toSQL() ) > -1 ){
+                    this->on_pushButton_after_clicked();
+                    msgBox.setInformativeText( "Salvamento feito com sucesso." );
+                    msgBox.setIcon( QMessageBox::Information );
+                    this->init();
+                }
+                else{
+                    msgBox.setInformativeText( "Erro na consulta." );
+                    msgBox.setIcon( QMessageBox::Warning );
+                }
+                msgBox.exec();
+            }
+            this->setStateInsert( 0 );
+            break;
+        }
+    }
 }
 
 void WindowWire::on_pushButton_delete_clicked(){
@@ -253,8 +325,10 @@ void WindowWire::on_pushButton_delete_clicked(){
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
     }
+    this->setStateInsert( 0 );
 }
 
 void WindowWire::on_pushButton_exit_clicked(){
+    this->setStateInsert( 0 );
     this->close();
 }

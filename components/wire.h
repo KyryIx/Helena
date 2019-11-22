@@ -202,29 +202,29 @@ class Wire{
 
         std::string toSQL() const{
             std::string txt = "";
-            txt = txt + "INSERT INTO wires (";
-            txt = txt + "type_wire, awg_wire, diameter_wire, turnsPerCm_wire, area_wire, resistance_wire, weight_wire, ";
-            txt = txt + "length_wire, currentMaxPerDensity_wire, frequency_wire, material_wire, provider_wire";
-            txt = ") VALUES( ";
-            txt = txt + "'" + this->getType()                   + "', ";
-            txt = txt + "'" + this->getAWG()                    + "', ";
-            txt = txt + std::to_string( this->getDiameter() )   + ", ";
-            txt = txt + std::to_string( this->getTurnsPerCm() ) + ", ";
-            txt = txt + std::to_string( this->getArea() )       + ", ";
-            txt = txt + std::to_string( this->getResistance() ) + ", ";
-            txt = txt + std::to_string( this->getWeight() )     + ", ";
-            txt = txt + std::to_string( this->getLength() )     + ", ";
-            txt = txt + "'";
+            txt += "INSERT INTO wires (";
+            txt += "type_wire, awg_wire, diameter_wire, turnsPerCm_wire, area_wire, resistance_wire, weight_wire, ";
+            txt += "length_wire, currentMaxPerDensity_wire, frequency_wire, material_wire, provider_wire";
+            txt += ") VALUES( ";
+            txt += "'" + this->getType()                   + "', ";
+            txt += "'" + this->getAWG()                    + "', ";
+            txt += std::to_string( this->getDiameter() )   + ", ";
+            txt += std::to_string( this->getTurnsPerCm() ) + ", ";
+            txt += std::to_string( this->getArea() )       + ", ";
+            txt += std::to_string( this->getResistance() ) + ", ";
+            txt += std::to_string( this->getWeight() )     + ", ";
+            txt += std::to_string( this->getLength() )     + ", ";
+            txt += "'";
             if( this->getCurrentMax().size() > 0 ){
                 for( std::vector< std::vector<double> >::iterator it; it != this->getCurrentMax().end(); it++ ){
-                    txt = txt + std::to_string( it->at(0) ) + ", " + std::to_string( it->at(1) ) + ", ";
+                    txt += txt + std::to_string( it->at(0) ) + ", " + std::to_string( it->at(1) ) + ", ";
                 }
                 txt = txt.substr(0, txt.size() - 2);
             }
-            txt = txt + "', ";
-            txt = txt + std::to_string( this->getFrequency() )  + ", ";
-            txt = txt + "'" + this->getMaterial()               + "', ";
-            txt = txt + "'" + this->getProvider()               + "' )";
+            txt += "', ";
+            txt += std::to_string( this->getFrequency() )  + ", ";
+            txt += "'" + this->getMaterial()               + "', ";
+            txt += "'" + this->getProvider()               + "' )";
 
             return txt;
         }

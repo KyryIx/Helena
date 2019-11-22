@@ -115,17 +115,13 @@ void WindowLamina::on_pushButton_update_clicked(){
             sql += "thickness_percent_lamina=" + ui->lineEdit_thicknessPercent->text().toStdString() + ", ";
         }
 
-        if( this->lamina->getType() == ui->lineEdit_type->text().toStdString() ){
+        if( this->lamina->getType() != ui->lineEdit_type->text().toStdString() ){
             sql += "type_lamina='" + ui->lineEdit_type->text().toStdString() + "', ";
         }
 
-        if( this->lamina->getProvider() == ui->lineEdit_provider->text().toStdString() ){
+        if( this->lamina->getProvider() != ui->lineEdit_provider->text().toStdString() ){
             sql += "provider_lamina='" + ui->lineEdit_provider->text().toStdString() + "', ";
         }
-
-        msgBox.setInformativeText( sql.c_str() );
-        msgBox.setStandardButtons( QMessageBox::Ok );
-        msgBox.exec();
 
         if( sql.size() > size ){
             sql = sql.substr( 0, sql.size()-2 );
