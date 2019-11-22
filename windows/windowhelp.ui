@@ -10,6 +10,18 @@
     <height>479</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>831</width>
+    <height>479</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>831</width>
+    <height>479</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Helena - Ajuda sobre o software</string>
   </property>
@@ -20,10 +32,10 @@
   <widget class="QTextBrowser" name="textBrowser">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>811</width>
-     <height>461</height>
+     <x>0</x>
+     <y>0</y>
+     <width>831</width>
+     <height>481</height>
     </rect>
    </property>
    <property name="html">

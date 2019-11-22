@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "components/database.h"
+#include "components/bobbin.h"
 
 namespace Ui {
 class WindowBobbin;
@@ -18,16 +19,20 @@ public:
     void setDatabase( DataBase *database );
     void clearFields();
     void updateFields();
+    void updateBobbin();
     void init();
 
 public slots:
-    void on_pushButton_exit_clicked();
     void on_pushButton_before_clicked();
     void on_pushButton_after_clicked();
+    void on_pushButton_update_clicked();
+    void on_pushButton_delete_clicked();
+    void on_pushButton_exit_clicked();
 
 private:
     Ui::WindowBobbin *ui;
     DataBase* database;
+    Bobbin* bobbin;
 };
 
 #endif // WINDOWBOBBIN_H
