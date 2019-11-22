@@ -3,12 +3,15 @@
 
 #include <QMessageBox>
 
+#define table "wires"
+
 WindowWire::WindowWire(QWidget *parent, DataBase* database) :
     QDialog(parent),
     ui(new Ui::WindowWire)
 {
     ui->setupUi(this);
     this->setDatabase( database );
+    this->wire = new Wire();
     this->init();
 }
 
@@ -146,23 +149,82 @@ void WindowWire::on_pushButton_update_clicked(){
     msgBox.setIcon( QMessageBox::Warning );
     msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
     if( msgBox.exec() == QMessageBox::Ok ){
-        //Wire* wire = new Wire();
+        std::string sql = "UPDATE ";
+        sql += table;
+        sql += " SET ";
+        unsigned char size = static_cast<unsigned char>( sql.size() );
+        const double precision = 1e-5;
 
-        /*
+        if( this->wire->getId() != ui->lineEdit_id->text().toUInt() ){
+            return;
+        }
 
+        if( this->wire->getType() != ui->lineEdit_type->text().toStdString() ){
+            sql += "type_wire='" + ui->lineEdit_type->text().toStdString() + "', ";
+        }
 
+        if( this->wire->getAWG() != ui->lineEdit_awg->text().toStdString() ){
+            sql += "awg_wire='" + ui->lineEdit_awg->text().toStdString() + "', ";
+        }
 
-        if( this->transformer->getID() == ui->lineEdit_id->text().toUInt() ){
-            std::string sql = "UPDATE ";
-            sql += table;
-            sql += " SET ";
+        if( fabs( this->wire->getDiameter() - ui->lineEdit_diameter->text().toDouble() ) >= precision ){
+            sql += "diameter_wire=" + ui->lineEdit_diameter->text().toStdString() + ", ";
+        }
 
-            const double precision = 1e-5;
+        if( fabs( this->wire->getTurnsPerCm() - ui->lineEdit_turnsPerCm->text().toDouble() ) >= precision ){
+            sql += "turnsPerCm_wire=" + ui->lineEdit_turnsPerCm->text().toStdString() + ", ";
+        }
 
-            if( fabs( this->transformer->getFrequency() - ui->lineEdit_frequency->text().toDouble() ) >= precision ){
-                sql += "frequency=" + ui->lineEdit_frequency->text().toStdString() + ", ";
+        if( fabs( this->wire->getArea() - ui->lineEdit_area->text().toDouble() ) >= precision ){
+            sql += "area_wire=" + ui->lineEdit_area->text().toStdString() + ", ";
+        }
+
+        if( fabs( this->wire->getResistance() - ui->lineEdit_resistance->text().toDouble() ) >= precision ){
+            sql += "resistance_wire=" + ui->lineEdit_resistance->text().toStdString() + ", ";
+        }
+
+        if( fabs( this->wire->getWeight() - ui->lineEdit_weight->text().toDouble() ) >= precision ){
+            sql += "weight_wire=" + ui->lineEdit_weight->text().toStdString() + ", ";
+        }
+
+        if( fabs( this->wire->getFrequency() - ui->lineEdit_frequency->text().toDouble() ) >= precision ){
+            sql += "frequency_wire=" + ui->lineEdit_frequency->text().toStdString() + ", ";
+        }
+
+        if( this->wire->getMaterial() != ui->lineEdit_material->text().toStdString() ){
+            sql += "material_wire='" + ui->lineEdit_material->text().toStdString() + "', ";
+        }
+
+        if( this->wire->getProvider() != ui->lineEdit_provider->text().toStdString() ){
+            sql += "provider_wire='" + ui->lineEdit_provider->text().toStdString() + "', ";
+        }
+
+        // implementar
+        //if( fabs( this->wire->getCurrentMax() - ui->lineEdit_length->text().toDouble() ) >= precision ){
+        //    sql += "currentMaxPerDensity_wire=" + ui->lineEdit_length->text().toStdString() + ", ";
+        //}
+
+        if( sql.size() > size ){
+            sql = sql.substr( 0, sql.size()-2 );
+            sql += " WHERE id=" + std::to_string( this->wire->getId() );
+
+            if( this->database->executeSQL( sql ) > -1 ){
+                msgBox.setInformativeText( "Atualização feita com sucesso." );
+                msgBox.setIcon( QMessageBox::Information );
+                this->init();
             }
-            */
+            else{
+                msgBox.setInformativeText( "Erro na consulta." );
+                msgBox.setIcon( QMessageBox::Warning );
+            }
+        }
+        else{
+            msgBox.setInformativeText( "Os valores nos campos são idênticos aos armazenados na base de dados." );
+            msgBox.setIcon( QMessageBox::Warning );
+        }
+
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
     }
 }
 
