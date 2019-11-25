@@ -23,6 +23,11 @@ public:
     void init();
 
 public slots:
+    void on_pushButton_currentAddDown_clicked();
+    void on_pushButton_currentAddUp_clicked();
+    void on_pushButton_currentDelete_clicked();
+    void on_pushButton_first_clicked();
+    void on_pushButton_last_clicked();
     void on_pushButton_before_clicked();
     void on_pushButton_after_clicked();
     void on_pushButton_update_clicked();

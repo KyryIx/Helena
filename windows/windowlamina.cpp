@@ -147,6 +147,16 @@ void WindowLamina::on_pushButton_update_clicked(){
     }
 }
 
+void WindowLamina::on_pushButton_insert_clicked(){
+    QMessageBox msgBox;
+    msgBox.setInformativeText( "Deseja campos em branco?" );
+    msgBox.setIcon( QMessageBox::Warning );
+    msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+    if( msgBox.exec() == QMessageBox::Ok ){
+        this->clearFields();
+    }
+}
+
 void WindowLamina::on_pushButton_delete_clicked(){
     QMessageBox msgBox;
     msgBox.setInformativeText( "Deseja realmente excluir a lâmina aberta?" );

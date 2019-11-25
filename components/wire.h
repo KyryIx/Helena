@@ -216,8 +216,9 @@ class Wire{
             txt += std::to_string( this->getLength() )     + ", ";
             txt += "'";
             if( this->getCurrentMax().size() > 0 ){
-                for( std::vector< std::vector<double> >::iterator it; it != this->getCurrentMax().end(); it++ ){
-                    txt += txt + std::to_string( it->at(0) ) + ", " + std::to_string( it->at(1) ) + ", ";
+                size_t size = this->getCurrentMax().size();
+                for( size_t i=0; i<size; i++ ){
+                    txt += std::to_string( this->getCurrentMax().at(i).at(0) ) + ", " + std::to_string( this->getCurrentMax().at(i).at(1) ) + ", ";
                 }
                 txt = txt.substr(0, txt.size() - 2);
             }

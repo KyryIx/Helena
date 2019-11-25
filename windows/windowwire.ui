@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>531</width>
-    <height>390</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>531</width>
-    <height>390</height>
+    <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>531</width>
-    <height>390</height>
+    <height>420</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -152,9 +152,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>360</y>
-     <width>75</width>
+     <x>200</x>
+     <y>390</y>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
@@ -165,14 +165,14 @@
   <widget class="QPushButton" name="pushButton_before">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>310</x>
      <y>360</y>
-     <width>75</width>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;&lt;</string>
+    <string>Anterior</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_frequency">
@@ -249,9 +249,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>360</y>
-     <width>75</width>
+     <x>90</x>
+     <y>390</y>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
@@ -278,22 +278,22 @@
   <widget class="QPushButton" name="pushButton_after">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>420</x>
      <y>360</y>
-     <width>75</width>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>&gt;&gt;</string>
+    <string>Próximo</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_exit">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>360</y>
-     <width>75</width>
+     <x>420</x>
+     <y>390</y>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
@@ -349,6 +349,57 @@
    <property name="title">
     <string>Corrente Maxima</string>
    </property>
+   <widget class="QPushButton" name="pushButton_currentAddDown">
+    <property name="geometry">
+     <rect>
+      <x>483</x>
+      <y>50</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../icons/main.qrc">
+      <normaloff>:/iconfinder_sign-add_299068_down.png</normaloff>:/iconfinder_sign-add_299068_down.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_currentAddUp">
+    <property name="geometry">
+     <rect>
+      <x>483</x>
+      <y>24</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../icons/main.qrc">
+      <normaloff>:/iconfinder_sign-add_299068_up.png</normaloff>:/iconfinder_sign-add_299068_up.png</iconset>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_currentDelete">
+    <property name="geometry">
+     <rect>
+      <x>483</x>
+      <y>76</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../icons/main.qrc">
+      <normaloff>:/iconfinder_minus_1645995.png</normaloff>:/iconfinder_minus_1645995.png</iconset>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label_frequency">
    <property name="geometry">
@@ -407,7 +458,7 @@
     <rect>
      <x>20</x>
      <y>210</y>
-     <width>451</width>
+     <width>470</width>
      <height>131</height>
     </rect>
    </property>
@@ -454,14 +505,40 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>360</y>
-     <width>75</width>
+     <x>310</x>
+     <y>390</y>
+     <width>100</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Excluir</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_first">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>360</y>
+     <width>100</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Primeiro</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_last">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>360</y>
+     <width>100</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Último</string>
    </property>
   </widget>
  </widget>

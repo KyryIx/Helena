@@ -117,6 +117,9 @@ void WindowWire::updateWire(){
 
 
 void WindowWire::init(){
+    //ui->pushButton_currentAddDown->setEnabled( false );
+    //ui->pushButton_currentAddUp->setEnabled( false );
+    //ui->pushButton_currentDelete->setEnabled( false );
     this->clearFields();
     if( this->database->executeSQL( "SELECT * FROM wires ORDER BY id ASC" ) > -1 ){
         this->on_pushButton_after_clicked();
@@ -130,17 +133,60 @@ void WindowWire::init(){
     }
 }
 
+void WindowWire::on_pushButton_currentAddDown_clicked(){
+    int currentRow = ui->tableWidget_currentMax->currentRow() + 1;
+    ui->tableWidget_currentMax->insertRow(currentRow);
+}
+
+void WindowWire::on_pushButton_currentAddUp_clicked(){
+    int currentRow = ui->tableWidget_currentMax->currentRow();
+    ui->tableWidget_currentMax->insertRow(currentRow);
+    int nRows = ui->tableWidget_currentMax->rowCount();
+    for( int i=1; i<=nRows; i++ ){
+        QTableWidgetItem* item = new QTableWidgetItem(QTableWidgetItem::Type);
+        item->setText( std::to_string(i).c_str() );
+        ui->tableWidget_currentMax->setVerticalHeaderItem( i-1, item );
+    }
+}
+
+void WindowWire::on_pushButton_currentDelete_clicked(){
+    int currentRow = ui->tableWidget_currentMax->currentRow();
+    ui->tableWidget_currentMax->removeRow( currentRow );
+}
+
+void WindowWire::on_pushButton_first_clicked(){
+    if( this->database->queryIsActive() ){
+        if( this->database->firstRegister() ){
+            this->updateFields();
+            this->updateWire();
+        }
+    }
+}
+
+void WindowWire::on_pushButton_last_clicked(){
+    if( this->database->queryIsActive() ){
+        if( this->database->lastRegister() ){
+            this->updateFields();
+            this->updateWire();
+        }
+    }
+}
+
 void WindowWire::on_pushButton_before_clicked(){
-    if( this->database->previousRegister() ){
-        this->updateFields();
-        this->updateWire();
+    if( this->database->queryIsActive() ){
+        if( this->database->previousRegister() ){
+            this->updateFields();
+            this->updateWire();
+        }
     }
 }
 
 void WindowWire::on_pushButton_after_clicked(){
-    if( this->database->nextRegister() ){
-        this->updateFields();
-        this->updateWire();
+    if( this->database->queryIsActive() ){
+        if( this->database->nextRegister() ){
+            this->updateFields();
+            this->updateWire();
+        }
     }
 }
 
@@ -200,10 +246,44 @@ void WindowWire::on_pushButton_update_clicked(){
             sql += "provider_wire='" + ui->lineEdit_provider->text().toStdString() + "', ";
         }
 
-        // implementar
-        //if( fabs( this->wire->getCurrentMax() - ui->lineEdit_length->text().toDouble() ) >= precision ){
-        //    sql += "currentMaxPerDensity_wire=" + ui->lineEdit_length->text().toStdString() + ", ";
-        //}
+        size_t numberRows = static_cast<size_t>( ui->tableWidget_currentMax->rowCount() );
+        std::vector< std::vector<double> > currentMax;
+        for( size_t i=0; i<numberRows; i++ ){
+            QTableWidgetItem* density = ui->tableWidget_currentMax->item( int(i), 0 );
+            if( density->text().trimmed() == "" ){
+                msgBox.setInformativeText( "Campo(s) de densidade de corrente em branco(s)." );
+                msgBox.setIcon( QMessageBox::Warning );
+                msgBox.setStandardButtons( QMessageBox::Ok );
+                msgBox.exec();
+                return;
+            }
+
+            QTableWidgetItem* current = ui->tableWidget_currentMax->item( int(i), 1 );
+            if( current->text().trimmed() == "" ){
+                msgBox.setInformativeText( "Campo(s) de corrente em branco(s)." );
+                msgBox.setIcon( QMessageBox::Warning );
+                msgBox.setStandardButtons( QMessageBox::Ok );
+                msgBox.exec();
+                return;
+            }
+
+            std::vector<double> values;
+            values.push_back( density->text().toDouble() );
+            values.push_back( current->text().toDouble() );
+            currentMax.push_back( values );
+        }
+        if( this->wire->getCurrentMax() != currentMax ){
+            sql += "currentMaxPerDensity_wire='";
+            size_t sizeTemp = sql.size();
+            for( size_t i=0; i<numberRows; i++ ){
+                sql += std::to_string( currentMax.at(i).at(0) ) + "," + std::to_string( currentMax.at(i).at(1) ) + ", ";
+            }
+            if( sql.size() > sizeTemp ){
+                sql = sql.substr( 0, sql.size()-2 );
+            }
+
+            sql += "', ";
+        }
 
         if( sql.size() > size ){
             sql = sql.substr( 0, sql.size()-2 );
@@ -226,6 +306,10 @@ void WindowWire::on_pushButton_update_clicked(){
 
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
+
+        FILE* fp = fopen( "wire_save.sql", "w" );
+        fputs( sql.c_str(), fp );
+        fclose( fp );
     }
     this->setStateInsert( 0 );
 }
@@ -234,11 +318,17 @@ void WindowWire::setStateInsert( unsigned char state ){
     switch( state ){
         case 0:
             ui->pushButton_insert->setText( "Inserir Novo" );
+            //ui->pushButton_currentAddDown->setEnabled( false );
+            //ui->pushButton_currentAddUp->setEnabled( false );
+            //ui->pushButton_currentDelete->setEnabled( false );
             this->stateInsert = 0;
             break;
 
         case 1:
             ui->pushButton_insert->setText( "Salvar" );
+            //ui->pushButton_currentAddDown->setEnabled( true );
+            //ui->pushButton_currentAddUp->setEnabled( true );
+            //ui->pushButton_currentDelete->setEnabled( true );
             this->stateInsert = 1;
             break;
     }
@@ -279,9 +369,34 @@ void WindowWire::on_pushButton_insert_clicked(){
                 wire->setFrequency( ui->lineEdit_frequency->text().toDouble() );
                 wire->setMaterial( ui->lineEdit_material->text().toStdString() );
                 wire->setProvider( ui->lineEdit_provider->text().toStdString() );
-                FILE* fp = fopen( "wire_save.sql", "w" );
-                fputs( wire->toSQL().c_str(), fp );
-                fclose( fp );
+                int numberRows = ui->tableWidget_currentMax->rowCount();
+                std::vector< std::vector<double> > currentMax;
+                for( int i=0; i<numberRows; i++ ){
+                    QTableWidgetItem* density = ui->tableWidget_currentMax->item( i, 0 );
+                    if( density->text().trimmed() == "" ){
+                        msgBox.setInformativeText( "Campo(s) de densidade de corrente em branco(s)." );
+                        msgBox.setIcon( QMessageBox::Warning );
+                        msgBox.setStandardButtons( QMessageBox::Ok );
+                        msgBox.exec();
+                        return;
+                    }
+
+                    QTableWidgetItem* current = ui->tableWidget_currentMax->item( i, 1 );
+                    if( current->text().trimmed() == "" ){
+                        msgBox.setInformativeText( "Campo(s) de corrente em branco(s)." );
+                        msgBox.setIcon( QMessageBox::Warning );
+                        msgBox.setStandardButtons( QMessageBox::Ok );
+                        msgBox.exec();
+                        return;
+                    }
+
+                    std::vector<double> values;
+                    values.push_back( density->text().toDouble() );
+                    values.push_back( current->text().toDouble() );
+                    currentMax.push_back( values );
+                }
+                wire->setCurrentMax( currentMax );
+
                 if( this->database->executeSQL( wire->toSQL() ) > -1 ){
                     this->on_pushButton_after_clicked();
                     msgBox.setInformativeText( "Salvamento feito com sucesso." );
