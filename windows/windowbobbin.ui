@@ -302,6 +302,21 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_id</tabstop>
+  <tabstop>lineEdit_code</tabstop>
+  <tabstop>lineEdit_length</tabstop>
+  <tabstop>lineEdit_provider</tabstop>
+  <tabstop>lineEdit_width</tabstop>
+  <tabstop>lineEdit_type</tabstop>
+  <tabstop>lineEdit_height</tabstop>
+  <tabstop>pushButton_before</tabstop>
+  <tabstop>pushButton_after</tabstop>
+  <tabstop>pushButton_update</tabstop>
+  <tabstop>pushButton_insert</tabstop>
+  <tabstop>pushButton_delete</tabstop>
+  <tabstop>pushButton_exit</tabstop>
+ </tabstops>
  <resources>
   <include location="../icons/main.qrc"/>
  </resources>

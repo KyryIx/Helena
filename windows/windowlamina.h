@@ -24,6 +24,8 @@ public:
 
 public slots:
     void on_pushButton_exit_clicked();
+    void on_pushButton_first_clicked();
+    void on_pushButton_last_clicked();
     void on_pushButton_before_clicked();
     void on_pushButton_update_clicked();
     void on_pushButton_insert_clicked();
@@ -34,6 +36,8 @@ private:
     Ui::WindowLamina *ui;
     DataBase* database;
     Lamina* lamina;
+    void setStateInsert( unsigned char state );
+    unsigned char stateInsert;
 };
 
 #endif // WINDOWLAMINA_H

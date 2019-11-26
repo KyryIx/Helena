@@ -111,7 +111,7 @@ class Lamina{
 
         std::string toSQL() const{
             std::string txt = "";
-            txt += "INSERT INTO laminas (width_lamina, area_lamina, weight_lamina, thicknessPercent_lamina, type_lamina, provider_lamina) ";
+            txt += "INSERT INTO laminas (width_lamina, window_area_lamina, weight_lamina, thickness_percent_lamina, type_lamina, provider_lamina) ";
             txt += "VALUES( ";
             txt += std::to_string( this->getWidth() )            + ", ";
             txt += std::to_string( this->getWindowArea() )       + ", ";

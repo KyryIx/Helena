@@ -13,6 +13,7 @@ WindowLamina::WindowLamina(QWidget *parent, DataBase* database) :
     this->setDatabase( database );
     this->lamina = new Lamina();
     this->init();
+    this->stateInsert = 0;
 }
 
 WindowLamina::~WindowLamina()
@@ -69,7 +70,28 @@ void WindowLamina::init(){
     }
 }
 
+void WindowLamina::on_pushButton_first_clicked(){
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->firstRegister() ){
+            this->updateFields();
+            this->updateLamina();
+        }
+    }
+}
+
+void WindowLamina::on_pushButton_last_clicked(){
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->lastRegister() ){
+            this->updateFields();
+            this->updateLamina();
+        }
+    }
+}
+
 void WindowLamina::on_pushButton_before_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->previousRegister() ){
         this->updateFields();
         this->updateLamina();
@@ -77,6 +99,7 @@ void WindowLamina::on_pushButton_before_clicked(){
 }
 
 void WindowLamina::on_pushButton_after_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->nextRegister() ){
         this->updateFields();
         this->updateLamina();
@@ -84,6 +107,7 @@ void WindowLamina::on_pushButton_after_clicked(){
 }
 
 void WindowLamina::on_pushButton_update_clicked(){
+    this->setStateInsert( 0 );
     QMessageBox msgBox;
     msgBox.setInformativeText( "Deseja realmente atualizar a lâmina aberta." );
     msgBox.setIcon( QMessageBox::Warning );
@@ -96,6 +120,9 @@ void WindowLamina::on_pushButton_update_clicked(){
         const double precision = 1e-5;
 
         if( this->lamina->getId() != ui->lineEdit_id->text().toUInt() ){
+            msgBox.setInformativeText( "Dados em branco. Use a opção de \"Inserir Novo\"" );
+            msgBox.setStandardButtons( QMessageBox::Ok );
+            msgBox.exec();
             return;
         }
 
@@ -147,17 +174,76 @@ void WindowLamina::on_pushButton_update_clicked(){
     }
 }
 
+void WindowLamina::setStateInsert( unsigned char state ){
+    switch( state ){
+        case 0:
+            ui->pushButton_insert->setText( "Inserir Novo" );
+            this->stateInsert = 0;
+            break;
+
+        case 1:
+            ui->pushButton_insert->setText( "Salvar" );
+            this->stateInsert = 1;
+            break;
+    }
+}
+
 void WindowLamina::on_pushButton_insert_clicked(){
-    QMessageBox msgBox;
-    msgBox.setInformativeText( "Deseja campos em branco?" );
-    msgBox.setIcon( QMessageBox::Warning );
-    msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
-    if( msgBox.exec() == QMessageBox::Ok ){
-        this->clearFields();
+    switch( this->stateInsert ){
+        case 0:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja campos em branco?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                this->clearFields();
+            }
+            this->setStateInsert( 1 );
+            break;
+        }
+
+        case 1:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja salvar mesmo?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                Lamina* lamina = new Lamina();
+                lamina->setId( ui->lineEdit_id->text().toUInt() );
+                lamina->setType( ui->lineEdit_type->text().toStdString() );
+                lamina->setProvider( ui->lineEdit_provider->text().toStdString() );
+                lamina->setWidth( ui->lineEdit_width->text().toDouble() );
+                lamina->setWindowArea( ui->lineEdit_windowArea->text().toDouble() );
+                lamina->setWeight( ui->lineEdit_weight->text().toDouble() );
+                lamina->setThicknessPercent( ui->lineEdit_thicknessPercent->text().toDouble() );
+
+                if( this->database->executeSQL( lamina->toSQL() ) > -1 ){
+                    this->on_pushButton_after_clicked();
+                    msgBox.setInformativeText( "Salvamento feito com sucesso." );
+                    msgBox.setIcon( QMessageBox::Information );
+                    this->init();
+                }
+                else{
+                    msgBox.setInformativeText( "Erro na consulta." );
+                    msgBox.setIcon( QMessageBox::Warning );
+                }
+                msgBox.setStandardButtons( QMessageBox::Ok );
+                msgBox.exec();
+
+                FILE* fp = fopen( "lamina_save.sql", "w" );
+                fputs( lamina->toSQL().c_str(), fp );
+                fclose( fp );
+            }
+            this->setStateInsert( 0 );
+            break;
+        }
     }
 }
 
 void WindowLamina::on_pushButton_delete_clicked(){
+    this->setStateInsert( 0 );
     QMessageBox msgBox;
     msgBox.setInformativeText( "Deseja realmente excluir a lâmina aberta?" );
     msgBox.setIcon( QMessageBox::Warning );
@@ -185,5 +271,6 @@ void WindowLamina::on_pushButton_delete_clicked(){
 }
 
 void WindowLamina::on_pushButton_exit_clicked(){
+    this->setStateInsert( 0 );
     this->close();
 }

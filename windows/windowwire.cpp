@@ -117,9 +117,6 @@ void WindowWire::updateWire(){
 
 
 void WindowWire::init(){
-    //ui->pushButton_currentAddDown->setEnabled( false );
-    //ui->pushButton_currentAddUp->setEnabled( false );
-    //ui->pushButton_currentDelete->setEnabled( false );
     this->clearFields();
     if( this->database->executeSQL( "SELECT * FROM wires ORDER BY id ASC" ) > -1 ){
         this->on_pushButton_after_clicked();
@@ -155,6 +152,7 @@ void WindowWire::on_pushButton_currentDelete_clicked(){
 }
 
 void WindowWire::on_pushButton_first_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->queryIsActive() ){
         if( this->database->firstRegister() ){
             this->updateFields();
@@ -164,6 +162,7 @@ void WindowWire::on_pushButton_first_clicked(){
 }
 
 void WindowWire::on_pushButton_last_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->queryIsActive() ){
         if( this->database->lastRegister() ){
             this->updateFields();
@@ -173,6 +172,7 @@ void WindowWire::on_pushButton_last_clicked(){
 }
 
 void WindowWire::on_pushButton_before_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->queryIsActive() ){
         if( this->database->previousRegister() ){
             this->updateFields();
@@ -182,6 +182,7 @@ void WindowWire::on_pushButton_before_clicked(){
 }
 
 void WindowWire::on_pushButton_after_clicked(){
+    this->setStateInsert( 0 );
     if( this->database->queryIsActive() ){
         if( this->database->nextRegister() ){
             this->updateFields();
@@ -191,6 +192,7 @@ void WindowWire::on_pushButton_after_clicked(){
 }
 
 void WindowWire::on_pushButton_update_clicked(){
+    this->setStateInsert( 0 );
     QMessageBox msgBox;
     msgBox.setInformativeText( "Deseja realmente atualizar o fio aberto." );
     msgBox.setIcon( QMessageBox::Warning );
@@ -203,6 +205,9 @@ void WindowWire::on_pushButton_update_clicked(){
         const double precision = 1e-5;
 
         if( this->wire->getId() != ui->lineEdit_id->text().toUInt() ){
+            msgBox.setInformativeText( "Dados em branco. Use a opção de \"Inserir Novo\"" );
+            msgBox.setStandardButtons( QMessageBox::Ok );
+            msgBox.exec();
             return;
         }
 
@@ -306,29 +311,18 @@ void WindowWire::on_pushButton_update_clicked(){
 
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
-
-        FILE* fp = fopen( "wire_save.sql", "w" );
-        fputs( sql.c_str(), fp );
-        fclose( fp );
     }
-    this->setStateInsert( 0 );
 }
 
 void WindowWire::setStateInsert( unsigned char state ){
     switch( state ){
         case 0:
             ui->pushButton_insert->setText( "Inserir Novo" );
-            //ui->pushButton_currentAddDown->setEnabled( false );
-            //ui->pushButton_currentAddUp->setEnabled( false );
-            //ui->pushButton_currentDelete->setEnabled( false );
             this->stateInsert = 0;
             break;
 
         case 1:
             ui->pushButton_insert->setText( "Salvar" );
-            //ui->pushButton_currentAddDown->setEnabled( true );
-            //ui->pushButton_currentAddUp->setEnabled( true );
-            //ui->pushButton_currentDelete->setEnabled( true );
             this->stateInsert = 1;
             break;
     }
@@ -356,6 +350,9 @@ void WindowWire::on_pushButton_insert_clicked(){
             msgBox.setIcon( QMessageBox::Warning );
             msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
             if( msgBox.exec() == QMessageBox::Ok ){
+                msgBox.setIcon( QMessageBox::Warning );
+                msgBox.setStandardButtons( QMessageBox::Ok );
+
                 Wire* wire = new Wire();
                 wire->setId( ui->lineEdit_id->text().toUInt() );
                 wire->setType( ui->lineEdit_type->text().toStdString() );
@@ -375,8 +372,6 @@ void WindowWire::on_pushButton_insert_clicked(){
                     QTableWidgetItem* density = ui->tableWidget_currentMax->item( i, 0 );
                     if( density->text().trimmed() == "" ){
                         msgBox.setInformativeText( "Campo(s) de densidade de corrente em branco(s)." );
-                        msgBox.setIcon( QMessageBox::Warning );
-                        msgBox.setStandardButtons( QMessageBox::Ok );
                         msgBox.exec();
                         return;
                     }
@@ -384,8 +379,6 @@ void WindowWire::on_pushButton_insert_clicked(){
                     QTableWidgetItem* current = ui->tableWidget_currentMax->item( i, 1 );
                     if( current->text().trimmed() == "" ){
                         msgBox.setInformativeText( "Campo(s) de corrente em branco(s)." );
-                        msgBox.setIcon( QMessageBox::Warning );
-                        msgBox.setStandardButtons( QMessageBox::Ok );
                         msgBox.exec();
                         return;
                     }
@@ -405,8 +398,8 @@ void WindowWire::on_pushButton_insert_clicked(){
                 }
                 else{
                     msgBox.setInformativeText( "Erro na consulta." );
-                    msgBox.setIcon( QMessageBox::Warning );
                 }
+
                 msgBox.exec();
             }
             this->setStateInsert( 0 );
@@ -416,6 +409,7 @@ void WindowWire::on_pushButton_insert_clicked(){
 }
 
 void WindowWire::on_pushButton_delete_clicked(){
+    this->setStateInsert( 0 );
     QMessageBox msgBox;
     msgBox.setInformativeText( "Deseja realmente excluir o fio aberto?" );
     msgBox.setIcon( QMessageBox::Warning );
@@ -440,7 +434,6 @@ void WindowWire::on_pushButton_delete_clicked(){
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
     }
-    this->setStateInsert( 0 );
 }
 
 void WindowWire::on_pushButton_exit_clicked(){

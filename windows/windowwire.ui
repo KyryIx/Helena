@@ -140,7 +140,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Espiras por centrimetro (esp/cm):</string>
+    <string>Espiras por centímetro (esp/cm):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -195,7 +195,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Area (mm^2):</string>
+    <string>Área (mm^2):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -211,7 +211,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Diametro (mm):</string>
+    <string>Diâmetro (mm):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -321,7 +321,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Resistencia (Ω/km):</string>
+    <string>Resistência (Ω/km):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -347,7 +347,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Corrente Maxima</string>
+    <string>Corrente Máxima</string>
    </property>
    <widget class="QPushButton" name="pushButton_currentAddDown">
     <property name="geometry">
@@ -411,7 +411,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Frequencia (kHz):</string>
+    <string>Frequência (kHz):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -547,18 +547,25 @@
   <tabstop>lineEdit_type</tabstop>
   <tabstop>lineEdit_awg</tabstop>
   <tabstop>lineEdit_diameter</tabstop>
+  <tabstop>lineEdit_material</tabstop>
+  <tabstop>lineEdit_provider</tabstop>
   <tabstop>lineEdit_turnsPerCm</tabstop>
   <tabstop>lineEdit_area</tabstop>
   <tabstop>lineEdit_resistance</tabstop>
   <tabstop>lineEdit_weight</tabstop>
   <tabstop>lineEdit_length</tabstop>
   <tabstop>lineEdit_frequency</tabstop>
-  <tabstop>lineEdit_material</tabstop>
   <tabstop>tableWidget_currentMax</tabstop>
+  <tabstop>pushButton_currentAddUp</tabstop>
+  <tabstop>pushButton_currentAddDown</tabstop>
+  <tabstop>pushButton_currentDelete</tabstop>
+  <tabstop>pushButton_first</tabstop>
+  <tabstop>pushButton_last</tabstop>
   <tabstop>pushButton_before</tabstop>
   <tabstop>pushButton_after</tabstop>
   <tabstop>pushButton_update</tabstop>
   <tabstop>pushButton_insert</tabstop>
+  <tabstop>pushButton_delete</tabstop>
   <tabstop>pushButton_exit</tabstop>
  </tabstops>
  <resources>
