@@ -86,6 +86,22 @@ class DataBase
             return this->query.size();
         }
 
+        bool queryIsValid() const{
+            return this->query.isValid();
+        }
+
+        bool queryIsActive() const{
+            return this->query.isActive();
+        }
+
+        bool firstRegister(){
+            return this->query.first();
+        }
+
+        bool lastRegister(){
+            return this->query.last();
+        }
+
         bool previousRegister(){
             return this->query.previous();
         }
