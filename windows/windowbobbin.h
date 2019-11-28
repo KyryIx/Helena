@@ -28,6 +28,7 @@ public slots:
     void on_pushButton_before_clicked();
     void on_pushButton_after_clicked();
     void on_pushButton_update_clicked();
+    void on_pushButton_insert_clicked();
     void on_pushButton_delete_clicked();
     void on_pushButton_exit_clicked();
 
