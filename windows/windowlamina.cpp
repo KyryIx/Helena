@@ -92,17 +92,21 @@ void WindowLamina::on_pushButton_last_clicked(){
 
 void WindowLamina::on_pushButton_before_clicked(){
     this->setStateInsert( 0 );
-    if( this->database->previousRegister() ){
-        this->updateFields();
-        this->updateLamina();
+    if( this->database->queryIsActive() ){
+        if( this->database->previousRegister() ){
+            this->updateFields();
+            this->updateLamina();
+        }
     }
 }
 
 void WindowLamina::on_pushButton_after_clicked(){
     this->setStateInsert( 0 );
-    if( this->database->nextRegister() ){
-        this->updateFields();
-        this->updateLamina();
+    if( this->database->queryIsActive() ){
+        if( this->database->nextRegister() ){
+            this->updateFields();
+            this->updateLamina();
+        }
     }
 }
 

@@ -13,6 +13,7 @@ WindowBobbin::WindowBobbin(QWidget *parent, DataBase* database) :
     this->setDatabase( database );
     this->bobbin = new Bobbin();
     this->init();
+    this->stateInsert = 0;
 }
 
 WindowBobbin::~WindowBobbin()
@@ -69,17 +70,43 @@ void WindowBobbin::init(){
     }
 }
 
+void WindowBobbin::on_pushButton_first_clicked(){
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->firstRegister() ){
+            this->updateFields();
+            this->updateBobbin();
+        }
+    }
+}
+
+void WindowBobbin::on_pushButton_last_clicked(){
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->lastRegister() ){
+            this->updateFields();
+            this->updateBobbin();
+        }
+    }
+}
+
 void WindowBobbin::on_pushButton_before_clicked(){
-    if( this->database->previousRegister() ){
-        this->updateFields();
-        this->updateBobbin();
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->previousRegister() ){
+            this->updateFields();
+            this->updateBobbin();
+        }
     }
 }
 
 void WindowBobbin::on_pushButton_after_clicked(){
-    if( this->database->nextRegister() ){
-        this->updateFields();
-        this->updateBobbin();
+    this->setStateInsert( 0 );
+    if( this->database->queryIsActive() ){
+        if( this->database->nextRegister() ){
+            this->updateFields();
+            this->updateBobbin();
+        }
     }
 }
 
