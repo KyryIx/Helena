@@ -23,6 +23,8 @@ public:
     void init();
 
 public slots:
+    void on_pushButton_first_clicked();
+    void on_pushButton_last_clicked();
     void on_pushButton_before_clicked();
     void on_pushButton_after_clicked();
     void on_pushButton_update_clicked();
@@ -33,6 +35,8 @@ private:
     Ui::WindowBobbin *ui;
     DataBase* database;
     Bobbin* bobbin;
+    void setStateInsert( unsigned char state );
+    unsigned char stateInsert;
 };
 
 #endif // WINDOWBOBBIN_H
