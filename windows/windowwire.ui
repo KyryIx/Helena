@@ -204,8 +204,8 @@
   <widget class="QLabel" name="label_diameter">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>40</y>
+     <x>80</x>
+     <y>70</y>
      <width>85</width>
      <height>16</height>
     </rect>
@@ -330,9 +330,9 @@
   <widget class="QLineEdit" name="lineEdit_diameter">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>40</y>
-     <width>140</width>
+     <x>170</x>
+     <y>70</y>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
@@ -430,9 +430,9 @@
   <widget class="QLabel" name="label_material">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>70</y>
-     <width>165</width>
+     <x>290</x>
+     <y>40</y>
+     <width>85</width>
      <height>16</height>
     </rect>
    </property>
@@ -446,9 +446,9 @@
   <widget class="QLineEdit" name="lineEdit_material">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>70</y>
-     <width>111</width>
+     <x>380</x>
+     <y>40</y>
+     <width>140</width>
      <height>20</height>
     </rect>
    </property>

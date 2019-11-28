@@ -150,10 +150,6 @@ void WindowBobbin::on_pushButton_update_clicked(){
             sql += "provider_bobbin='" + ui->lineEdit_provider->text().toStdString() + "', ";
         }
 
-        msgBox.setInformativeText( sql.c_str() );
-        msgBox.setStandardButtons( QMessageBox::Ok );
-        msgBox.exec();
-
         if( sql.size() > size ){
             sql = sql.substr( 0, sql.size()-2 );
             sql += " WHERE id=" + std::to_string( this->bobbin->getId() );
@@ -175,6 +171,72 @@ void WindowBobbin::on_pushButton_update_clicked(){
 
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
+    }
+}
+
+void WindowBobbin::setStateInsert( unsigned char state ){
+    switch( state ){
+        case 0:
+            ui->pushButton_insert->setText( "Inserir Novo" );
+            this->stateInsert = 0;
+            break;
+
+        case 1:
+            ui->pushButton_insert->setText( "Salvar" );
+            this->stateInsert = 1;
+            break;
+    }
+}
+
+void WindowBobbin::on_pushButton_insert_clicked(){
+    switch( this->stateInsert ){
+        case 0:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja campos em branco?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                this->clearFields();
+            }
+            this->setStateInsert( 1 );
+            break;
+        }
+
+        case 1:
+        {
+            QMessageBox msgBox;
+            msgBox.setInformativeText( "Deseja salvar mesmo?" );
+            msgBox.setIcon( QMessageBox::Warning );
+            msgBox.setStandardButtons( QMessageBox::Ok|QMessageBox::No );
+            if( msgBox.exec() == QMessageBox::Ok ){
+                msgBox.setIcon( QMessageBox::Warning );
+                msgBox.setStandardButtons( QMessageBox::Ok );
+
+                Bobbin* bobbin = new Bobbin();
+                bobbin->setId( ui->lineEdit_id->text().toUInt() );
+                bobbin->setType( ui->lineEdit_type->text().toStdString() );
+                bobbin->setProvider( ui->lineEdit_provider->text().toStdString() );
+                bobbin->setCode( ui->lineEdit_code->text().toStdString() );
+                bobbin->setWidth( ui->lineEdit_width->text().toDouble() );
+                bobbin->setLength( ui->lineEdit_length->text().toDouble() );
+                bobbin->setHeight( ui->lineEdit_height->text().toDouble() );
+
+                if( this->database->executeSQL( bobbin->toSQL() ) > -1 ){
+                    this->on_pushButton_after_clicked();
+                    msgBox.setInformativeText( "Salvamento feito com sucesso." );
+                    msgBox.setIcon( QMessageBox::Information );
+                    this->init();
+                }
+                else{
+                    msgBox.setInformativeText( "Erro na consulta." );
+                }
+
+                msgBox.exec();
+            }
+            this->setStateInsert( 0 );
+            break;
+        }
     }
 }
 

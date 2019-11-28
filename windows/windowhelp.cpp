@@ -24,8 +24,9 @@ WindowHelp::WindowHelp(QWidget *parent) :
     }
 
     fseek( fp, 0, SEEK_END );
-    long int size = ftell( fp );
+    long size = ftell( fp );
     fseek( fp, 0, SEEK_SET );
+
     char* buffer = static_cast<char*>( malloc( static_cast<unsigned long>(size) * sizeof(char) ) );
     if( buffer == nullptr ){
         QMessageBox msgBox;
@@ -33,18 +34,26 @@ WindowHelp::WindowHelp(QWidget *parent) :
         msgBox.setIcon( QMessageBox::Warning );
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
+        fclose( fp );
+        free( buffer );
         return;
     }
 
     size_t result = fread( buffer, sizeof(char), static_cast<size_t>(size), fp );
-    //if( result != static_cast<size_t>(size) ){
-    //    QMessageBox msgBox;
-    //    msgBox.setInformativeText( "Erro na leitura das informacoes." );
-    //    msgBox.setIcon( QMessageBox::Warning );
-    //    msgBox.setStandardButtons( QMessageBox::Ok );
-    //    msgBox.exec();
-    //    return;
-    //}
+    if( static_cast<long>(result) != size ){
+        QMessageBox msgBox;
+        std::string str = "Erro na leitura das informacoes.\nresult=";
+        str += std::to_string( result );
+        str += " e size=";
+        str += std::to_string( size );
+        msgBox.setInformativeText( str.c_str() );
+        msgBox.setIcon( QMessageBox::Warning );
+        msgBox.setStandardButtons( QMessageBox::Ok );
+        msgBox.exec();
+        fclose( fp );
+        free( buffer );
+        return;
+    }
 
     ui->textBrowser->setHtml( buffer );
 
