@@ -8,30 +8,10 @@ int main(int argc, char *argv[])
     w.show();
 
     /*
-     *
-     Fazer um método que compara dois fios, para que possa ser usado no update.
-     rever a inclusão usada na janela de fios
-
+     wires.h (verificar o metodo findIndexByCurrentMax)
+     transformer.h (No método calculate, verificar o delay ao precisar dar dois cliques no botao voltar apos excluir um projeto de transformador)
+     windownewproject.h (ver a opção de criar uma opção de center tap)
      http://www.novacon.com.br/audiotabawg.htm
-     *
      */
-
-    /*
-    NAO OK - transformer.h (verificar dados na folha de calculo)
-    NAO OK - wires.h (verificar o metodo findIndexByCurrentMax)
-    */
     return a.exec();
-
-    /*
-        Em calculate transformador
-        -> verificar o delay ao precisar dar dois cliques no botao voltar apos excluir um projeto de transformador
-
-        campos a serem alimentados pelos usuario //
-     */
-
-    /*
-      Itens a modificar ou acrescentar:
-      4 - Fazer uma tela de exportação do projeto para PDF
-      5 - Documentar o software.
-     */
 }
