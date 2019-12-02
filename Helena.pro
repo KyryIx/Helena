@@ -27,45 +27,44 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         windows/mainwindow.cpp \
-        windows/windowpreference.cpp \
+        windows/windownewproject.cpp \
+        windows/windowopenproject.cpp \
         windows/windowwire.cpp \
         windows/windowlamina.cpp \
         windows/windowbobbin.cpp \
-        windows/windowabout.cpp \
         windows/windowhelp.cpp \
-        windows/windownewproject.cpp \
-        windows/windowopenproject.cpp
+        windows/windowpreference.cpp \
+        windows/windowabout.cpp
 
 HEADERS += \
+        components/database.h \
         components/bobbin.h \
         components/bobbins.h \
-        components/database.h \
         components/lamina.h \
         components/laminas.h \
         components/wire.h \
         components/wires.h \
         components/transformer.h \
         windows/mainwindow.h \
-        windows/windowpreference.h \
-        windows/windowwire.h \
-        windows/windowbobbin.h \
-        windows/windowlamina.h \
-        windows/windowabout.h \
-        windows/windowhelp.h \
-        windows/windowopenproject.h \
         windows/windownewproject.h \
-        samples.h
+        windows/windowopenproject.h \
+        windows/windowwire.h \
+        windows/windowlamina.h \
+        windows/windowbobbin.h \
+        windows/windowhelp.h \
+        windows/windowpreference.h \
+        windows/windowabout.h
 
 FORMS += \
         windows/mainwindow.ui \
-        windows/windowpreference.ui \
-        windows/windowwire.ui \
-        windows/windowbobbin.ui \
-        windows/windowlamina.ui \
-        windows/windowabout.ui \
-        windows/windowhelp.ui \
+        windows/windownewproject.ui \
         windows/windowopenproject.ui \
-        windows/windownewproject.ui
+        windows/windowwire.ui \
+        windows/windowlamina.ui \
+        windows/windowbobbin.ui \
+        windows/windowhelp.ui \
+        windows/windowpreference.ui \
+        windows/windowabout.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
