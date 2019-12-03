@@ -6,13 +6,25 @@
 #include <QMessageBox>
 #include <stdlib.h>
 #include <stdio.h>
+#include <fstream>
+
+// https://doc.qt.io/archives/4.6/widgets-scribble.html
 
 WindowHelp::WindowHelp(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WindowHelp)
 {
     ui->setupUi(this);
-    std::string path = QDir::currentPath().toStdString() + "/debug/doc/index.html";
+    this->init();
+}
+
+WindowHelp::~WindowHelp()
+{
+    delete ui;
+}
+
+void WindowHelp::init(){
+    std::string path = QDir::currentPath().toStdString() + "/doc/index.html";
     //FILE* fp = fopen( path.c_str(), "r,ccs=UTF-8" ); // c++11
     FILE* fp = fopen( path.c_str(), "r" ); // have ansi
     if( fp == nullptr ){
@@ -23,6 +35,7 @@ WindowHelp::WindowHelp(QWidget *parent) :
         msgBox.setIcon( QMessageBox::Warning );
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
+        fclose( fp );
         return;
     }
 
@@ -64,24 +77,34 @@ WindowHelp::WindowHelp(QWidget *parent) :
     while( found != std::string::npos ){
         replace = "src=\"";
         replace += QDir::currentPath().toStdString();
-        replace += "/debug/doc/";
+        replace += "/doc/";
         html.replace( found, 7, replace );
         found = html.find( str, found );
     }
-
-    std::string path2 = path + ".html";
-    FILE* fp2 = fopen( path2.c_str(), "w" );
-    fwrite( html.c_str(), 1, static_cast<size_t>(html.size()), fp2 );
-    fclose(fp2);
 
     //ui->textBrowser->setHtml( buffer );
     ui->textBrowser->setHtml( html.c_str() );
 
     fclose( fp );
     free( buffer );
+    html.clear();
+    str.clear();
+    replace.clear();
 }
 
-WindowHelp::~WindowHelp()
-{
-    delete ui;
+void WindowHelp::resizeEvent(QResizeEvent *event){
+    if( width() > ui->textBrowser->width() || height() > ui->textBrowser->height() ){
+        ui->textBrowser->setFixedHeight( height() );
+        //ui->textBrowser->setMinimumHeight( height() );
+        //ui->textBrowser->setMaximumHeight( height() );
+        ui->textBrowser->setFixedWidth( width() );
+        //ui->textBrowser->setMinimumWidth( width() );
+        //ui->textBrowser->setMaximumWidth( width() );
+        update();
+        this->init();
+    }
+    QWidget::resizeEvent( event );
 }
+
+
+//QScrollBar* vscroll = ui->textBrowser->verticalScrollBar();

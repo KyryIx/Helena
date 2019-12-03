@@ -235,10 +235,6 @@ void WindowLamina::on_pushButton_insert_clicked(){
                 }
                 msgBox.setStandardButtons( QMessageBox::Ok );
                 msgBox.exec();
-
-                FILE* fp = fopen( "lamina_save.sql", "w" );
-                fputs( lamina->toSQL().c_str(), fp );
-                fclose( fp );
             }
             this->setStateInsert( 0 );
             break;
