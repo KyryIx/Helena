@@ -1,0 +1,248 @@
+<html>
+	<head>
+		<style type="text/css">
+			body{
+				font-family: 'MS Shell Dlg 2';
+				font-style: normal;
+				text-align: justify;
+			}
+			img{
+				padding: 5px;
+				border: 2px solid #000;
+			}
+			.tabela{
+				border-top: 3px solid #000;
+				border-bottom: 3px solid #000;
+			}
+			.tabela td{
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>This is a software to create mono phase transformer project.</p>
+		<p>This informations are in <a href="#en">English</a> or <a href="#pt">Portuguese</a></p>
+		
+		<p style="background-color:#ddffdd;font-weight:bold;width:100%;"><a name="en"># ENGLISH</a></p>
+		<p style="font-weight:bold;text-align:center;">
+			Informations in English not create now!
+		</p>
+		
+		<p style="background-color:#ddffdd;font-weight:bold;width:100%;"><a name="en"># PORTUGUESE</a></p>
+		<p>Uma ideia b&aacute;sica dos circuitos do transformador pode ser visto na Figura 1. Nesta figura pode-se ver os elementos b&aacute;sicos do esquema de um transformador.</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Figura 1:</span> Esquema de um transformador monof&aacute;sico</p>
+		<p style="text-align:center;"><img src="./880px-Ideal_transformer.svg.png" width="400"/></p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span> https://en.wikipedia.org/wiki/Transformer</p>
+		<br/><br/><br/><br/>
+		<p>Nesta figura, pode-se observar uma fonte de alimenta&ccedil;&atilde;o (<span style="font-weight:bold;">V<sub>p</sub></span>), uma corrente de entrada (<span style="font-weight:bold;">I<sub>p</sub></span>), tens&atilde;o de sa&iacute;da (<span style="font-weight:bold;">V<sub>s</sub></span>), uma corrente de sa&iacute;da (<span style="font-weight:bold;">I<sub>s</sub></span>), uma carga (<span style="font-weight:bold;">Z<sub>L</sub></span>), n&uacute;mero de espiras no circuito de entrada (<span style="font-weight:bold;">N<sub>p</sub></span>) e n&uacute;mero de espiras no circuito de sa&iacute;da (<span style="font-weight:bold;">N<sub>s</sub></span>).</p>
+		<p>A Figura 2 exibe uma transformador em vis&atilde;o explodida, no qual pode-se ver a chapa de suporte, o n&uacute;cleo composto de l&acirc;minas E, o carretel junto com as espiras de fio e o fechamento do n&uacute;cleo de l&acirc;minas I. Nas mesma Figura 2 pode-se ver ainda a figura de uma transformador monof&aacute;sico montado com seus fios de conex&atilde;o de entrada ou sa&iacute;da de tens&atilde;o/corrente.</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Figura 2:</span> Vis&atilde;o explodida do transformador monof&aacute;sico</p>
+		<p style="text-align:center;"><img src="./transformer_assembly.png" width="750"/></p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span>  http://www.joinville.udesc.br/portal/professores/joaquim/materiais/Transformador.pdf</p>
+		<br/><br/><br/><br/>
+		<p>O software Helena ser&aacute; utilizado para automatizar os c&aacute;lculos de transformadores monof&aacute;sicos (outros tipos ser&atilde;o implementados ao longo da vida deste) de at&eacute; 3 kVA, com no m&aacute;ximo tr&ecirc;s condutores na entrada e/ou sa&iacute;da, conforme Figura 3.</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Figura 3:</span> Tipos de entrada e sa&iacute;da de transformadores</p>
+		<p style="text-align:center;">
+			<img src="./tipos_de_trafos_1_1.png" height="150"/>
+			<img src="./tipos_de_trafos_2_1.png" height="150"/>
+			<img src="./tipos_de_trafos_2_2.png" height="150"/>
+		</p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span> Pr&oacute;prio autor</p>
+		<br/><br/><br/><br/>
+		<p>A seguir ser&aacute; exibido as telas e as informa&ccedil;&otilde;es associadas a elas, para que possam ser modificados pelo usu&aacute;rio do software.</p>
+		<p>A tela contida na Figura 4, &eacute; a tela do principal do software Helena, no qual s&atilde;o exibidos os seguintes itens, conforme Tabela 1:</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Figura 4:</span> Tela principal do software</p>
+		<p style="text-align:center;"><img src="./tela_principal.png" width="562"/></p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span> Pr&oacute;prio autor</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Tabela 1:</span> Rela&ccedil;&atilde;o dos itens que comp&otilde;em a tela principal</p>
+		<p style="text-align:center;">
+			<table class="tabela" align="center" border="1" width="600">
+				<tr>
+					<td align="center" style="font-weight:bold;width:115px;">ITEM</td>
+					<td  align="center" style="font-weight:bold;">DESCRI&ccedil;&atilde;O</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Menu Arquivo:</td>
+					<td align="justify">Respons&aacute;vel por dar acesso as a&ccedil;&otilde;es de "Novo Projeto", "Abrir Projeto", e "Sair" do aplicativo.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Menu Editar:</td>
+					<td align="justify">Respons&aacute;vel por permitir acessar as informa&ccedil;&otilde;es de conex&atilde;o e tabelas do banco de dados dos itens carretel, l&acirc;mina, fios e transformadores. Neste menu cont&eacute;m o item "Prefer&ecirc;ncias".</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Menu Materiais:</td>
+					<td align="justify">Respons&aacute;vel por permitir acesso as a&ccedil;&otilde;es relativas aos itens carret&eacute;is, l&acirc;minas e fios que comp&otilde;em o b&aacute;sico do transformador. Neste menu cont&eacute;m as ac&otilde;es "carret&eacute;is, l&acirc;minas e fios.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Menu Ajuda:</td>
+					<td align="justify">Neste menu tem-se os itens "Exibir Ajuda", relativo a este documento que voc&ecirc; est&aacute; lendo. Tamb&eacute;m h&aacute; o item "Sobre o Helena", no qual explicita a licen&ccedil;a de uso deste.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">&iacute;cones:</td>
+					<td align="justify">S&atilde;o alguns &iacute;cones que tem suas a&ccedil;&otilde;es contidas nos menus.</td>
+				</tr>
+			</table>
+		</p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span> Pr&oacute;prio autor</p>
+		<br/><br/><br/><br/>
+		<p>A pr&oacute;xima tela &eacute; a de "Novo Projeto", no qual h&aacute; a necessidade de preenchimento de algumas informa&ccedil;&otilde;es para o c&aacute;lculo de outros parametros do transformador. Esses parametros podem ser vistos na Figura 5.</p>
+		<br/><br/><br/><br/>
+		<p style="text-align:center;"><span style="font-weight:bold;">Figura 5:</span> Tela "Novo Projeto" dos dados gerais do software</p>
+		<p style="text-align:center;"><img src="./tela_novo_projeto_1.png" width="774"/></p>
+		<p style="text-align:center;"><span style="font-weight:bold">Fonte:</span> Pr&oacute;prio autor</p>
+		<br/><br/><br/><br/>
+		<p>Note que alguns campos j&aacute; vem setado, sendo os campos em azul, para que facilite saber quais s&atilde;o os dados essenciais para c&aacute;lculo automatico do transformador.<p>
+		<br/><br/><br/><br/>
+		<p style="text-align: center;"><span style="font-weight:bold;">Tabela 2:</span> Rela&ccedil;&atilde;o dos itens que comp&otilde;em a tela Novo Projeto</span></p>
+		<p style="text-align: center;">
+			<table class="tabela" align="center" border="1" width="750">
+				<tr>
+					<td align="center" style="font-weight:bold;width:235px;">ITEM</td>
+					<td  align="center" style="font-weight:bold;">DESCRI&ccedil;&atilde;O</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Padr&atilde;o de Enrolamento:</td>
+					<td align="justify">Este &eacute; o padr&atilde;o de enrolamento dos circuitos prim&aacute;rio (entrada) e secund&aacute;rio (sa&iacute;da) do transformador.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Frequ&ecirc;ncia:</td>
+					<td align="justify">&eacute; a frequ&ecirc;ncia da tens&atilde;o que alimenta o transformador, em hertz (Hz).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Indu&ccedil;&atilde;o Magn&eacute;tica:</td>
+					<td align="justify">&eacute; a indu&ccedil;&atilde;o magn&eacute;tica m&aacute;xima gerada pela pelos enrolamentos do prim&aacute;rio ao passar uma corrente por estes, e o valor &eacute; dado em gauss (G).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Densidade de Corrente:</td>
+					<td align="justify">&eacute; a quantidade de corrente que flui em uma &aacute;rea de 1 mm<sup>2</sup>, e a sua unidade &eacute; o amp&egrave;res por milimetro quadrado (A/mm<sup>2).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Densidade de Corrente M&eacute;dia:</td>
+					<td align="justify">&eacute; a densidade de corrente m&eacute;dia entre o circuito prim&aacute;rio e secund&aacute;rio.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Compensa&ccedil;&atilde;o de pot&ecirc;ncia:</td>
+					<td align="justify">A compensa&ccedil;&atilde;o de pot&ecirc;ncia est&aacute; relacionada a perda no ferro (l&acirc;mina) que no caso pode ser perda por histeresse e tamb&eacute;m a rela&ccedil;&atilde;o sobre o verniz que recobre as l&acirc;minas.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Valor de acomoda&ccedil;&atilde;o:</td>
+					<td align="justify">&eacute; o valor relativo a rela&ccedil;&atilde;o entre a &aacute;rea da janela da l&acirc;mina pela se&ccedil;&atilde;o transversal de todos os fios condutores que passam pela janela da l&acirc;mina.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Peso dos Enrolamentos:</td>
+					<td align="justify">&eacute; o peso do cobre ou outro material usado como condutor nos circuitos prim&aacute;rio e secund&aacute;rio do transformador, medido em quilograma (kg).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Peso do Ferro:</td>
+					<td align="justify">&eacute; o peso das l&acirc;minas usada nos transformador, medido em quilograma (kg).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Perdas nos Enrolamentos:</td>
+					<td align="justify">S&atilde;o as perdas por efeito Joule, dada em watts (W).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Perda no Ferro:</td>
+					<td align="justify">&eacute; a perda nas l&acirc;minas no qual est&aacute; relacionada as perdas de Focoault e Histeress, e &eacute; da em watts (W).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Comprimento da Espira M&eacute;dia:</td>
+					<td align="justify">&eacute; o comprimento da espira no qual est&aacute; ao centro de todas as outras espiras no transformador, e &eacute; usada para o c&aacute;lculo do peso dos enrolamentos, sendo que sua unidade de media &eacute; o milimetro (mm).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Perda Total:</td>
+					<td align="justify">&eacute; a perda do enrolamento mais a perda no n&uacute;cleo e &eacute; dada em watts (W).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">&aacute;rea do Enrolamentos:</td>
+					<td align="justify">&eacute; a &aacute;rea dos enrolamentos prim&aacute;rio e secund&aacute;rio, dado em milimetro ao quadrado (mm<sup>2</sup>).</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Efici&ecirc;ncia:</td>
+					<td align="justify">&eacute; a efici&ecirc;ncia do transformador, dado em porcentagem.</td>
+				</tr>
+				<tr>
+					<td align="right" valign="top">Observa&ccedil;&otilde;es:</td>
+					<td align="justify">S&atilde;o as observa&ccedil;&otilde;es sobre este projeto (transformador).</td>
+				</tr>
+			</table>
+		</p>
+		<p align="center"><span style="font-weight:bold">Fonte:</span> Pr&oacute;prio autor</p>
+		<br/><br/><br/><br/>
+		<h1 align="center">Exemplo</h1>
+		<p align="center">
+			<table align="center" border="0" style="border:1px solid #000;">
+				<tr><td colspan="3" style="background-color:rgb(240,240,240);padding:5px;font-weight:bold;">Dados iniciais</td></tr>
+				<tr><td>Padr&atilde;o</td><td>=</td><td>0 (2 condutores na entrada e 2 condutores na sa&iacute;da)</td></tr>
+				<tr><td>Frequ&ecirc;ncia</td><td>=</td><td>50 Hz</td></tr>
+				<tr><td>Indu&ccedil;&atilde;o Magn&eacute;tica M&aacute;xima</td><td>=</td><td>11300 G</td></tr>
+				<tr><td>Densidade de corrente</td><td>=</td><td>3 A/mm<sup>2</sup></td></tr>
+				<tr><td>Compensa&ccedil;&atilde;o de perda de pot&ecirc;ncia</td><td>=</td><td>10%</td></tr>
+				<tr><td>Valor de acomoda&ccedil;&atilde;o dos condutores</td><td>=</td><td>3</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Tens&atilde;o de entrada</td><td>=</td><td>120 V</td></tr>
+				<tr><td>Tens&atilde;o de sa&iacute;da</td><td>=</td><td>220 V</td></tr>
+				<tr><td>Pot&ecirc;ncia de sa&iacute;da</td><td>=</td><td>300 VA</td></tr>
+				<tr><td>Tipo do fio de entrada</td><td>=</td><td>redondo</td></tr>
+				<tr><td>Tipo do fio de sa&iacute;da</td><td>=</td><td>redondo</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Tipo de l&acirc;mina</td><td>=</td><td>padr&atilde;o</td></tr>
+				<tr><td>Compensa&ccedil;&atilde;o em rela&ccedil;&atilde;o a espessura da l&acirc;mina</td><td>=</td><td>10%</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Tipo de carretel</td><td>=</td><td>STSR</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td colspan="3" style="background-color:rgb(240,240,240);padding:5px;font-weight:bold;">Execu&ccedil;&atilde;o</td></tr>
+				<tr><td>Corrente de sa&iacute;da</td><td>=</td><td>1.3636363636363635 A</td></tr>
+				<tr><td>Pot&ecirc;ncia de entrada</td><td>=</td><td>330 VA</td></tr>
+				<tr><td>Corrente de entrada</td><td>=</td><td>2.75 A</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Se&ccedil;&atilde;o tranversal necess&aacute;rio do fio do secund&aacute;rio</td><td>=</td><td>0.45454545454545453 mm<sup>2</sup></td></tr>
+				<tr><td>AWG do fio do secund&aacute;rio</td><td>=</td><td>20</td></tr>
+				<tr><td>Se&ccedil;&atilde;o tranversal do fio selecionado do secund&aacute;rio</td><td>=</td><td>0.518 mm<sup>2</sup></td></tr>
+				<tr><td>Densidade de corrente do fio selecionado do secund&aacute;rio</td><td>=</td><td>2.632502632502632 A/mm<sup>2</sup></td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Se&ccedil;&atilde;o tranversal necess&aacute;rio do fio do prim&aacute;rio</td><td>=</td><td>0.9166666666666666 mm<sup>2</sup></td></tr>
+				<tr><td>AWG do fio do prim&aacute;rio</td><td>=</td><td>17</td></tr>
+				<tr><td>Se&ccedil;&atilde;o tranversal do fio selecionado do prim&aacute;rio</td><td>=</td><td>1.038 mm<sup>2</sup></td></tr>
+				<tr><td>Densidade de corrente do fio selecionado do prim&aacute;rio</td><td>=</td><td>2.649325626204239 A/mm<sup>2</sup></td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Se&ccedil;&atilde;o magn&eacute;tica</td><td>=</td><td>1837.1173070873836 mm<sup>2</sup></td></tr>
+				<tr><td>Se&ccedil;&atilde;o geom&eacute;trica</td><td>=</td><td>2020.8290377961218 mm<sup>2</sup></td></tr>
+				<tr><td>Largura da perna da l&acirc;mina</td><td>=</td><td>44.95363208680831 mm</td></tr>
+				<tr><td>Largura da perna da l&acirc;mina</td><td>=</td><td>4.495363208680831 cm</td></tr>
+				<tr><td>L&acirc;mina selecionada</td><td>=</td><td>n&ordm; 7 (50 mm)</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Modelo do carretel</td><td>=</td><td>DR 03</td></tr>
+				<tr><td>Largura do carretel</td><td>=</td><td>50 mm</td></tr>
+				<tr><td>Comprimento do carretel</td><td>=</td><td>41 mm</td></tr>
+				<tr><td>Altura do carretel</td><td>=</td><td>75 mm</td></tr>
+				<tr><td>Tipo do carretel</td><td>=</td><td>STSR</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Se&ccedil;&atilde;o magn&eacute;tica</td><td>=</td><td>2050 mm<sup>2</sup></td></tr>
+				<tr><td>Se&ccedil;&atilde;o geom&eacute;trica</td><td>=</td><td>18.636363636363637 cm<sup>2</sup></td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Espiras do secund&aacute;rio</td><td>=</td><td>470.5763393438765 espiras</td></tr>
+				<tr><td>Espiras do prim&aacute;rio</td><td>=</td><td>256.6780032784781 espiras</td></tr>
+				<tr><td>&nbsp;</td><td></td><td></td></tr>
+				<tr><td>Se&ccedil;&atilde;o dos fios</td><td>=</td><td>535.09 mm<sup>2</sup></td></tr>
+				<tr><td>Valor de acomoda&ccedil;&atilde;o dos condutores</td><td>=</td><td>3,513427647685436 > 3.0</td></tr>
+			</table>
+		</p>
+		<br/><br/>
+		<p>Alguns campos j&aacute; vem setado, sendo os campos em azul, para que facilite, necessitando preencher os valores de tens&atilde;o de entrada e sa&iacute;da, e pot&ecirc;ncia de sa&iacute;da.<p>
+		<p>A cria&ccedil;&atilde;o da folha de fabrica&ccedil;&atilde;o com as informa&ccedil;&otilde;es relevantes na produ&ccedil;&atilde;o podem ser criadas.</p>
+		<p>O pontos deste projeto s&atilde;o:</p>
+		<ul>
+			<li>Ponto 1 - Ser um software live para cria&ccedil;&atilde;o de projetos de transformadores;</li>
+			<li>Ponto 2 - Ser de uso livro para estudo quanto comercial;</li>
+			<li>Ponto 3 - Uso de ferramentas livres e integra&ccedil;&otilde;es com outras plataformas;</li>
+			<li>Ponto 4 - Faz&ecirc;-lo crescer, e conquistar o mundo.</li>
+			<li>Ponto 5 - Que ele seja ut&iacute;l para voc&ecirc; :)</li>
+		</ul>
+		<p>continua...</p>
+	</body>
+</html>
