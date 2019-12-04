@@ -115,14 +115,14 @@
      <widget class="QLabel" name="label_currentDensity">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>80</y>
-        <width>161</width>
+        <width>170</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Densidade de Corrente (A/mm2):</string>
+       <string>Densidade de Corrente (A/mm^2):</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -823,7 +823,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Seção Trans.:</string>
+         <string>Seção (mm^2):</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1401,7 +1401,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Seção Trans.:</string>
+         <string>Seção (mm^2):</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1904,7 +1904,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Area Janela (mm^2):</string>
+        <string>Área Janela (mm^2):</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
