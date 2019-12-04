@@ -312,17 +312,39 @@ void WindowOpenProject::clearFields(){
     ui->lineEdit_laminaCompensation->setText( "" );
 }
 
+void WindowOpenProject::on_pushButton_first_clicked(){
+    if( this->database->queryIsActive() ){
+        if( this->database->firstRegister() ){
+            this->updateFieldsWithResultQuery();
+            this->setTransformer();
+        }
+    }
+}
+
+void WindowOpenProject::on_pushButton_last_clicked(){
+    if( this->database->queryIsActive() ){
+        if( this->database->lastRegister() ){
+            this->updateFieldsWithResultQuery();
+            this->setTransformer();
+        }
+    }
+}
+
 void WindowOpenProject::on_pushButton_previous_clicked(){
-    if( this->database->previousRegister() ){
-        this->updateFieldsWithResultQuery();
-        this->setTransformer();
+    if( this->database->queryIsActive() ){
+        if( this->database->previousRegister() ){
+            this->updateFieldsWithResultQuery();
+            this->setTransformer();
+        }
     }
 }
 
 void WindowOpenProject::on_pushButton_next_clicked(){
-    if( this->database->nextRegister() ){
-        this->updateFieldsWithResultQuery();
-        this->setTransformer();
+    if( this->database->queryIsActive() ){
+        if( this->database->nextRegister() ){
+            this->updateFieldsWithResultQuery();
+            this->setTransformer();
+        }
     }
 }
 

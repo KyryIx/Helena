@@ -28,6 +28,8 @@ public:
     void init();
 
 public slots:
+    void on_pushButton_first_clicked();
+    void on_pushButton_last_clicked();
     void on_pushButton_previous_clicked();
     void on_pushButton_next_clicked();
     void on_pushButton_makeReport_clicked();
