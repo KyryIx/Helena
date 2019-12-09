@@ -1284,22 +1284,22 @@ class Transformer{
             txt = txt + "<table align=\"center\" class=\"transformer\" width=\"100%\">\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with: "
-                    + std::to_string( this->getTransformerPatternNumber() ) + "("
+                    + std::to_string( this->getTransformerPatternNumber() ) + " ("
                     + this->getTransformerPatternNameAuto()  + ")</td><td><b>";
 
             txt = txt + "</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Magnetic Induction:</td><td><b>" + std::to_string( this->getMagneticInduction() ) + " G</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Average Cur. Density:</td><td><b>" + std::to_string( this->getAverageCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Weigth Iron:</td><td><b>" + std::to_string( this->getWeightIron()*1000.0 ) + " g</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Weight Copper:</td><td><b>" + std::to_string( this->getWeightCopper()*1000.0 ) + " g</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Turns Average Length:</td><td><b>" + std::to_string( this->getAverageTurnLength()/10 ) + " cm</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Coil Area:</td><td><b>" + std::to_string( this->getCopperArea() ) + " mm<sup>2</sup></b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Iron Loss:</td><td><b>" + std::to_string( this->getIronLoss() ) + " W</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Copper Loss:</td><td><b>" + std::to_string( this->getCopperLoss() ) + " W</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Total Loss:</td><td><b>" + std::to_string( this->getTotalLoss() ) + " W</b></td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Efficiency:</td><td><b>" + std::to_string( this->getEfficiency() ) + " %</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"background-color:#f00;heght:100px;\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Magnetic Induction:</td><td><b>" + std::to_string( this->getMagneticInduction() ) + " G</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Average Cur. Density:</td><td><b>" + std::to_string( this->getAverageCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Weigth Iron:</td><td><b>" + std::to_string( this->getWeightIron()*1000.0 ) + " g</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Weight Copper:</td><td><b>" + std::to_string( this->getWeightCopper()*1000.0 ) + " g</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Turns Average Length:</td><td><b>" + std::to_string( this->getAverageTurnLength()/10 ) + " cm</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Coil Area:</td><td><b>" + std::to_string( this->getCopperArea() ) + " mm<sup>2</sup></b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Iron Loss:</td><td><b>" + std::to_string( this->getIronLoss() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Copper Loss:</td><td><b>" + std::to_string( this->getCopperLoss() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Total Loss:</td><td><b>" + std::to_string( this->getTotalLoss() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\" style=\"50\">Efficiency:</td><td><b>" + std::to_string( this->getEfficiency() ) + " %</b></td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">INPUT</td></tr>\n";

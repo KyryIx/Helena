@@ -211,6 +211,7 @@ void WindowOpenProject::setTransformer(){
     lamina->setId( ui->lineEdit_laminaID->text().toUInt() );
     lamina->setType( ui->lineEdit_laminaType->text().toStdString() );
     lamina->setWidth( ui->lineEdit_laminaWidth->text().toDouble() );
+    lamina->setProvider( ui->lineEdit_laminaProvider->text().toStdString() );
     lamina->setWindowArea( ui->lineEdit_laminaWindowArea->text().toDouble() );
     lamina->setWeight( ui->lineEdit_laminaWeight->text().toDouble() );
     lamina->setThicknessPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
