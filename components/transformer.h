@@ -1282,9 +1282,11 @@ class Transformer{
         std::string toHTML() const{
             std::string txt = "";
             txt = txt + "<table align=\"center\" class=\"transformer\" width=\"100%\">\n";
+            txt = txt + "\t<tr><td colspan=\"2\"><h1 align=\"center\">Datasheet</h1></td></tr>\n";
+            txt = txt + "\t<tr><td>&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with: "
-                    + std::to_string( this->getTransformerPatternNumber() ) + "("
+                    + std::to_string( this->getTransformerPatternNumber() ) + " ("
                     + this->getTransformerPatternNameAuto()  + ")</td><td><b>";
 
             txt = txt + "</td></tr>\n";
@@ -1303,7 +1305,7 @@ class Transformer{
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
 
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">INPUT</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getInputPower() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getInputPower() ) + " VA</b></td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Voltage 1:</td><td><b>" + std::to_string( this->getInputVoltage1() ) + " V</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Current 1:</td><td><b>" + std::to_string( this->getInputCurrent1() ) + " A</b></td></tr>\n";
@@ -1332,7 +1334,7 @@ class Transformer{
             }
 
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">OUTPUT</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getOutputPower() ) + " W</b></td></tr>\n";
+            txt = txt + "\t<tr><td align=\"right\">Power:</td><td><b>" + std::to_string( this->getOutputPower() ) + " VA</b></td></tr>\n";
             txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Voltage 1:</td><td><b>" + std::to_string( this->getOutputVoltage1() ) + " V</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Current 1:</td><td><b>" + std::to_string( this->getOutputCurrent1() ) + " A</b></td></tr>\n";

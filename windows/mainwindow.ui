@@ -150,7 +150,7 @@
      <normaloff>:/iconWire.ico</normaloff>:/iconWire.ico</iconset>
    </property>
    <property name="text">
-    <string>Fios</string>
+    <string>Gerenciador de Fios</string>
    </property>
   </action>
   <action name="action_laminas">
@@ -159,7 +159,7 @@
      <normaloff>:/iconLamina.ico</normaloff>:/iconLamina.ico</iconset>
    </property>
    <property name="text">
-    <string>Lâminas</string>
+    <string>Gerenciador de Lâminas</string>
    </property>
   </action>
   <action name="action_bobbins">
@@ -168,7 +168,7 @@
      <normaloff>:/iconBobbin.ico</normaloff>:/iconBobbin.ico</iconset>
    </property>
    <property name="text">
-    <string>Carretéis</string>
+    <string>Gerenciador de Carretéis</string>
    </property>
   </action>
   <action name="action_showHelp">

@@ -12,14 +12,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>861</width>
-    <height>100</height>
+    <width>1050</width>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>2000</width>
-    <height>829</height>
+    <width>1050</width>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
