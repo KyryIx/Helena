@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>lamina_dimensoes.png</file>
+    </qresource>
+</RCC>

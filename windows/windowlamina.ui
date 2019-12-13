@@ -236,7 +236,7 @@
     <string>Sair</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_thicknessPercent">
+  <widget class="QLineEdit" name="lineEdit_compensationPercent">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -246,7 +246,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_thicknessPercent">
+  <widget class="QLabel" name="label_compensationPercent">
    <property name="geometry">
     <rect>
      <x>245</x>
@@ -256,7 +256,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Espessura verniz (%):</string>
+    <string>Compensação (%):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -330,10 +330,23 @@
     <string>Último</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_visualMode">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Modo Visual</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEdit_id</tabstop>
-  <tabstop>lineEdit_thicknessPercent</tabstop>
+  <tabstop>lineEdit_compensationPercent</tabstop>
   <tabstop>lineEdit_type</tabstop>
   <tabstop>lineEdit_provider</tabstop>
   <tabstop>lineEdit_width</tabstop>

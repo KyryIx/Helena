@@ -1,6 +1,8 @@
 #include "windows/windowlamina.h"
 #include "ui_windowlamina.h"
 
+#include "windows/windowlaminaimage.h"
+
 #include <QMessageBox>
 
 #define table "laminas"
@@ -32,7 +34,7 @@ void WindowLamina::clearFields(){
     ui->lineEdit_width->clear();
     ui->lineEdit_weight->clear();
     ui->lineEdit_windowArea->clear();
-    ui->lineEdit_thicknessPercent->clear();
+    ui->lineEdit_compensationPercent->clear();
 }
 
 void WindowLamina::updateFields(){
@@ -43,7 +45,7 @@ void WindowLamina::updateFields(){
     ui->lineEdit_width->setText( this->database->returnValue( "width_lamina" ).c_str() );
     ui->lineEdit_weight->setText( this->database->returnValue( "weight_lamina" ).c_str() );
     ui->lineEdit_windowArea->setText( this->database->returnValue( "window_area_lamina" ).c_str() );
-    ui->lineEdit_thicknessPercent->setText( this->database->returnValue( "thickness_percent_lamina" ).c_str() );
+    ui->lineEdit_compensationPercent->setText( this->database->returnValue( "compensation_percent_lamina" ).c_str() );
 }
 
 void WindowLamina::updateLamina(){
@@ -51,7 +53,7 @@ void WindowLamina::updateLamina(){
     this->lamina->setWidth( ui->lineEdit_width->text().toDouble() );
     this->lamina->setWindowArea( ui->lineEdit_windowArea->text().toDouble() );
     this->lamina->setWeight( ui->lineEdit_weight->text().toDouble() );
-    this->lamina->setThicknessPercent( ui->lineEdit_thicknessPercent->text().toDouble() );
+    this->lamina->setCompensationPercent( ui->lineEdit_compensationPercent->text().toDouble() );
     this->lamina->setType( ui->lineEdit_type->text().toStdString() );
     this->lamina->setProvider( ui->lineEdit_provider->text().toStdString() );
 }
@@ -68,6 +70,14 @@ void WindowLamina::init(){
         msgBox.setStandardButtons( QMessageBox::Ok );
         msgBox.exec();
     }
+}
+
+void WindowLamina::on_pushButton_visualMode_clicked(){
+    WindowLaminaImage* dialog = new WindowLaminaImage(this, this->database);
+    dialog->show();
+    dialog->raise();
+    dialog->exec();
+    //dialog->activateWindow();
 }
 
 void WindowLamina::on_pushButton_first_clicked(){
@@ -142,8 +152,8 @@ void WindowLamina::on_pushButton_update_clicked(){
             sql += "weight_lamina=" + ui->lineEdit_weight->text().toStdString() + ", ";
         }
 
-        if( fabs( this->lamina->getThicknessPercent() - ui->lineEdit_thicknessPercent->text().toDouble() ) >= precision ){
-            sql += "thickness_percent_lamina=" + ui->lineEdit_thicknessPercent->text().toStdString() + ", ";
+        if( fabs( this->lamina->getCompensationPercent() - ui->lineEdit_compensationPercent->text().toDouble() ) >= precision ){
+            sql += "compensation_percent_lamina=" + ui->lineEdit_compensationPercent->text().toStdString() + ", ";
         }
 
         if( this->lamina->getType() != ui->lineEdit_type->text().toStdString() ){
@@ -221,7 +231,7 @@ void WindowLamina::on_pushButton_insert_clicked(){
                 lamina->setWidth( ui->lineEdit_width->text().toDouble() );
                 lamina->setWindowArea( ui->lineEdit_windowArea->text().toDouble() );
                 lamina->setWeight( ui->lineEdit_weight->text().toDouble() );
-                lamina->setThicknessPercent( ui->lineEdit_thicknessPercent->text().toDouble() );
+                lamina->setCompensationPercent( ui->lineEdit_compensationPercent->text().toDouble() );
 
                 if( this->database->executeSQL( lamina->toSQL() ) > -1 ){
                     this->on_pushButton_after_clicked();

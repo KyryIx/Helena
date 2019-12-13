@@ -49,7 +49,7 @@ class DataBase
 
             this->query.clear();
 
-            if( this->query.exec( "CREATE TABLE IF NOT EXISTS laminas( id INTEGER PRIMARY KEY AUTOINCREMENT, width_lamina DOUBLE, window_area_lamina DOUBLE, weight_lamina DOUBLE, thickness_percent_lamina DOUBLE, type_lamina VARCHAR(64), provider_lamina VARCHAR(255) )" ) == false ){
+            if( this->query.exec( "CREATE TABLE IF NOT EXISTS laminas( id INTEGER PRIMARY KEY AUTOINCREMENT, width_lamina DOUBLE, window_area_lamina DOUBLE, weight_lamina DOUBLE, compensation_percent_lamina DOUBLE, type_lamina VARCHAR(64), provider_lamina VARCHAR(255) )" ) == false ){
                 return -2;
             }
 

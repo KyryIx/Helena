@@ -34,7 +34,8 @@ SOURCES += \
         windows/windowbobbin.cpp \
         windows/windowhelp.cpp \
         windows/windowpreference.cpp \
-        windows/windowabout.cpp
+        windows/windowabout.cpp \
+        windows/windowlaminaimage.cpp
 
 HEADERS += \
         components/database.h \
@@ -53,7 +54,8 @@ HEADERS += \
         windows/windowbobbin.h \
         windows/windowhelp.h \
         windows/windowpreference.h \
-        windows/windowabout.h
+        windows/windowabout.h \
+        windows/windowlaminaimage.h
 
 FORMS += \
         windows/mainwindow.ui \
@@ -64,7 +66,8 @@ FORMS += \
         windows/windowbobbin.ui \
         windows/windowhelp.ui \
         windows/windowpreference.ui \
-        windows/windowabout.ui
+        windows/windowabout.ui \
+        windows/windowlaminaimage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -72,6 +75,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icons/main.qrc
+    icons/main.qrc \
+    images/images.qrc
 
 RC_ICONS = icons/iconPower.ico

@@ -795,7 +795,7 @@ class Transformer{
                     return (1 + this->getLaminaLossCompensation()/100.0) * this->getMagneticSectionAuto();
 
                 case MethodLaminaCompensation::LaminaCompensation:
-                    return (1 + this->getLamina()->getThicknessPercent()/100.0) * this->getMagneticSectionAuto();
+                    return (1 + this->getLamina()->getCompensationPercent()/100.0) * this->getMagneticSectionAuto();
             }
             return 0.0;
         }
@@ -939,7 +939,7 @@ class Transformer{
                             SM = SG / (1 + this->getLaminaLossCompensation()/100.0);
                             break;
                         case MethodLaminaCompensation::LaminaCompensation:
-                            SM = SG / (1 + this->getLamina()->getThicknessPercent()/100.0);
+                            SM = SG / (1 + this->getLamina()->getCompensationPercent()/100.0);
                             break;
                     }
 
@@ -999,7 +999,7 @@ class Transformer{
                     }
 
                     if( this->getMethodLaminaLossCompensation() == MethodLaminaCompensation::LaminaCompensation ) {
-                        this->setLaminaLossCompensation( this->getLamina()->getThicknessPercent() );
+                        this->setLaminaLossCompensation( this->getLamina()->getCompensationPercent() );
                     }
 
                     return ResultCalculus::CorrectResult;
@@ -1513,7 +1513,7 @@ class Transformer{
             sql += std::to_string( this->getLamina()->getWindowArea() ) + ", ";        // lamina window area
             sql += std::to_string( this->getLamina()->getWeight() ) + ", ";            // lamina weight
             sql += std::to_string( this->getMethodLaminaLossCompensation() ) + ", ";   // lamina compensation state
-            sql += std::to_string( this->getLamina()->getThicknessPercent() ) + ", ";  // lamina compensation value
+            sql += std::to_string( this->getLamina()->getCompensationPercent() ) + ", ";  // lamina compensation value
 
             sql += std::to_string( this->getBobbin()->getId() ) + ", ";                // bobbin id
             sql += "'" + this->getBobbin()->getType() + "', ";                         // bobbin type
