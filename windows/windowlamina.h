@@ -14,7 +14,7 @@ class WindowLamina : public QDialog
     Q_OBJECT
 
 public:
-    explicit WindowLamina(QWidget *parent = nullptr,  DataBase* database=nullptr);
+    explicit WindowLamina(QWidget *parent = nullptr, DataBase* database=nullptr);
     ~WindowLamina();
     void setDatabase( DataBase *database );
     void clearFields();
@@ -23,6 +23,7 @@ public:
     void init();
 
 public slots:
+    void on_pushButton_visualMode_clicked();
     void on_pushButton_exit_clicked();
     void on_pushButton_first_clicked();
     void on_pushButton_last_clicked();

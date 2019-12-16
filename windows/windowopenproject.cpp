@@ -214,7 +214,7 @@ void WindowOpenProject::setTransformer(){
     lamina->setProvider( ui->lineEdit_laminaProvider->text().toStdString() );
     lamina->setWindowArea( ui->lineEdit_laminaWindowArea->text().toDouble() );
     lamina->setWeight( ui->lineEdit_laminaWeight->text().toDouble() );
-    lamina->setThicknessPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
+    lamina->setCompensationPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
 
     this->transformer->setLamina( lamina );
     switch( ui->comboBox_useMode->currentIndex() ){
@@ -694,7 +694,7 @@ void WindowOpenProject::on_pushButton_update_clicked(){
                 sql += ", ";
             }
 
-            if( fabs( this->transformer->getLamina()->getThicknessPercent() - ui->lineEdit_laminaCompensation->text().toDouble() ) >= precision ){
+            if( fabs( this->transformer->getLamina()->getCompensationPercent() - ui->lineEdit_laminaCompensation->text().toDouble() ) >= precision ){
                 sql += "lamina_compensation_value=" + ui->lineEdit_laminaCompensation->text().toStdString() + ", ";
             }
 
@@ -863,7 +863,7 @@ void WindowOpenProject::on_pushButton_saveAs_clicked(){
         lamina->setWidth( ui->lineEdit_laminaWidth->text().toDouble() );
         lamina->setWindowArea( ui->lineEdit_laminaWindowArea->text().toDouble() );
         lamina->setWeight( ui->lineEdit_laminaWeight->text().toDouble() );
-        lamina->setThicknessPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
+        lamina->setCompensationPercent( ui->lineEdit_laminaCompensation->text().toDouble() );
         switch( ui->comboBox_useMode->currentIndex() ) {
             case MethodLaminaCompensation::NotApplied:
                 transformer->setMethodLaminaLossCompensation( MethodLaminaCompensation::NotApplied );

@@ -501,7 +501,7 @@ void WindowNewProject::on_pushButton_calculate_clicked(){
             ui->lineEdit_laminaWidth->setText( QString::number( transformer->getLamina()->getWidth(), 'f', precision ) );
             ui->lineEdit_laminaArea->setText( QString::number( transformer->getLamina()->getWindowArea(), 'f', precision ) );
             ui->lineEdit_laminaWeight->setText( QString::number( transformer->getLamina()->getWeight(), 'f', precision ) );
-            ui->lineEdit_laminaCompensation->setText( QString::number( transformer->getLamina()->getThicknessPercent(), 'f', precision ) );
+            ui->lineEdit_laminaCompensation->setText( QString::number( transformer->getLamina()->getCompensationPercent(), 'f', precision ) );
 
             ui->lineEdit_bobbinID->setText( std::to_string( transformer->getBobbin()->getId() ).c_str() );
             ui->lineEdit_bobbinCode->setText( transformer->getBobbin()->getCode().c_str() );
