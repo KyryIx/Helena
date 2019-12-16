@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Helena - Abrir Projeto</string>
+   <string>Helena 1.0 - Abrir Projeto</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons/main.qrc">

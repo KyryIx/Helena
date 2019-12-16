@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Helena - Software de desenvolvimento de transformadores</string>
+   <string>Helena 1.0 - Software de desenvolvimento de transformadores</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons/main.qrc">
