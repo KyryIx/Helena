@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Helena - Fios</string>
+   <string>Helena 1.0 - Fios</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons/main.qrc">

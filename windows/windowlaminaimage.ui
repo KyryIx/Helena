@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>580</height>
+    <width>660</width>
+    <height>579</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Helena 1.0 - Lâminas</string>
   </property>
   <widget class="QPushButton" name="pushButton_exit">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>540</x>
      <y>550</y>
-     <width>80</width>
+     <width>111</width>
      <height>23</height>
     </rect>
    </property>
@@ -29,9 +29,9 @@
   <widget class="QLabel" name="label_width">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>430</y>
-     <width>125</width>
+     <x>5</x>
+     <y>460</y>
+     <width>145</width>
      <height>16</height>
     </rect>
    </property>
@@ -45,9 +45,9 @@
   <widget class="QLineEdit" name="lineEdit_width">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>430</y>
-     <width>111</width>
+     <x>160</x>
+     <y>460</y>
+     <width>90</width>
      <height>20</height>
     </rect>
    </property>
@@ -58,9 +58,9 @@
   <widget class="QLineEdit" name="lineEdit_windowArea">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>420</x>
      <y>460</y>
-     <width>111</width>
+     <width>90</width>
      <height>20</height>
     </rect>
    </property>
@@ -68,9 +68,9 @@
   <widget class="QLabel" name="label_type">
    <property name="geometry">
     <rect>
-     <x>255</x>
-     <y>400</y>
-     <width>111</width>
+     <x>5</x>
+     <y>430</y>
+     <width>145</width>
      <height>20</height>
     </rect>
    </property>
@@ -84,9 +84,9 @@
   <widget class="QLabel" name="label_compensationPercent">
    <property name="geometry">
     <rect>
-     <x>255</x>
-     <y>460</y>
-     <width>111</width>
+     <x>265</x>
+     <y>550</y>
+     <width>145</width>
      <height>20</height>
     </rect>
    </property>
@@ -97,10 +97,10 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_area">
+  <widget class="QLabel" name="label_windowArea">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>290</x>
      <y>460</y>
      <width>125</width>
      <height>16</height>
@@ -116,14 +116,14 @@
   <widget class="QLabel" name="label_weight">
    <property name="geometry">
     <rect>
-     <x>25</x>
-     <y>490</y>
-     <width>111</width>
+     <x>5</x>
+     <y>550</y>
+     <width>145</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Densidade (kg/cm):</string>
+    <string>Densidade Lâmina (kg/cm):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -132,9 +132,9 @@
   <widget class="QLineEdit" name="lineEdit_compensationPercent">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>460</y>
-     <width>141</width>
+     <x>420</x>
+     <y>550</y>
+     <width>90</width>
      <height>20</height>
     </rect>
    </property>
@@ -145,22 +145,22 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>550</y>
-     <width>80</width>
-     <height>23</height>
+     <x>540</x>
+     <y>460</y>
+     <width>111</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
-    <string>Inserir Novo</string>
+    <string>Inserir</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_type_2">
+  <widget class="QLabel" name="label_provider">
    <property name="geometry">
     <rect>
-     <x>255</x>
-     <y>430</y>
-     <width>111</width>
+     <x>5</x>
+     <y>400</y>
+     <width>145</width>
      <height>20</height>
     </rect>
    </property>
@@ -174,9 +174,9 @@
   <widget class="QLineEdit" name="lineEdit_type">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>400</y>
-     <width>141</width>
+     <x>160</x>
+     <y>430</y>
+     <width>131</width>
      <height>20</height>
     </rect>
    </property>
@@ -184,9 +184,9 @@
   <widget class="QLineEdit" name="lineEdit_provider">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>430</y>
-     <width>141</width>
+     <x>160</x>
+     <y>400</y>
+     <width>351</width>
      <height>20</height>
     </rect>
    </property>
@@ -194,14 +194,14 @@
   <widget class="QLineEdit" name="lineEdit_weight">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>490</y>
-     <width>111</width>
+     <x>160</x>
+     <y>550</y>
+     <width>90</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_laminaImage">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -217,13 +217,438 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../images/lamina_dimensoes .png</pixmap>
+    <pixmap resource="../images/images.qrc">:/lamina_dimensoes.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>false</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label_A">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>50</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>A (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_A">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>50</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_B">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>80</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>B (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_B">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>80</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_C">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>110</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>C (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_C">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>110</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_D">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>140</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>D (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_D">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>140</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_E">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>170</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>E (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_E">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>170</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_F">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>200</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>F (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_F">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>200</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_G">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>230</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>G (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_G">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>230</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_H">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>260</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>H (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_H">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>260</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_I">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>290</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_I">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>290</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>I (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_J">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>320</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>J (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_J">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>320</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_K">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>350</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>K (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_K">
+   <property name="geometry">
+    <rect>
+     <x>575</x>
+     <y>350</y>
+     <width>75</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_dimension">
+   <property name="geometry">
+    <rect>
+     <x>516</x>
+     <y>10</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Dimensões</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_thicknessLamina">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>520</y>
+     <width>145</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Espessura Lâmina (mm):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_materialDensity">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>490</y>
+     <width>145</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Densidade material (g/cm^3):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_thicknessLamina">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>520</y>
+     <width>90</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_materialDensity">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>490</y>
+     <width>90</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_thicknessLayer">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>520</y>
+     <width>90</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_thicknessLayer">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>520</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Espessura Revestimento (um):</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_calculate">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>400</y>
+     <width>111</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Calcular Parâmetros</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_code">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>430</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_code">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>430</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Código:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../images/images.qrc"/>
+ </resources>
  <connections/>
 </ui>
