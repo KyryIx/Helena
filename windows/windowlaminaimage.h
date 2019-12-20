@@ -19,7 +19,8 @@ public:
     void setDatabase( DataBase *database );
 
 public slots:
-    void on_push_calculate_clicked();
+    void on_pushButton_calculate_clicked();
+    void on_pushButton_exit_clicked();
 
 private:
     Ui::WindowLaminaImage *ui;

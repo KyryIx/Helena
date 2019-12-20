@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>660</width>
-    <height>579</height>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,7 +117,7 @@
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>550</y>
+     <y>520</y>
      <width>145</width>
      <height>20</height>
     </rect>
@@ -180,6 +180,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>E170/Aperam</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_provider">
    <property name="geometry">
@@ -190,12 +193,15 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>Soma Brasil</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_weight">
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>550</y>
+     <y>520</y>
      <width>90</width>
      <height>20</height>
     </rect>
@@ -248,6 +254,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>63.50</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_B">
    <property name="geometry">
@@ -273,6 +282,9 @@
      <width>75</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>190.50</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_C">
@@ -300,6 +312,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>127.00</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_D">
    <property name="geometry">
@@ -325,6 +340,9 @@
      <width>75</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>95.25</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_E">
@@ -352,6 +370,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>31.75</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_F">
    <property name="geometry">
@@ -377,6 +398,9 @@
      <width>75</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>31.75</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_G">
@@ -404,6 +428,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>9.53</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_H">
    <property name="geometry">
@@ -430,6 +457,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>171.45</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_I">
    <property name="geometry">
@@ -439,6 +469,9 @@
      <width>75</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>9.92</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_I">
@@ -482,6 +515,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>9.92</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_K">
    <property name="geometry">
@@ -507,6 +543,9 @@
      <width>75</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>9.92</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_dimension">
@@ -535,8 +574,8 @@
   <widget class="QLabel" name="label_thicknessLamina">
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>520</y>
+     <x>265</x>
+     <y>490</y>
      <width>145</width>
      <height>16</height>
     </rect>
@@ -567,11 +606,14 @@
   <widget class="QLineEdit" name="lineEdit_thicknessLamina">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>520</y>
+     <x>420</x>
+     <y>490</y>
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>0.35</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_materialDensity">
@@ -583,6 +625,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>7.75</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_thicknessLayer">
    <property name="geometry">
@@ -592,6 +637,9 @@
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>0.6</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_thicknessLayer">
@@ -629,6 +677,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="text">
+    <string>EI-0250/Soma</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_code">
    <property name="geometry">
@@ -641,6 +692,64 @@
    </property>
    <property name="text">
     <string>Código:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_loss">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>550</y>
+     <width>145</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Perdas (W/kg em 60Hz/1T):</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_loss">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>550</y>
+     <width>90</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1.70</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_stackingFactor">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>580</y>
+     <width>90</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>95.0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_stackingFactor">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>580</y>
+     <width>145</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Fator de Empilhamento (%):</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
