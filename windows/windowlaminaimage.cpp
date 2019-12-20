@@ -21,7 +21,7 @@ void WindowLaminaImage::setDatabase( DataBase *database ){
     this->database = database;
 }
 
-void WindowLaminaImage::on_push_calculate_clicked(){
+void WindowLaminaImage::on_pushButton_calculate_clicked(){
     double A = ui->lineEdit_A->text().toDouble();
     double B = ui->lineEdit_B->text().toDouble();
     double C = ui->lineEdit_C->text().toDouble();
@@ -59,6 +59,20 @@ void WindowLaminaImage::on_push_calculate_clicked(){
 
     // density material - lamina //
     double materialDensity = ui->lineEdit_materialDensity->text().toDouble();
-    // tickeness lamina - lamina //
+    // tickness lamina - lamina //
     double tickenessLamina = ui->lineEdit_thicknessLamina->text().toDouble();
+    // thickness layer - layer //
+    double ticknessLayer = ui->lineEdit_thicknessLayer->text().toDouble();
+
+    double tickenessLaminaReal = tickenessLamina * 1000.0 - 2 * ticknessLayer;
+    double areaCm2 = area / 100.0;
+
+
+    // falta o processo de transformar a massa por centimetro
+
+
+}
+
+void WindowLaminaImage::on_pushButton_exit_clicked(){
+    this->close();
 }
