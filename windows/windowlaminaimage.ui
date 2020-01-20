@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>550</y>
+     <y>578</y>
      <width>111</width>
      <height>23</height>
     </rect>
@@ -51,6 +51,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -63,6 +69,12 @@
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_type">
@@ -138,6 +150,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_insert">
    <property name="enabled">
@@ -146,7 +164,7 @@
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>460</y>
+     <y>430</y>
      <width>111</width>
      <height>71</height>
     </rect>
@@ -180,6 +198,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string>E170/Aperam</string>
    </property>
@@ -193,6 +217,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string>Soma Brasil</string>
    </property>
@@ -205,6 +235,12 @@
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_laminaImage">
@@ -612,6 +648,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string>0.35</string>
    </property>
@@ -625,6 +667,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string>7.75</string>
    </property>
@@ -637,6 +685,12 @@
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
    </property>
    <property name="text">
     <string>0.6</string>
@@ -676,6 +730,12 @@
      <width>131</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
    </property>
    <property name="text">
     <string>EI-0250/Soma</string>
@@ -722,6 +782,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
+   </property>
    <property name="text">
     <string>1.70</string>
    </property>
@@ -734,6 +800,12 @@
      <width>90</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(140, 230, 255);</string>
    </property>
    <property name="text">
     <string>95.0</string>
@@ -753,6 +825,19 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clear">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>510</y>
+     <width>111</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Limpar campos</string>
    </property>
   </widget>
  </widget>

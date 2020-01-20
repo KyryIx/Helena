@@ -2,6 +2,8 @@
 #define WINDOWLAMINAIMAGE_H
 
 #include <QDialog>
+#include <QMessageBox>
+
 #include "components/database.h"
 #include "components/lamina.h"
 
@@ -20,12 +22,15 @@ public:
 
 public slots:
     void on_pushButton_calculate_clicked();
+    void on_pushButton_clear_clicked();
+    void on_pushButton_insert_clicked();
     void on_pushButton_exit_clicked();
 
 private:
     Ui::WindowLaminaImage *ui;
     DataBase* database;
     Lamina* lamina;
+    void clearFields();
 };
 
 #endif // WINDOWLAMINAIMAGE_H
