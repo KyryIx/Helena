@@ -78,6 +78,7 @@ void WindowLamina::on_pushButton_visualMode_clicked(){
     dialog->raise();
     dialog->exec();
     //dialog->activateWindow();
+     this->init();
 }
 
 void WindowLamina::on_pushButton_first_clicked(){
