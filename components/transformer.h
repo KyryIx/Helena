@@ -10,6 +10,8 @@
 #include "components/bobbins.h"
 #include "components/laminas.h"
 
+#include "libraries/bitmap_image.hpp"
+
 #define PI 3.141592653589793238
 
 enum MethodLaminaCompensation { NotApplied, LaminaCompensation, FieldCompensation };
@@ -1285,11 +1287,9 @@ class Transformer{
             txt = txt + "\t<tr><td colspan=\"2\"><h1 align=\"center\">Datasheet</h1></td></tr>\n";
             txt = txt + "\t<tr><td>&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with: "
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\">Transformer with: "
                     + std::to_string( this->getTransformerPatternNumber() ) + " ("
-                    + this->getTransformerPatternNameAuto()  + ")</td><td><b>";
-
-            txt = txt + "</td></tr>\n";
+                    + this->getTransformerPatternNameAuto()  + ")</td>\n";
             txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Magnetic Induction:</td><td><b>" + std::to_string( this->getMagneticInduction() ) + " G</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";
@@ -1377,6 +1377,115 @@ class Transformer{
             txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
             txt = txt + this->getObservation();
             txt = txt + "\n\t</td></tr>\n";
+
+            txt = txt + "\t<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">SCHEMATIC</td></tr>\n";
+            txt = txt + "\t<tr><td align=\"center\"colspan=\"2\">\n";
+
+
+            // http://pngwriter.sourceforge.net/
+            // https://github.com/pngwriter/pngwriter
+            // https://sourceforge.net/projects/cimg/
+            // http://cimg.eu/
+            // http://cimg.eu/CImg_slides.pdf
+            // https://www.partow.net/programming/bitmap/index.html
+            // http://izanbf.es/project/easy-bmp/
+            const unsigned int dim = 300;
+            bitmap_image image1(dim,dim);
+            for (unsigned int x = 0; x < dim; ++x){
+                for (unsigned int y = 0; y < dim; ++y){
+                    rgb_t col = jet_colormap[(x + y) % dim];
+                    image1.set_pixel(x,y,col.red,col.green,col.blue);
+                }
+            }
+            image1.save_image("test09_color_map_image.bmp");
+
+            bitmap_image image2(512,512);
+            image2.clear();
+            double c1 = 0.9;
+            double c2 = 0.5;
+            double c3 = 0.3;
+            double c4 = 0.7;
+            ::srand(0xA5AA5AA5);
+            plasma(image2,0,0,image2.width(),image2.height(),c1,c2,c3,c4,3.0,jet_colormap);
+            image2.save_image("test15_plasma.bmp");
+
+            bitmap_image image3(512,512);
+            /*double*/ c1 = 0.9;
+            /*double*/ c2 = 0.5;
+            /*double*/ c3 = 0.3;
+            /*double*/ c4 = 0.7;
+            plasma(image3,0,0,image3.width(),image3.height(),c1,c2,c3,c4,3.0,jet_colormap);
+            image_drawer draw(image3);
+            draw.pen_width(3);
+            draw.pen_color(255,0,0);
+            draw.circle(image3.width() / 2 + 100, image3.height() / 2, 100);
+            draw.pen_width(2);
+            draw.pen_color(0,255,255);
+            draw.ellipse(image3.width() / 2, image3.height() / 2, 200,350);
+            draw.pen_width(1);
+            draw.pen_color(255,255,0);
+            draw.rectangle(50,50,250,400);
+            draw.pen_color(0,255,0);
+            draw.rectangle(450,250,850,880);
+            image3.save_image("test17_image_drawer.bmp");
+
+            {
+                bitmap_image image(1000,180);
+                image_drawer draw(image);
+                const rgb_t* colormap[9] = {
+                    autumn_colormap,
+                    copper_colormap,
+                    gray_colormap,
+                    hot_colormap,
+                    hsv_colormap,
+                    jet_colormap,
+                    prism_colormap,
+                    vga_colormap,
+                    yarg_colormap
+                };
+                for (unsigned int i = 0; i < image.width(); ++i){
+                    for (unsigned int j = 0; j < 9; ++j){
+                        draw.pen_color(colormap[j][i].red,colormap[j][i].green,colormap[j][i].blue);
+                        draw.vertical_line_segment(j * 20, (j + 1) * 20, i);
+                    }
+                }
+
+                image.save_image("test18_color_maps.bmp");
+            }
+            {
+                bitmap_image image(1000,500);
+                image_drawer draw(image);
+                std::size_t palette_colormap_size = sizeof(palette_colormap) / sizeof(rgb_t);
+                std::size_t bar_width = image.width() / palette_colormap_size;
+                for (std::size_t i = 0; i < palette_colormap_size; ++i){
+                    for (std::size_t j = 0; j < bar_width; ++j){
+                        draw.pen_color(palette_colormap[i].red,palette_colormap[i].green,palette_colormap[i].blue);
+                        draw.vertical_line_segment(0, image.height(), static_cast<int>(i * bar_width + j));
+                    }
+                }
+
+                image.save_image("test18_palette_colormap.bmp");
+            }
+
+
+
+
+
+            txt = txt + "\t<svg width=\"400\" height=\"110\">";
+            txt = txt + "\t\t<rect width=\"300\" height=\"100\" style=\"fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)\"/>";
+            txt = txt + "\t\t\tSorry, your browser does not support inline SVG.";
+            txt+= txt + "\t</svg>\n";
+
+
+
+
+            txt = txt + "\n\t</td></tr>\n";
+
+
+
+
+
 
             txt = txt + "</table>";
 

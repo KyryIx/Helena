@@ -35,7 +35,8 @@ SOURCES += \
         windows/windowhelp.cpp \
         windows/windowpreference.cpp \
         windows/windowabout.cpp \
-        windows/windowlaminaimage.cpp
+        windows/windowlaminaimage.cpp \
+        windows/windowreport.cpp
 
 HEADERS += \
         components/database.h \
@@ -55,7 +56,9 @@ HEADERS += \
         windows/windowhelp.h \
         windows/windowpreference.h \
         windows/windowabout.h \
-        windows/windowlaminaimage.h
+        windows/windowlaminaimage.h \
+        windows/windowreport.h \
+        libraries/bitmap_image.hpp
 
 FORMS += \
         windows/mainwindow.ui \
@@ -67,7 +70,8 @@ FORMS += \
         windows/windowhelp.ui \
         windows/windowpreference.ui \
         windows/windowabout.ui \
-        windows/windowlaminaimage.ui
+        windows/windowlaminaimage.ui \
+        windows/windowreport.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
