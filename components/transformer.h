@@ -10,7 +10,7 @@
 #include "components/bobbins.h"
 #include "components/laminas.h"
 
-#include "libaries/bitmap_image.hpp"
+#include "libraries/bitmap_image.hpp"
 
 #define PI 3.141592653589793238
 
@@ -1287,11 +1287,9 @@ class Transformer{
             txt = txt + "\t<tr><td colspan=\"2\"><h1 align=\"center\">Datasheet</h1></td></tr>\n";
             txt = txt + "\t<tr><td>&nbsp;</td></tr>\n";
             txt = txt + "\t<tr><td align=\"center\" colspan=\"2\" style=\"background-color:#ddd;\">GENERAL INFORMATION</td></tr>\n";
-            txt = txt + "\t<tr><td align=\"right\" width=\"50%\">Transformer with: "
+            txt = txt + "\t<tr><td align=\"center\" colspan=\"2\">Transformer with: "
                     + std::to_string( this->getTransformerPatternNumber() ) + " ("
-                    + this->getTransformerPatternNameAuto()  + ")</td><td><b>";
-
-            txt = txt + "</td></tr>\n";
+                    + this->getTransformerPatternNameAuto()  + ")</td>\n";
             txt = txt + "\t<tr><td align=\"right\">Frequency:</td><td><b>" + std::to_string( this->getFrequency() ) + " Hz</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Magnetic Induction:</td><td><b>" + std::to_string( this->getMagneticInduction() ) + " G</b></td></tr>\n";
             txt = txt + "\t<tr><td align=\"right\">Current Density:</td><td><b>" + std::to_string( this->getCurrentDensity() ) + " A/mm<sup>2</sup></b></td></tr>\n";

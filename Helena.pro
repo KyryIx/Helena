@@ -71,7 +71,7 @@ FORMS += \
         windows/windowpreference.ui \
         windows/windowabout.ui \
         windows/windowlaminaimage.ui \
-    windows/windowreport.ui
+        windows/windowreport.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
