@@ -2,6 +2,7 @@
 #define WINDOWBOBBIN_H
 
 #include <QDialog>
+#include <math.h>
 #include "components/database.h"
 #include "components/bobbin.h"
 

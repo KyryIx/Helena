@@ -2,6 +2,7 @@
 #define WINDOWLAMINA_H
 
 #include <QDialog>
+#include <math.h>
 #include "components/database.h"
 #include "components/lamina.h"
 

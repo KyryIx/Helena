@@ -18,6 +18,7 @@ public:
     ~WindowReport();
 
 public slots:
+    void on_plainTextEdit_reportCode_textChanged();
     void on_pushButton_exit_clicked();
     void on_pushButton_makeReportFinal_clicked();
 

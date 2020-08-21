@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <math.h>
 
 #include "components/database.h"
 #include "components/lamina.h"

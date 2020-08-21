@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>748</height>
+    <width>830</width>
+    <height>440</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,25 +16,31 @@
   <widget class="QPlainTextEdit" name="plainTextEdit_reportCode">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>510</y>
-     <width>601</width>
-     <height>171</height>
+     <x>230</x>
+     <y>30</y>
+     <width>451</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="plainText">
     <string>&lt;html&gt;
 &lt;body&gt;
-&lt;table&gt;
-&lt;tr&gt;
-&lt;td&gt;row 1, col 1$$tensao_entrada$$&lt;/td&gt;&lt;td&gt;row 1, col 2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;row 2, col 1&lt;/td&gt;&lt;td&gt;row 2, col 2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;row 3, col 1&lt;/td&gt;&lt;td&gt;row 3, col 2&lt;/td&gt;
-&lt;/tr&gt;
+   &lt;h1&gt;Relatorio de Producao&lt;/h1&gt;
+   &lt;hr/&gt;
+   &lt;table&gt;
+              &lt;tr&gt;
+                    &lt;td&gt;&lt;b&gt;Tensao de entrada:&lt;/b&gt; &lt;/td&gt;
+                    &lt;td&gt;$$tensao_entrada$$ V&lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr&gt;
+                    &lt;td&gt;&lt;b&gt;Tensao de saida:&lt;/b&gt; &lt;/td&gt;
+                    &lt;td&gt;$$tensao_saida$$ V&lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr&gt;
+                    &lt;td&gt;&lt;b&gt;Frequencia:&lt;/b&gt; &lt;/td&gt;
+                    &lt;td&gt;$$frequencia$$ Hz&lt;/td&gt;
+              &lt;/tr&gt;
+   &lt;/table&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
    </property>
@@ -42,9 +48,9 @@
   <widget class="QPushButton" name="pushButton_makeReportFinal">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>690</y>
-     <width>150</width>
+     <x>690</x>
+     <y>30</y>
+     <width>131</width>
      <height>50</height>
     </rect>
    </property>
@@ -55,9 +61,9 @@
   <widget class="QPushButton" name="pushButton_exit">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>690</y>
-     <width>150</width>
+     <x>690</x>
+     <y>120</y>
+     <width>131</width>
      <height>50</height>
     </rect>
    </property>
@@ -65,43 +71,13 @@
     <string>Sair</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>420</y>
-     <width>104</width>
-     <height>71</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>440</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_3">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>480</y>
-     <width>104</width>
-     <height>71</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QTextBrowser" name="textBrowser_reportView">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>631</width>
-     <height>241</height>
+     <y>30</y>
+     <width>211</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="html">
@@ -109,24 +85,77 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;h3 align=&quot;center&quot; style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Listas das variáveis usadas no relatorio&lt;/span&gt;&lt;/h3&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;tensao_entrada&lt;/span&gt;: 1240 V&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;tensao_saida&lt;/span&gt;: 12 V&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;frequencia&lt;/span&gt;: 60 Hz&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;corrente_entrada&lt;/span&gt;: 10 A&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;corrente_saida&lt;/span&gt;: 50 A&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;espiras_primario&lt;/span&gt;: 6845&lt;/li&gt;
-&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;espiras_secundario&lt;/span&gt;: 6845&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-weight:600;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;tensao_entrada&lt;span style=&quot; font-weight:400;&quot;&gt;: 1240 V&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;tensao_saida&lt;/span&gt;: 12 V&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;frequencia&lt;/span&gt;: 60 Hz&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;corrente_entrada&lt;/span&gt;: 10 A&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;corrente_saida&lt;/span&gt;: 50 A&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;espiras_primario&lt;/span&gt;: 6845&lt;/li&gt;
+&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;espiras_secundario&lt;/span&gt;: 68&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QGraphicsView" name="graphicsView">
+  <widget class="QLabel" name="label_reportView">
    <property name="geometry">
     <rect>
-     <x>660</x>
-     <y>570</y>
-     <width>141</width>
-     <height>91</height>
+     <x>10</x>
+     <y>5</y>
+     <width>261</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Variáveis disponiveis</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_reportCode">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>10</y>
+     <width>261</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Variáveis disponiveis</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="textBrowser_reportResult">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>210</y>
+     <width>811</width>
+     <height>221</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_reportResult">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>261</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Resultado Final</string>
    </property>
   </widget>
  </widget>

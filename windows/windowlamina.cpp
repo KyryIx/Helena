@@ -45,7 +45,7 @@ void WindowLamina::updateFields(){
     ui->lineEdit_width->setText( this->database->returnValue( "width_lamina" ).c_str() );
     ui->lineEdit_weight->setText( this->database->returnValue( "weight_lamina" ).c_str() );
     ui->lineEdit_windowArea->setText( this->database->returnValue( "window_area_lamina" ).c_str() );
-    ui->lineEdit_compensationPercent->setText( this->database->returnValue( "compensation_percent_lamina" ).c_str() );
+    ui->lineEdit_compensationPercent->setText( this->database->returnValue( "thickness_percent_lamina" ).c_str() );
 }
 
 void WindowLamina::updateLamina(){
@@ -154,7 +154,7 @@ void WindowLamina::on_pushButton_update_clicked(){
         }
 
         if( fabs( this->lamina->getCompensationPercent() - ui->lineEdit_compensationPercent->text().toDouble() ) >= precision ){
-            sql += "compensation_percent_lamina=" + ui->lineEdit_compensationPercent->text().toStdString() + ", ";
+            sql += "thickness_percent_lamina=" + ui->lineEdit_compensationPercent->text().toStdString() + ", ";
         }
 
         if( this->lamina->getType() != ui->lineEdit_type->text().toStdString() ){
